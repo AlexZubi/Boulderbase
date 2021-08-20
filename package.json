@@ -13,6 +13,8 @@
     "cheerio": "^1.0.0-rc.10",
     "curl": "^0.1.4",
     "express": "^4.17.1",
+    "pg": "^8.7.1",
+    "request": "^2.88.2",
     "ts-node": "^10.2.0"
   },
   "devDependencies": {

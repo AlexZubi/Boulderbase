@@ -1,35 +1,47 @@
-const https = require('https');
-const cheerio = require('cheerio')
+const cheerio = require('cheerio');
+const request = require ('request');
 
-export function getSite(cragName: string) : string {
-    
-    var baseURL = 'https://27crags.com/site/search?qs='
-    var fullURL = baseURL.concat(cragName)
 
-    let data = '';
+export function getCrags(cragName: string) {
 
-    let request = https.get('https://27crags.com/site/search?qs=sudelfeld', (res) => {
-        if (res.statusCode !== 200) {
-            console.error(`Did not get an OK from the server. Code: ${res.statusCode}`);
-            res.resume();
-            return;
-          }        
-          res.on('data', (chunk) => {
-            data += chunk;
-          });
-        
-          res.on('close', () => {
-            console.log('Retrieved all data');
-          });
-    })
-    return data;
+  var baseURL = 'https://27crags.com';
+  var searchURL = 'https://27crags.com/site/search?qs=';
+  var routeList = '/routelist';
+  var fullURL = searchURL.concat(cragName);
+  var climbingAreas = [];
+
+  request(fullURL, (error, response, html) => {
+
+    if(!error && response.statusCode == 200){
+
+      const $ = cheerio.load(html);
+
+      $('.name').each((i, ele) => {
+
+        climbingAreas.push($(ele).find('a').attr('href'));
+      });
+      for(var i = 0; i < climbingAreas.length; i++){
+        climbingAreas[i] = baseURL.concat(climbingAreas[i]).concat(routeList);
+      }
+      getBoulders(climbingAreas[0]);
+    }
+  });
 }
+export function getBoulders(area: string){
 
-export function getTables(html: string): cheerio.Cheerio{
+  request(area, (error, response, html) => {
 
-    const $ = cheerio.load(html);
-    const tableElements = $('html body#site-search.user-vistor' +
-        'div.body-contain…ner div.row div.col-md-6 div.box-padded.box-white');
+    if(!error && response.statusCode == 200){
 
-    return tableElements;
-};
+      var routes = [];
+
+      const $ = cheerio.load(html);
+
+      $('.route-block').each((i, ele) =>{
+
+        routes.push($(ele).find('a').text());
+      })
+      console.log(routes);
+    }
+  });
+}
