@@ -2,7 +2,7 @@ const cheerio = require('cheerio');
 const request = require ('request');
 
 
-export function getCrags(cragName: string) {
+export function getCrags(cragName: string, callback) {
 
   var baseURL = 'https://27crags.com';
   var searchURL = 'https://27crags.com/site/search?qs=';
@@ -23,11 +23,12 @@ export function getCrags(cragName: string) {
       for(var i = 0; i < climbingAreas.length; i++){
         climbingAreas[i] = baseURL.concat(climbingAreas[i]).concat(routeList);
       }
-      getBoulders(climbingAreas[0]);
+      callback(climbingAreas[0]);
     }
   });
 }
-export function getBoulders(area: string){
+
+export function getBoulders(area: string, callback){
 
   request(area, (error, response, html) => {
 
@@ -41,7 +42,7 @@ export function getBoulders(area: string){
 
         routes.push($(ele).find('a').text());
       })
-      console.log(routes);
     }
+    callback(routes);
   });
 }
