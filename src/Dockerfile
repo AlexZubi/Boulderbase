@@ -1,0 +1,13 @@
+FROM node:16.6.2
+
+WORKDIR 
+
+ENV PORT 80
+
+COPY
+
+RUN
+
+COPY
+
+CMD [ ]

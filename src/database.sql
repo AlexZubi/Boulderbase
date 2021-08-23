@@ -8,3 +8,10 @@ CREATE TABLE boulders (
     grade VARCHAR(6)
 );
 
+-- Setzt die automatisch fortlaufende ID einer Tabelle auf 0 zurück.
+
+SELECT setval(pg_get_serial_sequence('boulders', 'boulder_id')
+	   , COALESCE(max(boulder_id) + 1, 1)
+	   , false)
+FROM boulders;
+  

@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 import {getCrags, getBoulders} from "./webscrape";
-import {addToDB} from "./sqlStatements";
+import {addToDb, getFromDb} from "./sqlStatements";
 
 app.use(express.json());
 app.use(express.urlencoded({
@@ -12,19 +12,17 @@ app.post("/", (request, response)=> {
 
     getCrags(request.query.crag, (resultCrags) => 
         getBoulders(resultCrags, (resultBoulders) =>                   
-            addToDB(resultBoulders)
+            addToDb(resultBoulders)
     )); 
     response.send("Boulder hinzugefügt");
 }); 
 
 app.get("/", (request, response)=> {
 
-    getCrags(request.query.crag, (resultCrags) =>
-        getBoulders(resultCrags, (resultBoulders) =>
-            console.log(resultBoulders)
-        )
+    getFromDb((resultBoulders) =>
+        console.log(resultBoulders.rows)
     );
-    response.send("Boulder angefragt")
+    response.send("Boulder abgefragt");
 });
 
 app.listen(3000, ()=>{
