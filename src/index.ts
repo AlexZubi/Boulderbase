@@ -1,6 +1,5 @@
 const express = require("express");
 const app = express();
-//let {pool: pool} = require('./database');
 import {getCrags, getBoulders} from "./webscrape";
 import {addToDB} from "./sqlStatements";
 

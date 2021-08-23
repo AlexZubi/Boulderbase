@@ -1,5 +1,4 @@
 let {pool: pool} = require('./database');
-import {getCrags, getBoulders} from "./webscrape";
 
 export function addToDB(boulders: string[]) {
 
@@ -10,10 +9,3 @@ export function addToDB(boulders: string[]) {
          );   
     }
 }
-
-/* "Manuelles" Einfügen von übergebenen Werten
-     const {name, grade} = request.body;        
-     const newBoulder = pool.query(
-        "INSERT INTO boulders (name, grade) VALUES ($1, $2)",
-        [name, grade]
-        ); */
