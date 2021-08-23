@@ -8,23 +8,23 @@ app.use(express.urlencoded({
   extended: true
 }));
 
- app.post("/", (request, response)=> {
+app.post("/", (request, response)=> {
 
     getCrags(request.query.crag, (resultCrags) => 
-    getBoulders(resultCrags, (resultBoulders) =>                   
-    addToDB(resultBoulders)
+        getBoulders(resultCrags, (resultBoulders) =>                   
+            addToDB(resultBoulders)
     )); 
-    response.send("Boulder hinzugefügt!");
+    response.send("Boulder hinzugefügt");
 }); 
 
 app.get("/", (request, response)=> {
 
     getCrags(request.query.crag, (resultCrags) =>
         getBoulders(resultCrags, (resultBoulders) =>
-        console.log(resultBoulders)
+            console.log(resultBoulders)
         )
     );
-    response.send("Bye World!")
+    response.send("Boulder angefragt")
 });
 
 app.listen(3000, ()=>{

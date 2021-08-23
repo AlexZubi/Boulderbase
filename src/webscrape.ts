@@ -1,7 +1,6 @@
 const cheerio = require('cheerio');
 const request = require ('request');
 
-
 export function getCrags(cragName: string, callback) {
 
   var baseURL = 'https://27crags.com';
