@@ -10,10 +10,10 @@ export function addToDb(boulders: string[]) {
     }
 }
 
-export async function getFromDb(callback) {
+export function getFromDb(callback) {
 
-    var boulders = await pool.query(
-            "SELECT name FROM boulders"
+    var boulders = pool.query(
+            "SELECT name FROM boulders",
+            callback
     );   
-    callback(boulders);
 }

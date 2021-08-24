@@ -19,8 +19,9 @@ export function getCrags(cragName: string, callback) {
 
         climbingAreas.push($(ele).find('a').attr('href'));
       });
+      
       for(var i = 0; i < climbingAreas.length; i++){
-        climbingAreas[i] = baseURL.concat(climbingAreas[i]).concat(routeList);
+        climbingAreas[i] = baseURL + climbingAreas[i] + routeList;
       }
       callback(climbingAreas[0]);
     }

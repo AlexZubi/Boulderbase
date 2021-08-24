@@ -10,6 +10,8 @@ app.use(express.urlencoded({
 
 app.post("/", (request, response)=> {
 
+    console.log(request.body);
+
     getCrags(request.query.crag, (resultCrags) => 
         getBoulders(resultCrags, (resultBoulders) =>                   
             addToDb(resultBoulders)
@@ -19,8 +21,8 @@ app.post("/", (request, response)=> {
 
 app.get("/", (request, response)=> {
 
-    getFromDb((resultBoulders) =>
-        console.log(resultBoulders.rows)
+    getFromDb((error, result) =>
+        console.log(result)
     );
     response.send("Boulder abgefragt");
 });
