@@ -1,7 +1,8 @@
 const cheerio = require('cheerio');
-const request = require ('request');
+const request = require('request');
+const fetch = require('node-fetch');
 
-export function getCrags(cragName: string, callback) {
+export function getCrags(cragName: string) {
 
   var baseURL = 'https://27crags.com';
   var searchURL = 'https://27crags.com/site/search?qs=';
@@ -9,40 +10,33 @@ export function getCrags(cragName: string, callback) {
   var fullURL = searchURL.concat(cragName);
   var climbingAreas = [];
 
-  request(fullURL, (error, response, html) => {
+  return fetch(fullURL, { method: "GET" }).then(res => res.text()).then((html) => {
 
-    if(!error && response.statusCode == 200){
+    const $ = cheerio.load(html);
 
-      const $ = cheerio.load(html);
-
-      $('.name').each((i, ele) => {
-
-        climbingAreas.push($(ele).find('a').attr('href'));
-      });
-      
-      for(var i = 0; i < climbingAreas.length; i++){
-        climbingAreas[i] = baseURL + climbingAreas[i] + routeList;
-      }
-      callback(climbingAreas[0]);
+    $('.name').each((i, ele) => {
+      climbingAreas.push($(ele).find('a').attr('href'));
+    });
+    for (var i = 0; i < climbingAreas.length; i++) {
+      climbingAreas[i] = baseURL + climbingAreas[i] + routeList;
     }
+    return climbingAreas[1];
   });
 }
 
-export function getBoulders(area: string, callback){
+export function getBoulders(area: string) {
 
-  request(area, (error, response, html) => {
+  return fetch(area, { method: "GET" }).then(res => res.text()).then((html) => {
 
-    if(!error && response.statusCode == 200){
+    var routes = [];
 
-      var routes = [];
+    const $ = cheerio.load(html);
 
-      const $ = cheerio.load(html);
+    $('.route-block').each((i, ele) => {
 
-      $('.route-block').each((i, ele) =>{
-
-        routes.push($(ele).find('a').text());
-      })
-    }
-    callback(routes);
-  });
+      routes.push($(ele).find('a').text());
+    })
+    console.log(routes)
+    return routes;
+  })
 }

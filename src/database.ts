@@ -8,4 +8,6 @@ const pool = new Pool({
     port: 5432
 });
 
-module.exports = {pool};
+const client = pool.connect()
+
+module.exports = {client};

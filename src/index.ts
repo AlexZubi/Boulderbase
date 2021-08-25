@@ -10,14 +10,10 @@ app.use(express.urlencoded({
 
 app.post("/", (request, response)=> {
 
-    console.log(request.body);
-
-    getCrags(request.query.crag, (resultCrags) => 
-        getBoulders(resultCrags, (resultBoulders) =>                   
-            addToDb(resultBoulders)
-    )); 
-    response.send("Boulder hinzugefügt");
-}); 
+    getCrags(request.query.crag)
+        .then(getBoulders)
+        .then(addToDb)
+})
 
 app.get("/", (request, response)=> {
 
