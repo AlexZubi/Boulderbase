@@ -26,7 +26,7 @@ export function getCrags(cragName: string) {
 
 export function getBoulders(area: string) {
 
-  return fetch(area, { method: "GET" }).then(res => res.text()).then((html) => {
+  return fetch(area, { method: "GET" 6}).then(res => res.text()).then((html) => {
 
     var routes = [];
 

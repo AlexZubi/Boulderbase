@@ -2,7 +2,6 @@ const {client} = require("./database")
 let clientImp;
 client.then(data => clientImp = data)
 
-
 export function addToDb(boulders: string[]) {
 
     for(var i = 0; i < boulders.length; i++){
