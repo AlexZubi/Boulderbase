@@ -1,20 +1,18 @@
-const {client} = require("./database")
+const { client } = require("./database");
 let clientImp;
-client.then(data => clientImp = data)
+client.then((data) => (clientImp = data));
 
-export function addToDb(boulders: string[]) {
+export function addToDbNames(boulders: string[]) {
+  const name = 0;
+  const grade = 1;
 
-    for(var i = 0; i < boulders.length; i++){
-        clientImp.query(
-            "INSERT INTO boulders (name) VALUES ($1)",
-            [boulders[i]]
-        );   
-    }
+  for (var i = 0; i < boulders[name].length; i++) {
+    clientImp.query("INSERT INTO boulders (name, grade) VALUES ($1, $2)", [
+      boulders[name][i],
+      boulders[grade][i],
+    ]);
+  }
 }
-export function getFromDb(callback) {
-
-     var boulders = clientImp.query(
-            "SELECT name FROM boulders",
-            callback
-    );   
+export function getFromDb(nameAndGrade) { 
+  clientImp.query("SELECT (name, grade) FROM boulders", nameAndGrade);
 }

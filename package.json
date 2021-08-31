@@ -6,34 +6,43 @@
     "dev": "ts-node src/index.ts",
     "start": "node src/index.ts",
     "test": "nodemon src/index.ts",
-    "dev:frontend": "parcel ./src/frontend/index.html --target client --no-hmr"
+    "dev:frontend": "parcel ./src/frontend/index.html --target client --no-hmr",
+    "build:frontend": "parcel build ./src/frontend/index.html --target client"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@parcel/babel-preset-env": "^2.0.0-alpha.3",
-    "@parcel/transformer-sass": "^2.0.0-nightly.690",
-    "@parcel/transformer-svg-react": "^2.0.0-nightly.1739",
-    "@parcel/transformer-svgo": "^2.0.0-nightly.1739",
-    "@parcel/transformer-typescript-tsc": "^2.0.0-nightly.736",
-    "@parcel/validator-typescript": "^2.0.0-nightly.736",
+    "@types/express": "^4.17.13",
     "babel": "^6.23.0",
     "babel-preset-es2015": "^6.24.1",
     "body-parser": "^1.19.0",
     "cheerio": "^1.0.0-rc.10",
+    "cors": "^2.8.5",
     "curl": "^0.1.4",
     "express": "^4.17.1",
+    "node-fetch": "^2.6.1",
     "nodemon": "^2.0.12",
-    "parcel": "^2.0.0-nightly.688",
     "pg": "^8.7.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-table": "^7.7.0",
     "request": "^2.88.2",
     "ts-node": "^10.2.0"
   },
   "devDependencies": {
-    "@parcel/transformer-typescript-tsc": "^2.0.0-alpha.3",
-    "@types/cheerio": "^0.22.30"
+    "@parcel/babel-preset-env": "^2.0.0-nightly.690",
+    "@parcel/transformer-sass": "^2.0.0-nightly.690",
+    "@parcel/transformer-svg-react": "^2.0.0-nightly.690",
+    "@parcel/transformer-svgo": "^2.0.0-nightly.690",
+    "@parcel/transformer-typescript-tsc": "^2.0.0-nightly.690",
+    "@parcel/validator-typescript": "^2.0.0-nightly.690",
+    "@types/cheerio": "^0.22.30",
+    "@types/node": "^16.7.2",
+    "@types/react": "^17.0.19",
+    "@types/react-dom": "^17.0.9",
+    "parcel": "^2.0.0-nightly.690",
+    "prettier": "2.3.2",
+    "typescript": "^4.3.5"
   },
   "targets": {
     "client": {

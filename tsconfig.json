@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "rootDir": "src/frontend",
+    "lib": ["es2015", "DOM"],
     "allowJs": true,
     "target": "es5",
     "noImplicitAny": false,

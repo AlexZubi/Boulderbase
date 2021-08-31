@@ -14,4 +14,4 @@ CREATE TABLE boulders (
 /* SELECT setval(pg_get_serial_sequence('boulders', 'boulder_id')
 	   , COALESCE(max(boulder_id) + 1, 1)
 	   , false)
-FROM
+FROM boulders;
