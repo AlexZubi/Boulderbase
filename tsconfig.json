@@ -10,7 +10,7 @@
     "jsx": "react",
     "moduleResolution": "node",
     "sourceMap": true,
-    "noEmit": false
+    "noEmit": false,
   },
   "exclude": ["node_modules", "dist"],
   "include": ["src/frontend"]

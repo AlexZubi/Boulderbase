@@ -1,43 +1,52 @@
-import React, { useMemo } from "react";
-import { useTable } from "react-table";
-import { COLUMNS } from "./columns";
+import React from "react";
+import PropTypes from "prop-types";
 
-export const Table = (boulders: {}) => {
-  
-  const columns = useMemo(() => COLUMNS, []);
-  const data = useMemo(() => boulders, []);
+const Table = ({ tableData, headingColumns, title }) => {
+  let tableClass = "table-container__table";
 
-  const tableInstance = useTable({
-    columns,
-    data,
+  const data = tableData.map((row, index) => {
+    let rowData = [];
+    let i = 0;
+    for (const key in row) {
+      rowData.push({
+        key: headingColumns[i],
+        val: row[key],
+      });
+      i++;
+    }
+    return (
+      <tr key={index}>
+        {rowData.map((data, index) => (
+          <td key={index} data-heading={data.key}>
+            {data.val}
+          </td>
+        ))}
+      </tr>
+    );
   });
-
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    tableInstance;
-
   return (
-    <table {...getTableProps}>
-      <thead>
-        {headerGroups.map((headerGroup) => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map((column) => (
-              <th {...column.getHeaderProps()}> {column.render("Header")} </th>
+    <div className="table-container">
+      <div className="table-container__title">
+        <h2>{title}</h2>
+      </div>
+      <table className={tableClass}>
+        <thead>
+          <tr>
+            {headingColumns.map((col, index) => (
+              <th key={index}> {col}</th>
             ))}
           </tr>
-        ))}
-      </thead>
-      <tbody {...getTableBodyProps()}>
-        {rows.map((row) => {
-          prepareRow(row);
-          return (
-            <tr {...row.getRowProps()}>
-              {row.cells.map((cell) => {
-                return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
-              })}
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>{data}</tbody>
+      </table>
+    </div>
   );
 };
+
+Table.propTypes = {
+  tableData: PropTypes.arrayOf(PropTypes.object).isRequired,
+  headingColumns: PropTypes.arrayOf(PropTypes.string).isRequired,
+  title: PropTypes.string.isRequired,
+};
+
+export default Table;

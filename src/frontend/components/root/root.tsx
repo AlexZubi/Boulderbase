@@ -1,33 +1,22 @@
-import React from "react";
-import { isConstructorDeclaration } from "typescript";
+import React, { Fragment, useState } from "react";
 import Area from "../SearchArea";
-import { Table } from "../Table"
-
-//Takes the entered Area and passes it to the searchBoulders function
-const searchArea = (area: string) => {
-  searchBoulders(area);
-};
-
-//Uses the scraper on the Server to return the boulders of the entered area as an array of objects
-const searchBoulders = async (area: string) => {
-  try {
-    let URL = "http://localhost:3000/?crag=" + area;
-
-    const res = await fetch(URL, { method: "GET", credentials: "same-origin" });
-    const data = await res.json();
-    console.log(data)
-
-  } catch (err) {
-    console.log(err);
-  }
-};
+import { searchBoulders } from "./searchFunctions";
+import Table from "../Table";
 
 const root = () => {
+  const [boulder, setBoulder] = useState([]);
+
   return (
     <div className="Root">
-      <h1>List of Boulders</h1>
-      <Area onSearch={searchArea} />
-      <Table/>
+      <h1>Search Area:</h1>
+      <Area onSearch={searchBoulders(setBoulder)} />
+      <Fragment>
+        <Table
+          tableData={boulder}
+          headingColumns={["Name", "Grade"]}
+          title="Boulder:"
+        />
+      </Fragment>
     </div>
   );
 };

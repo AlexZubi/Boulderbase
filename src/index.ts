@@ -1,9 +1,9 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-import { getCrags, getBoulderNames } from "./webscrape";
+import { getLinks, getBoulderNames, getAreas } from "./webscrape";
 import { addToDbNames, getFromDb } from "./sqlStatements";
-import toTableForm from "./toTableForm";
+import { toTableFormBoulders, toTableFormArea } from "./toTableForm";
 
 app.use(express.json());
 app.use(cors());
@@ -14,7 +14,7 @@ app.use(
 );
 
 app.post("/", (req, res) => {
-  getCrags(req.query.crag).then(getBoulderNames).then(addToDbNames);
+  getLinks(req.query.crag).then(getBoulderNames).then(addToDbNames);
 
   res.send("Boulder abgefragt");
 });
@@ -24,14 +24,30 @@ app.get("/database", (req, res) => {
   res.send("Boulder abgefragt");
 });
 
-app.get("/", (req, res) => {
+app.get("/area/:crags", (req, res) => {
   try {
     const scrapeBoulders = async () => {
-      const getArea = await getCrags(req.query.crag);
-      const getBoulder = await getBoulderNames(getArea);
-      const tableForm = toTableForm(getBoulder);
+      const { crags } = req.params;
+      const getArea = await getAreas(crags);
+      const tableForm = toTableFormArea(getArea);
 
-      res.send(tableForm);
+      res.json(tableForm);
+    };
+    scrapeBoulders();
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+app.get("/boulder/:crag", (req, res) => {
+  try {
+    const scrapeBoulders = async () => {
+      const { crag } = req.params;
+      const getArea = await getLinks(crag);
+      const getBoulder = await getBoulderNames(getArea);
+      const tableForm = toTableFormBoulders(getBoulder);
+
+      res.json(tableForm);
     };
     scrapeBoulders();
   } catch (err) {

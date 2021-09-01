@@ -1,12 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 const Area = ({ onSearch }) => {
-
   const [text, setArea] = useState("");
-
-  useEffect(() => {
-    console.log(text);
-  }, []);
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -21,7 +16,6 @@ const Area = ({ onSearch }) => {
   return (
     <form className="area-form" onSubmit={onSubmit}>
       <div className="form-control">
-        <label>Enter Area:</label>
         <input
           type="text"
           placeholder="Area"
