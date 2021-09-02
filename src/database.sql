@@ -9,6 +9,9 @@ CREATE TABLE boulders (
     grade VARCHAR(6)
 );
 
+DELETE FROM boulders WHERE boulder_id > 0;
+
+
 -- Setzt die automatisch fortlaufende ID einer Tabelle auf 1 zurück.
 
 /* SELECT setval(pg_get_serial_sequence('boulders', 'boulder_id')

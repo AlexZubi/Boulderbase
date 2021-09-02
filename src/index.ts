@@ -13,10 +13,9 @@ app.use(
   })
 );
 
-app.post("/", (req, res) => {
-  getLinks(req.query.crag).then(getBoulderNames).then(addToDbNames);
-
-  res.send("Boulder abgefragt");
+app.post("/", async (req, res) => {
+  const answer = await req.body;
+  console.log(answer)
 });
 
 app.get("/database", (req, res) => {

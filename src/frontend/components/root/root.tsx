@@ -1,22 +1,19 @@
-import React, { Fragment, useState } from "react";
+import React, { useState } from "react";
 import Area from "../SearchArea";
-import { searchBoulders } from "./searchFunctions";
-import Table from "../Table";
+import { searchBoulders } from "./toMiddleware";
+import { BasicTable } from "../Table";
 
 const root = () => {
   const [boulder, setBoulder] = useState([]);
 
   return (
     <div className="Root">
-      <h1>Search Area:</h1>
+      <h1>Search Area...</h1>
       <Area onSearch={searchBoulders(setBoulder)} />
-      <Fragment>
-        <Table
-          tableData={boulder}
-          headingColumns={["Name", "Grade"]}
-          title="Boulder:"
+      <h2>...then click on a Boulder to add it to the list of climbed boulders:</h2>
+        <BasicTable
+          setData={boulder}
         />
-      </Fragment>
     </div>
   );
 };

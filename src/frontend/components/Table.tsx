@@ -1,52 +1,89 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { useEffect, useMemo, useState } from "react";
+import { useTable } from "react-table";
+import { sendClimbed } from "./root/toMiddleware";
+import "./table.css";
+export const BasicTable = ({ setData }) => {
+  const columns = useMemo(
+    () => [
+      {
+        Header: "Name",
+        accessor: "name",
+      },
+      {
+        Header: "Grade",
+        accessor: "grade",
+      },
+    ],
+    []
+  );
+  const data = useMemo(() => setData, [setData]);
 
-const Table = ({ tableData, headingColumns, title }) => {
-  let tableClass = "table-container__table";
+  const [selection, selectBoulder] = useState({});
 
-  const data = tableData.map((row, index) => {
-    let rowData = [];
-    let i = 0;
-    for (const key in row) {
-      rowData.push({
-        key: headingColumns[i],
-        val: row[key],
-      });
-      i++;
+  useEffect(() => {
+    async function test() {
+      try {
+        const res = await sendClimbed(selection);
+      } catch (err) {
+        console.log(err);
+      }
     }
-    return (
-      <tr key={index}>
-        {rowData.map((data, index) => (
-          <td key={index} data-heading={data.key}>
-            {data.val}
-          </td>
-        ))}
-      </tr>
-    );
+    if (Object.keys(selection).length> 0) {
+      test();
+    }
   });
+
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    footerGroups,
+    rows,
+    prepareRow,
+  } = useTable({
+    columns,
+    data,
+  });
+
   return (
-    <div className="table-container">
-      <div className="table-container__title">
-        <h2>{title}</h2>
-      </div>
-      <table className={tableClass}>
+    <>
+      <table {...getTableProps()}>
         <thead>
-          <tr>
-            {headingColumns.map((col, index) => (
-              <th key={index}> {col}</th>
-            ))}
-          </tr>
+          {headerGroups.map((headerGroup) => (
+            <tr {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map((column) => (
+                <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+              ))}
+            </tr>
+          ))}
         </thead>
-        <tbody>{data}</tbody>
+        <tbody {...getTableBodyProps()}>
+          {rows.map((row) => {
+            prepareRow(row);
+            return (
+              <tr
+                {...row.getRowProps()}
+                onClick={() => selectBoulder(row.original)}
+              >
+                {row.cells.map((cell) => {
+                  return (
+                    <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                  );
+                })}
+              </tr>
+            );
+          })}
+        </tbody>
+        <tfoot>
+          {footerGroups.map((footerGroup) => (
+            <tr {...footerGroup.getFooterGroupProps()}>
+              {footerGroup.headers.map((column) => (
+                <td {...column.getFooterProps()}>{column.render("Footer")}</td>
+              ))}
+            </tr>
+          ))}
+        </tfoot>
       </table>
-    </div>
+    </>
   );
 };
-
-Table.propTypes = {
-  tableData: PropTypes.arrayOf(PropTypes.object).isRequired,
-  headingColumns: PropTypes.arrayOf(PropTypes.string).isRequired,
-  title: PropTypes.string.isRequired,
-};
-
-export default Table;
