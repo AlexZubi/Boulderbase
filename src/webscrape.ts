@@ -1,5 +1,4 @@
 const cheerio = require("cheerio");
-const request = require("request");
 const fetch = require("node-fetch");
 
 export function getAreas(cragName: string) {

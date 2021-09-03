@@ -1,7 +1,5 @@
-import { json } from "body-parser";
-
 export function toTableFormBoulders(array: String[]) {
-  let nameAndGrade;
+  let nameAndGrade = {};
   let tableForm = [];
   const name = 0;
   const grade = 1;
@@ -17,7 +15,7 @@ export function toTableFormBoulders(array: String[]) {
 }
 
 export function toTableFormArea(array: String[]) {
-  let nameAndGrade;
+  let nameAndGrade = {};
   let tableForm = [];
 
   for (var j = 0; j < array.length; j++) {

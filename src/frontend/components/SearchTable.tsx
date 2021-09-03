@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useTable } from "react-table";
 import { sendClimbed } from "./root/toMiddleware";
 import "./table.css";
-export const BasicTable = ({ setData }) => {
+export const SearchTable = ({ setData }) => {
   const columns = useMemo(
     () => [
       {
@@ -21,15 +21,15 @@ export const BasicTable = ({ setData }) => {
   const [selection, selectBoulder] = useState({});
 
   useEffect(() => {
-    async function test() {
+    async function toDatabase() {
       try {
-        const res = await sendClimbed(selection);
+        sendClimbed(selection);
       } catch (err) {
         console.log(err);
       }
     }
-    if (Object.keys(selection).length> 0) {
-      test();
+    if (Object.keys(selection).length > 0) {
+      toDatabase();
     }
   });
 

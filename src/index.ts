@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 import { getLinks, getBoulderNames, getAreas } from "./webscrape";
-import { addToDbNames, getFromDb } from "./sqlStatements";
+import { addToDbMultiple, addToDbSingle, getFromDb } from "./sqlStatements";
 import { toTableFormBoulders, toTableFormArea } from "./toTableForm";
 
 app.use(express.json());
@@ -13,14 +13,16 @@ app.use(
   })
 );
 
-app.post("/", async (req, res) => {
-  const answer = await req.body;
-  console.log(answer)
+app.post("/", (req, res) => {
+  addToDbSingle(req.body);
 });
 
 app.get("/database", (req, res) => {
-  getFromDb((error: Error, result) => console.log(result.rows));
-  res.send("Boulder abgefragt");
+  async function getBoulders() {
+    let result = await getFromDb();
+    res.send(result.rows);
+  }
+  getBoulders();
 });
 
 app.get("/area/:crags", (req, res) => {
