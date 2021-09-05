@@ -3,6 +3,7 @@ let clientImp;
 client.then((data) => (clientImp = data));
 
 export function addToDbSingle(boulder) {
+  //Adds the clicked boulder to the "so-far climbed"-database
   type boulder = {
     name: string;
     grade: string;
@@ -15,6 +16,7 @@ export function addToDbSingle(boulder) {
 }
 
 export function addToDbMultiple(boulders: string[]) {
+  //No function yet, planned to add multiple boulders to the "so-far climbed"-database
   const name = 0;
   const grade = 1;
 
@@ -26,6 +28,7 @@ export function addToDbMultiple(boulders: string[]) {
   }
 }
 export function getFromDb() {
+  //Gets all boulder from the "so-far climbed"-database
   let fullDataSet: string[];
 
   async function selectAll() {

@@ -1,7 +1,8 @@
 const cheerio = require("cheerio");
 const fetch = require("node-fetch");
 
-export function getAreas(cragName: string) {
+export function getSections(cragName: string) {
+  //Gets all the sections of a supplied area
   var searchURL = "https://27crags.com/site/search?qs=";
   var fullURL = searchURL.concat(cragName);
   var climbingAreas = [];
@@ -12,14 +13,15 @@ export function getAreas(cragName: string) {
       const $ = cheerio.load(html);
 
       $(".name").each((i, ele) => {
-        climbingAreas.push($(ele).text().replace(/\n/g, ''));
+        climbingAreas.push($(ele).text().replace(/\n/g, ""));
       });
       console.log(climbingAreas);
       return climbingAreas;
     });
 }
 
-export function getLinks(cragName: string) {
+export function getSection(cragName: string) {
+  //Gets the second section of a supplied area
   var baseURL = "https://27crags.com";
   var searchURL = "https://27crags.com/site/search?qs=";
   var routeList = "/routelist";
@@ -42,6 +44,7 @@ export function getLinks(cragName: string) {
 }
 
 export function getBoulderNames(area: string) {
+  //Gets all the boulders of a supplied section
   return fetch(area, { method: "GET" })
     .then((res) => res.text())
     .then((html) => {

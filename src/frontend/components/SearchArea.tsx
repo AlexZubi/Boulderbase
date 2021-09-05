@@ -4,6 +4,7 @@ const Area = ({ onSearch }) => {
   const [text, setArea] = useState("");
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    //Gets all the boulders from the webscraper
     e.preventDefault();
 
     if (!text) {

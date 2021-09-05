@@ -1,14 +1,18 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
-export const GetButton = ({ onClick }) => {
+export const ShowClimbedButton = ({ onClick }) => {
+  //Gets the so-far climbed boulders and stores them in an useState in root
   return (
     <div>
-      <button onClick={onClick}>Show climbed boulders</button>
+      <Link to="/database">
+        <button onClick={onClick}>Show climbed boulders</button>
+      </Link>
     </div>
   );
 };
 
-GetButton.propTypes = {
+ShowClimbedButton.propTypes = {
   onClick: PropTypes.func.isRequired,
 };

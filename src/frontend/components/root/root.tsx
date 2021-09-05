@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import Area from "../SearchArea";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import { searchBoulders, fetchDatabase } from "./toMiddleware";
 import { SearchTable } from "../SearchTable";
-import { GetButton } from "../GetButton";
+import { ShowClimbedButton } from "../GetButton";
 import { DatabaseTable } from "../DatabaseTable";
+import { GoBackButton } from "../GoBackButton";
 
 const root = () => {
   const [searchedBoulder, setSearched] = useState([]); //Sets the state to the result of the webscraper
@@ -14,14 +16,35 @@ const root = () => {
   };
 
   return (
-    <div className="Root">
-      <h1>Search Area...</h1>
-      <Area onSearch={searchBoulders(setSearched)} />
-      <GetButton onClick={onClick} />
-      <h2>Click on a Boulder to add it to the list of climbed boulders:</h2>
-      <SearchTable setData={searchedBoulder} />
-      <DatabaseTable setData={fetchedBoulders} />
-    </div>
+    <Router>
+      <div className="Root">
+        <Route
+          path="/"
+          exact
+          render={(props) => (
+            <>
+              <h1>Search Area...</h1>
+              <Area onSearch={searchBoulders(setSearched)} />
+              <ShowClimbedButton onClick={onClick} />
+              <h2>
+                Click on a Boulder to add it to the list of climbed boulders:
+              </h2>
+              <SearchTable setData={searchedBoulder} />
+            </>
+          )}
+        />
+        <Route
+          path="/database"
+          exact
+          render={(props) => (
+            <>
+              <GoBackButton/>
+              <DatabaseTable setData={fetchedBoulders} />
+            </>
+          )}
+        />
+      </div>
+    </Router>
   );
 };
 

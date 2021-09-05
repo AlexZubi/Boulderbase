@@ -2,6 +2,7 @@ import React, { useMemo } from "react";
 import { useTable } from "react-table";
 import "./table.css";
 export const DatabaseTable = ({ setData }) => {
+  //Table for the so-far climbed boulders
   const columns = useMemo(
     () => [
       {
@@ -45,9 +46,7 @@ export const DatabaseTable = ({ setData }) => {
           {rows.map((row) => {
             prepareRow(row);
             return (
-              <tr
-                {...row.getRowProps()}
-              >
+              <tr {...row.getRowProps()}>
                 {row.cells.map((cell) => {
                   return (
                     <td {...cell.getCellProps()}>{cell.render("Cell")}</td>

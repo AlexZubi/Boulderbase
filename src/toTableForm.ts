@@ -1,4 +1,5 @@
 export function toTableFormBoulders(array: String[]) {
+  //Converts array with boulders to JSON-Form
   let nameAndGrade = {};
   let tableForm = [];
   const name = 0;
@@ -15,12 +16,13 @@ export function toTableFormBoulders(array: String[]) {
 }
 
 export function toTableFormArea(array: String[]) {
+  //Converts array with areas to JSON-Form
   let nameAndGrade = {};
   let tableForm = [];
 
   for (var j = 0; j < array.length; j++) {
     nameAndGrade = {
-      area: array[j]
+      area: array[j],
     };
     tableForm.push(nameAndGrade);
   }
