@@ -1,6 +1,6 @@
 const cheerio = require("cheerio");
 const fetch = require("node-fetch");
-import { scrapedAreas, scrapedBoulders } from "./serverSql";
+import { scrapedSection, scrapedBoulders } from "./serverInserts";
 
 export function getSections(cragName: string) {
   //Gets all the sections of a supplied area
@@ -39,7 +39,7 @@ export function getSection(cragName: string) {
       for (var i = 0; i < climbingAreas.length; i++) {
         climbingAreas[i] = baseURL + climbingAreas[i] + routeList;
       }
-      scrapedAreas(cragName);
+      scrapedSection(cragName);
       return [climbingAreas[1], cragName];
     });
 }

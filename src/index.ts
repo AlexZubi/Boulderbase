@@ -4,6 +4,7 @@ const cors = require("cors");
 import { getSection, getBoulderNames, getSections } from "./webscrape";
 import { addToDbMultiple, addToDbSingle, getFromDb } from "./userSql";
 import { toTableFormBoulders, toTableFormArea } from "./toTableForm";
+import queryDistributor from "./queryLogic";
 
 app.use(express.json());
 app.use(cors());
@@ -47,12 +48,10 @@ app.get("/boulder/:crag", (req, res) => {
   //Gets all the boulders from the scraper
   try {
     const scrapeBoulders = async () => {
-      const { crag } = req.params;
-      const getArea = await getSection(crag);
-      const getBoulder = await getBoulderNames(getArea);
-      const tableForm = toTableFormBoulders(getBoulder);
+      const { crags } = req.params;
+      const doQuery = queryDistributor(crags);
 
-      res.json(tableForm);
+      res.json(doQuery);
     };
     scrapeBoulders();
   } catch (err) {

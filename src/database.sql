@@ -44,3 +44,19 @@ CREATE TABLE test (
 FROM boulders;
 
 SELECT name,scraping_date FROM scraped WHERE name = 'test' AND  scraping_date < now() - '1 minute' :: interval;
+
+"SELECT name from scraped WHERE name = $1", name;
+
+
+ for(var key in zulu) {
+          for(var innerKey in zulu[key]) {
+            console.log("Key: " + innerKey + " value: " + zulu[key][innerKey]);
+         }      
+      }
+onst scrapeBoulders = async () => {
+  const { crags } = req.params;
+  const doQuery = queryDistributor(crags);
+
+  res.json(doQuery);
+};
+scrapeBoulders();
