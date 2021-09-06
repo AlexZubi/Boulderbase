@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 import { getSection, getBoulderNames, getSections } from "./webscrape";
-import { addToDbMultiple, addToDbSingle, getFromDb } from "./sqlStatements";
+import { addToDbMultiple, addToDbSingle, getFromDb } from "./userSql";
 import { toTableFormBoulders, toTableFormArea } from "./toTableForm";
 
 app.use(express.json());

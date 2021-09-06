@@ -4,11 +4,13 @@ export function toTableFormBoulders(array: String[]) {
   let tableForm = [];
   const name = 0;
   const grade = 1;
+  const area = 2;
 
   for (var j = 0; j < array[name].length; j++) {
     nameAndGrade = {
       name: array[name][j],
       grade: array[grade][j],
+      area: array[area],
     };
     tableForm.push(nameAndGrade);
   }

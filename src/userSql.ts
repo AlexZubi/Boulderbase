@@ -7,12 +7,16 @@ export function addToDbSingle(boulder) {
   type boulder = {
     name: string;
     grade: string;
+    area: string;
   };
-
-  clientImp.query("INSERT INTO boulders (name, grade) VALUES ($1, $2)", [
-    boulder.name,
-    boulder.grade,
-  ]);
+  try {
+    clientImp.query(
+      "INSERT INTO boulders (name, grade, area) VALUES ($1, $2, $3) ON CONFLICT (name) DO NOTHING",
+      [boulder.name, boulder.grade, boulder.area] 
+    );
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 export function addToDbMultiple(boulders: string[]) {
@@ -33,7 +37,7 @@ export function getFromDb() {
 
   async function selectAll() {
     const nameAndGrade = await clientImp.query(
-      "SELECT name,grade FROM boulders",
+      "SELECT name,grade,area FROM boulders",
       fullDataSet
     );
     return nameAndGrade;

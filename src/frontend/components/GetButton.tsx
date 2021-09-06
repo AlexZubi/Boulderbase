@@ -1,13 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import "./styles/table.css";
 
 export const ShowClimbedButton = ({ onClick }) => {
   //Gets the so-far climbed boulders and stores them in an useState in root
   return (
     <div>
       <Link to="/database">
-        <button onClick={onClick}>Show climbed boulders</button>
+        <button className='btn' onClick={onClick}>Show climbed boulders</button>
       </Link>
     </div>
   );

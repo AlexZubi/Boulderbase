@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useTable } from "react-table";
 import { sendClimbed } from "./root/toMiddleware";
-import "./table.css";
+import "./styles/table.css";
 export const SearchTable = ({ setData }) => {
   //Table for the scraped boulders of the supplied area
   const columns = useMemo(

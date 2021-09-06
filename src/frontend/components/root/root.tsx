@@ -26,9 +26,7 @@ const root = () => {
               <h1>Search Area...</h1>
               <Area onSearch={searchBoulders(setSearched)} />
               <ShowClimbedButton onClick={onClick} />
-              <h2>
-                Click on a Boulder to add it to the list of climbed boulders:
-              </h2>
+
               <SearchTable setData={searchedBoulder} />
             </>
           )}
@@ -38,7 +36,7 @@ const root = () => {
           exact
           render={(props) => (
             <>
-              <GoBackButton/>
+              <GoBackButton />
               <DatabaseTable setData={fetchedBoulders} />
             </>
           )}

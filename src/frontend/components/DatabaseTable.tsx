@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { useTable } from "react-table";
-import "./table.css";
+import "./styles/table.css";
 export const DatabaseTable = ({ setData }) => {
   //Table for the so-far climbed boulders
   const columns = useMemo(
@@ -13,6 +13,10 @@ export const DatabaseTable = ({ setData }) => {
         Header: "Grade",
         accessor: "grade",
       },
+      {
+        Header: "Area",
+        accessor: "area"
+      }
     ],
     []
   );

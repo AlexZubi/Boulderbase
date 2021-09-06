@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./styles/table.css";
 
 const Area = ({ onSearch }) => {
   const [text, setArea] = useState("");

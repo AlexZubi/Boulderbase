@@ -1,5 +1,6 @@
 const cheerio = require("cheerio");
 const fetch = require("node-fetch");
+import { scrapedAreas, scrapedBoulders } from "./serverSql";
 
 export function getSections(cragName: string) {
   //Gets all the sections of a supplied area
@@ -15,7 +16,6 @@ export function getSections(cragName: string) {
       $(".name").each((i, ele) => {
         climbingAreas.push($(ele).text().replace(/\n/g, ""));
       });
-      console.log(climbingAreas);
       return climbingAreas;
     });
 }
@@ -39,13 +39,16 @@ export function getSection(cragName: string) {
       for (var i = 0; i < climbingAreas.length; i++) {
         climbingAreas[i] = baseURL + climbingAreas[i] + routeList;
       }
-      return climbingAreas[1];
+      scrapedAreas(cragName);
+      return [climbingAreas[1], cragName];
     });
 }
 
-export function getBoulderNames(area: string) {
+export function getBoulderNames(area: string[]) {
   //Gets all the boulders of a supplied section
-  return fetch(area, { method: "GET" })
+  const link = 0;
+  const areaConst = 1;
+  return fetch(area[link], { method: "GET" })
     .then((res) => res.text())
     .then((html) => {
       const names = [];
@@ -59,6 +62,7 @@ export function getBoulderNames(area: string) {
       $(".grade").each((i, ele) => {
         grades.push($(ele).text());
       });
-      return [names, grades];
+      scrapedBoulders([names, grades, area[areaConst]])
+      return [names, grades, area[areaConst]];
     });
 }
