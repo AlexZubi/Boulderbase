@@ -2,23 +2,8 @@ const { client } = require("./database");
 let clientImp;
 client.then((data) => (clientImp = data));
 
-export function scrapedSection(cragName: string) {
+export function newScrapedSection(cragName: string) {
   //Saves the areas and date of the scraped section to a table
-
-  /*async function test(cragName: any) {
-    const bla = await clientImp.query(
-      "SELECT name, scraping_date FROM scraped WHERE name = ($1) AND  scraping_date < now() - '1 minute' :: interval"
-      [cragName]
-    );
-    return bla;
-  }
-  test(cragName).then((data) => distribute(data));
-
-  function distribute(data) {
-    var json = data.rows;
-    console.log(json)
-  }*/
-
   try {
     clientImp.query(
       "INSERT INTO scraped (name) VALUES ($1) ON CONFLICT (name) DO NOTHING",
@@ -28,7 +13,17 @@ export function scrapedSection(cragName: string) {
     console.log(err);
   }
 }
-
+export function existingScrapedSection(cragName: string) {
+  //Updates the date of the section in the scraped table
+  try {
+    clientImp.query(
+      "UPDATE scraped SET scraping_date = now() WHERE name = ($1)",
+      [cragName]
+    );
+  } catch (err) {
+    console.log(err);
+  }
+}
 export function scrapedBoulders(boulder) {
   //Saves the boulders of the scraping to a table
   const names = 0;

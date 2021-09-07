@@ -21361,6 +21361,7 @@ var searchBoulders = function searchBoulders(setBoulders) {
                             4
                         ]);
                         URL1 = "http://localhost:3000/boulder/" + area;
+                        console.log(area);
                         return [
                             4 /*yield*/ ,
                             fetch(URL1, {
