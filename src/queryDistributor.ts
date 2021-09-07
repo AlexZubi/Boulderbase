@@ -12,7 +12,7 @@ client.then((data) => (clientImp = data));
 export default function queryDistributor(cragName: string): Promise<any> {
   //Does an initial nameCheck resulting in the type of query and hands it to the respective function
 
-  async function checkName(cragName: any) {
+  async function checkName(cragName: string) {
     const nameQuery = await clientImp.query(
       "SELECT name from scraped WHERE name = ($1)",
       [cragName]
@@ -42,7 +42,7 @@ async function newQuery(cragName: string): Promise<any> {
 
 async function reapeatingQuery(cragName: string): Promise<any> {
   //Handles a query which supplied a name that is already present in the "scraped"-table
-  async function checkName(cragName: any) {
+  async function checkName(cragName: string) {
     const nameQuery = await clientImp.query(
       "SELECT name, scraping_date FROM scraped WHERE name = ($1) AND scraping_date < now() - '7 days' :: interval",
       [cragName]
@@ -79,7 +79,7 @@ async function webscrape(cragName: string) {
 
 function update(cragName: string) {
   //Function to update the date in "scraped"-table and the boulders in the "scrapedBoulders"-table of the last query
-  async function scrapeBoulders(cragName) {
+  async function scrapeBoulders(cragName: string) {
     const boulders = webscrape(cragName);
     return boulders;
   }
