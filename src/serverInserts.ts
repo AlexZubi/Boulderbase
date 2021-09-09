@@ -24,16 +24,17 @@ export function existingScrapedSection(cragName: string) {
     console.log(err);
   }
 }
-export function scrapedBoulders(boulder) {
+export function scrapedBoulders(boulder: any, area: String) {
   //Saves the boulders of the scraping to a table
-  const names = 0;
-  const grades = 1;
-  const area = 2;
 
-  for (var i = 0; i < boulder[names].length; i++) {
+  type boulder = {
+    name: String;
+    grade: String;
+  };
+  for (var i = 0; i < boulder.length; i++) { //Solkv
     clientImp.query(
       "INSERT INTO scrapedBoulders (name, grade, area) VALUES ($1, $2, $3) ON CONFLICT (name) DO NOTHING",
-      [boulder[names][i], boulder[grades][i], boulder[area]]
+      [boulder[i].name, boulder[i].grade, area]
     );
   }
 }

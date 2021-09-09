@@ -2,24 +2,6 @@ const cheerio = require("cheerio");
 const fetch = require("node-fetch");
 import { scrapedBoulders } from "./serverInserts";
 
-export function getSections(cragName: string) {
-  //Gets all the sections of a supplied area
-  var searchURL = "https://27crags.com/site/search?qs=";
-  var fullURL = searchURL.concat(cragName);
-  var climbingAreas = [];
-
-  return fetch(fullURL, { method: "GET" })
-    .then((res) => res.text())
-    .then((html) => {
-      const $ = cheerio.load(html);
-
-      $(".name").each((i, ele) => {
-        climbingAreas.push($(ele).text().replace(/\n/g, ""));
-      });
-      return climbingAreas;
-    });
-}
-
 export function getSection(cragName: string) {
   //Gets the second section of a supplied area
   var baseURL = "https://27crags.com";
@@ -43,25 +25,32 @@ export function getSection(cragName: string) {
     });
 }
 
-export function getBoulderNames(area: string[]) {
+export async function getBoulderNames(area: string[]) {
   //Gets all the boulders of a supplied section
   const link = 0;
+  const boulder = {
+    name: String,
+    grade: String,
+  };
+  let boulderList = [];
   const areaConst = 1;
-  return fetch(area[link], { method: "GET" })
-    .then((res) => res.text())
-    .then((html) => {
-      const names = [];
-      const grades = [];
+  async function getBoulderInfo(area) {
+    return fetch(area[link], { method: "GET" })
+      .then((res) => res.text())
+      .then((html) => {
+        const $ = cheerio.load(html);
 
-      const $ = cheerio.load(html);
-
-      $(".route-block").each((i, ele) => {
-        names.push($(ele).find(".lfont").text());
+        $(".route-block").each((i: any, ele) => {
+          boulderList[i] = Object.create(boulder);
+          boulderList[i].name = $(ele).find(".lfont").text();
+        });
+        $(".grade").each((i, ele) => {
+          boulderList[i].grade = $(ele).text();
+        });
       });
-      $(".grade").each((i, ele) => {
-        grades.push($(ele).text());
-      });
-      scrapedBoulders([names, grades, area[areaConst]])
-      return [names, grades, area[areaConst]];
-    });
+  }
+  return await getBoulderInfo(area).then(() => {
+    scrapedBoulders(boulderList, area[areaConst]);
+    return boulderList;
+  });
 }

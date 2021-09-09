@@ -12,7 +12,7 @@ export function addToDbSingle(boulder) {
   try {
     clientImp.query(
       "INSERT INTO boulders (name, grade, area) VALUES ($1, $2, $3) ON CONFLICT (name) DO NOTHING",
-      [boulder.name, boulder.grade, boulder.area] 
+      [boulder.name, boulder.grade, boulder.area]
     );
   } catch (err) {
     console.log(err);
@@ -33,14 +33,5 @@ export function addToDbMultiple(boulders: string[]) {
 }
 export function getFromDb() {
   //Gets all boulder from the "so-far climbed"-database
-  let fullDataSet: string[];
-
-  async function selectAll() {
-    const nameAndGrade = await clientImp.query(
-      "SELECT name,grade,area FROM boulders",
-      fullDataSet
-    );
-    return nameAndGrade;
-  }
-  return selectAll();
+    return clientImp.query("SELECT name,grade,area FROM boulders");
 }

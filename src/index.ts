@@ -1,10 +1,8 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-import { getSections } from "./webscrape";
 import { addToDbSingle, getFromDb } from "./userSql";
-import { toTableFormArea } from "./toTableForm";
-import queryDistributor from "./queryDistributor";
+import queryDistributor, { update, webscrape } from "./queryDistributor";
 
 app.use(express.json());
 app.use(cors());
@@ -19,46 +17,32 @@ app.post("/", (req, res) => {
   addToDbSingle(req.body);
 });
 
-app.get("/database", (req, res) => {
+app.get("/database", async (req, res) => {
   //Gets the values from the database
-  async function getBoulders() {
-    let result = await getFromDb();
-    res.send(result.rows);
-  }
-  getBoulders();
+  let result = await getFromDb();
+  res.send(result.rows);
 });
 
-app.get("/area/:crags", (req, res) => {
-  //Gets all the sections of an area
-  try {
-    const scrapeBoulders = async () => {
-      const { crags } = req.params;
-      const getArea = await getSections(crags);
-      const tableForm = toTableFormArea(getArea);
+app.get('/:crag', async (req, res) => {
+  //Testfunction
+  const { crag } = req.params;
+  console.log(await webscrape(crag))
+})
 
-      res.json(tableForm);
-    };
-    scrapeBoulders();
-  } catch (err) {
-    console.log(err);
-  }
-});
-
-app.get("/boulder/:crag", (req, res) => {
+app.get("/boulder/:crag", async (req, res) => {
   //Gets all the boulders from the scraper
   try {
-    const scrapeBoulders = async () => {
-      const { crag } = req.params;
-      const getBoulders = await queryDistributor(crag)
-      return getBoulders
-    };
-    scrapeBoulders().then((boulders) => res.json(boulders));
+    const { crag } = req.params;
+    const getBoulders = await queryDistributor(crag);
+    return res.json(getBoulders);
   } catch (err) {
     console.log(err);
   }
 });
 
-app.listen(3000, () => {
-  //Starts the server
-  console.log("Server läuft");
+app.listen(3000, async () => {
+  //Starts the server and checks if updates to the database are neccessary
+  const delay = (ms: any) => new Promise((res) => setTimeout(res, ms));
+  await delay(100).then(update);
+  console.log("Data updated. Server ready");
 });
