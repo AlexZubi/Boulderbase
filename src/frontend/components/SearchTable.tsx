@@ -21,6 +21,7 @@ export const SearchTable = ({ setData }) => {
     ],
     []
   );
+
   const data = useMemo(() => setData, [setData]);
 
   const [selection, selectBoulder] = useState({});

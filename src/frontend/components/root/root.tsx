@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Area from "../SearchArea";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { searchBoulders, fetchDatabase } from "./toMiddleware";
@@ -14,6 +14,9 @@ const root = () => {
   const onClick = () => {
     fetchDatabase(setFetch);
   };
+  useEffect(() => {
+    console.log('This might be the end, my friend:' + searchedBoulder)
+  })
 
   return (
     <Router>

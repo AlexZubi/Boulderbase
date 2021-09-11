@@ -1,6 +1,6 @@
 const { client } = require("./database");
 import forEach from "lodash/forEach";
-let clientImp;
+let clientImp: any;
 client.then((data: any) => (clientImp = data));
 
 export function newScrapedSection(cragName: string) {

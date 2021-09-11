@@ -2,13 +2,15 @@ export const searchBoulders = (setBoulders: any) => async (area: string) => {
   //Searches the boulders from a given Area
   try {
     let URL = "http://localhost:3000/boulder/" + area;
-    console.log(area)
 
     const res = await fetch(URL, { method: "GET", credentials: "same-origin" });
     const data = await res.json();
+    if (Object.keys(data).length === 0) {
+      throw Error("Area not found");
+    }
     setBoulders(data);
   } catch (err) {
-    console.log(err);
+      return err;
   }
 };
 

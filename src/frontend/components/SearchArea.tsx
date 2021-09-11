@@ -2,17 +2,17 @@ import React, { useState } from "react";
 import "./styles/table.css";
 
 const Area = ({ onSearch }) => {
-  const [text, setArea] = useState("");
+  const [area, setArea] = useState("");
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     //Gets all the boulders from the webscraper
     e.preventDefault();
 
-    if (!text) {
+    if (!area) {
       alert("Please add an area");
       return;
     }
-    onSearch(text);
+    onSearch(area);
     setArea("");
   };
   return (
@@ -21,7 +21,7 @@ const Area = ({ onSearch }) => {
         <input
           type="text"
           placeholder="Area"
-          value={text}
+          value={area}
           onChange={(e) => setArea(e.target.value)}
         />
       </div>

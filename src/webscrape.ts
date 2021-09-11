@@ -9,27 +9,21 @@ export function getSection(cragName: string) {
   let URL = `https://27crags.com/site/search?qs=${cragName}`;
   let climbingAreas = [];
   let i = 0;
-  try {
-    if (!validURL(URL)) {
-      throw Error("Entered area not found");
-    }
-    return fetch(URL, { method: "GET" })
-      .then((res) => res.text())
-      .then((html) => {
-        const $ = cheerio.load(html);
 
-        $(".name").each((i: any, ele: any) => {
-          climbingAreas.push($(ele).find("a").attr("href"));
-        });
-        forEach(climbingAreas, function (area) {
-          climbingAreas[i] = `https://27crags.com/${area}/routelist`;
-          i++;
-        });
+  return fetch(URL, { method: "GET" })
+    .then((res) => res.text())
+    .then((html) => {
+      const $ = cheerio.load(html);
+
+      $(".name").each((i: any, ele: any) => {
+        climbingAreas.push($(ele).find("a").attr("href"));
       });
-  } catch (err) {
-    console.log(err);
-  }
-  return [climbingAreas[1], cragName];
+      forEach(climbingAreas, function (area) {
+        climbingAreas[i] = `https://27crags.com/${area}/routelist`;
+        i++;
+      });
+      return [climbingAreas[1], cragName];
+    });
 }
 
 export async function getBoulderNames(area: string[]) {
@@ -43,25 +37,21 @@ export async function getBoulderNames(area: string[]) {
   const areaConst = 1;
   async function getBoulderInfo(area: any) {
     try {
-      if (!area) {
+      if (!validURL(area[link])) {
         throw Error("Area not found");
       }
       return fetch(area[link], { method: "GET" })
         .then((res: any) => res.text())
         .then((html: any) => {
-          try {
-            const $ = cheerio.load(html);
+          const $ = cheerio.load(html);
 
-            $(".route-block").each((i: any, ele: any) => {
-              boulderList[i] = Object.create(boulder);
-              boulderList[i].name = $(ele).find(".lfont").text();
-            });
-            $(".grade").each((i: any, ele: any) => {
-              boulderList[i].grade = $(ele).text();
-            });
-          } catch (err) {
-            console.log(err);
-          }
+          $(".route-block").each((i: any, ele: any) => {
+            boulderList[i] = Object.create(boulder);
+            boulderList[i].name = $(ele).find(".lfont").text();
+          });
+          $(".grade").each((i: any, ele: any) => {
+            boulderList[i].grade = $(ele).text();
+          });
         });
     } catch (err) {
       console.log(err);
@@ -72,9 +62,6 @@ export async function getBoulderNames(area: string[]) {
       scrapedBoulders(boulderList, area[areaConst]);
       return boulderList;
     })
-    .catch((err) => {
-      return err
-    });
 }
 
 function validURL(link: string) {

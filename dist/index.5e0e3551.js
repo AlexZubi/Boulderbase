@@ -21120,6 +21120,9 @@ var root = function root() {
     var onClick = function onClick() {
         _toMiddleware.fetchDatabase(setFetch);
     };
+    _react.useEffect(function() {
+        console.log('This might be the end, my friend:' + searchedBoulder);
+    });
     return(/*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.BrowserRouter, null, /*#__PURE__*/ _reactDefault.default.createElement("div", {
         className: "Root"
     }, /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Route, {
@@ -21186,15 +21189,15 @@ var _reactDefault = parcelHelpers.interopDefault(_react);
 var _tableCss = require("./styles/table.css");
 var Area = function Area(_a) {
     var onSearch = _a.onSearch;
-    var _b = _react.useState(""), text = _b[0], setArea = _b[1];
+    var _b = _react.useState(""), area = _b[0], setArea = _b[1];
     var onSubmit = function onSubmit(e) {
         //Gets all the boulders from the webscraper
         e.preventDefault();
-        if (!text) {
+        if (!area) {
             alert("Please add an area");
             return;
         }
-        onSearch(text);
+        onSearch(area);
         setArea("");
     };
     return(/*#__PURE__*/ _reactDefault.default.createElement("form", {
@@ -21205,7 +21208,7 @@ var Area = function Area(_a) {
     }, /*#__PURE__*/ _reactDefault.default.createElement("input", {
         type: "text",
         placeholder: "Area",
-        value: text,
+        value: area,
         onChange: function onChange(e) {
             return setArea(e.target.value);
         }
@@ -21361,7 +21364,6 @@ var searchBoulders = function searchBoulders(setBoulders) {
                             4
                         ]);
                         URL1 = "http://localhost:3000/boulder/" + area;
-                        console.log(area);
                         return [
                             4 /*yield*/ ,
                             fetch(URL1, {
@@ -21377,6 +21379,7 @@ var searchBoulders = function searchBoulders(setBoulders) {
                         ];
                     case 2:
                         data = _a.sent();
+                        if (Object.keys(data).length === 0) throw Error("Area not found");
                         setBoulders(data);
                         return [
                             3 /*break*/ ,
@@ -21384,10 +21387,9 @@ var searchBoulders = function searchBoulders(setBoulders) {
                         ];
                     case 3:
                         err_1 = _a.sent();
-                        console.log(err_1);
                         return [
-                            3 /*break*/ ,
-                            4
+                            2 /*return*/ ,
+                            err_1
                         ];
                     case 4:
                         return [
