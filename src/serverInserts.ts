@@ -1,6 +1,7 @@
 const { client } = require("./database");
+import forEach from "lodash/forEach";
 let clientImp;
-client.then((data) => (clientImp = data));
+client.then((data: any) => (clientImp = data));
 
 export function newScrapedSection(cragName: string) {
   //Saves the areas and date of the scraped section to a table
@@ -24,17 +25,12 @@ export function existingScrapedSection(cragName: string) {
     console.log(err);
   }
 }
-export function scrapedBoulders(boulder: any, area: String) {
+export function scrapedBoulders(boulders: any, area: String) {
   //Saves the boulders of the scraping to a table
-
-  type boulder = {
-    name: String;
-    grade: String;
-  };
-  for (var i = 0; i < boulder.length; i++) { //Solkv
+  forEach(boulders, function (boulder: any) {
     clientImp.query(
       "INSERT INTO scrapedBoulders (name, grade, area) VALUES ($1, $2, $3) ON CONFLICT (name) DO NOTHING",
-      [boulder[i].name, boulder[i].grade, area]
+      [boulder.name, boulder.grade, area]
     );
-  }
+  });
 }

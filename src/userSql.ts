@@ -2,13 +2,8 @@ const { client } = require("./database");
 let clientImp;
 client.then((data) => (clientImp = data));
 
-export function addToDbSingle(boulder) {
+export function addToDbSingle(boulder: any) {
   //Adds the clicked boulder to the "so-far climbed"-database
-  type boulder = {
-    name: string;
-    grade: string;
-    area: string;
-  };
   try {
     clientImp.query(
       "INSERT INTO boulders (name, grade, area) VALUES ($1, $2, $3) ON CONFLICT (name) DO NOTHING",

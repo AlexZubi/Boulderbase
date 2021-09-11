@@ -1,28 +1,35 @@
 const cheerio = require("cheerio");
 const fetch = require("node-fetch");
+import { url } from "inspector";
+import { forEach } from "lodash";
 import { scrapedBoulders } from "./serverInserts";
 
 export function getSection(cragName: string) {
   //Gets the second section of a supplied area
-  var baseURL = "https://27crags.com";
-  var searchURL = "https://27crags.com/site/search?qs=";
-  var routeList = "/routelist";
-  var fullURL = searchURL.concat(cragName);
-  var climbingAreas = [];
+  let URL = `https://27crags.com/site/search?qs=${cragName}`;
+  let climbingAreas = [];
+  let i = 0;
+  try {
+    if (!validURL(URL)) {
+      throw Error("Entered area not found");
+    }
+    return fetch(URL, { method: "GET" })
+      .then((res) => res.text())
+      .then((html) => {
+        const $ = cheerio.load(html);
 
-  return fetch(fullURL, { method: "GET" })
-    .then((res) => res.text())
-    .then((html) => {
-      const $ = cheerio.load(html);
-
-      $(".name").each((i, ele) => {
-        climbingAreas.push($(ele).find("a").attr("href"));
+        $(".name").each((i: any, ele: any) => {
+          climbingAreas.push($(ele).find("a").attr("href"));
+        });
+        forEach(climbingAreas, function (area) {
+          climbingAreas[i] = `https://27crags.com/${area}/routelist`;
+          i++;
+        });
       });
-      for (var i = 0; i < climbingAreas.length; i++) {
-        climbingAreas[i] = baseURL + climbingAreas[i] + routeList;
-      }
-      return [climbingAreas[1], cragName];
-    });
+  } catch (err) {
+    console.log(err);
+  }
+  return [climbingAreas[1], cragName];
 }
 
 export async function getBoulderNames(area: string[]) {
@@ -34,23 +41,49 @@ export async function getBoulderNames(area: string[]) {
   };
   let boulderList = [];
   const areaConst = 1;
-  async function getBoulderInfo(area) {
-    return fetch(area[link], { method: "GET" })
-      .then((res) => res.text())
-      .then((html) => {
-        const $ = cheerio.load(html);
+  async function getBoulderInfo(area: any) {
+    try {
+      if (!area) {
+        throw Error("Area not found");
+      }
+      return fetch(area[link], { method: "GET" })
+        .then((res: any) => res.text())
+        .then((html: any) => {
+          try {
+            const $ = cheerio.load(html);
 
-        $(".route-block").each((i: any, ele) => {
-          boulderList[i] = Object.create(boulder);
-          boulderList[i].name = $(ele).find(".lfont").text();
+            $(".route-block").each((i: any, ele: any) => {
+              boulderList[i] = Object.create(boulder);
+              boulderList[i].name = $(ele).find(".lfont").text();
+            });
+            $(".grade").each((i: any, ele: any) => {
+              boulderList[i].grade = $(ele).text();
+            });
+          } catch (err) {
+            console.log(err);
+          }
         });
-        $(".grade").each((i, ele) => {
-          boulderList[i].grade = $(ele).text();
-        });
-      });
+    } catch (err) {
+      console.log(err);
+    }
   }
-  return await getBoulderInfo(area).then(() => {
-    scrapedBoulders(boulderList, area[areaConst]);
-    return boulderList;
-  });
+  return await getBoulderInfo(area)
+    .then(() => {
+      scrapedBoulders(boulderList, area[areaConst]);
+      return boulderList;
+    })
+    .catch((err) => {
+      return err
+    });
+}
+
+function validURL(link: string) {
+  //Checks if input is a valid URL
+  let url: any;
+  try {
+    url = new URL(link);
+  } catch (_) {
+    return false;
+  }
+  return url.protocol === "http:" || url.protocol === "https:";
 }

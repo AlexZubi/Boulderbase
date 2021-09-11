@@ -1,12 +1,6 @@
 const { client } = require("./database");
-import {
-  newScrapedSection,
-  existingScrapedSection,
-  scrapedBoulders,
-} from "./serverInserts";
+import { newScrapedSection } from "./serverInserts";
 import { getSection, getBoulderNames } from "./webscrape";
-import map from "lodash/map";
-import forEach from "lodash/forEach";
 let clientImp: any;
 client.then((data: any) => (clientImp = data));
 
@@ -28,7 +22,7 @@ export default async function queryDistributor(cragName: string): Promise<any> {
       return reapeatingQuery(cragName);
     }
   }
-  return checkName(cragName).then((res) => distribute(res));
+  return checkName(cragName).then((res: any) => distribute(res));
 }
 
 function newQuery(cragName: string): Promise<any> {
@@ -43,31 +37,15 @@ async function reapeatingQuery(cragName: string): Promise<any> {
     .query("SELECT name, grade, area FROM scrapedBoulders WHERE area = ($1)", [
       cragName,
     ])
-    .then((data) => data.rows);
-}
-
-export function update() {
-  //Function to update the database automatically once the server starts
-  console.log("Updating data...");
-  function checkOutdated() {
-    return clientImp
-      .query(
-        "SELECT name FROM scraped WHERE scraping_date < now() - '7 days' :: interval"
-      )
-      .then((data) => data.rows);
-  }
-  function updateDatabase(outdatedValues: any) {
-    let areas = map(outdatedValues, "name");
-    forEach(areas, function (area: any) {
-      existingScrapedSection(area);
-      webscrape(area).then((boulders) => scrapedBoulders(boulders, area));
-    });
-  }
-  checkOutdated().then((areas: any) => updateDatabase(areas));
+    .then((data: any) => data.rows);
 }
 
 export async function webscrape(cragName: string) {
-  const getArea = await getSection(cragName);
-  const getBoulder = await getBoulderNames(getArea);
-  return getBoulder;
+  try {
+    const getArea = await getSection(cragName);
+    const getBoulder = await getBoulderNames(getArea);
+    return getBoulder;
+  } catch (err) {
+    console.log(err);
+  }
 }

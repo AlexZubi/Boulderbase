@@ -24661,6 +24661,10 @@ var SearchTable = function SearchTable(_a) {
             {
                 Header: "Grade",
                 accessor: "grade"
+            },
+            {
+                Header: "Area",
+                accessor: "area"
             }, 
         ];
     }, []);

@@ -25,7 +25,7 @@ export const fetchDatabase = async (setFetch) => {
   }
 };
 
-export const sendClimbed = (selectBoulders) => {
+export const sendClimbed = (selectBoulders: any) => {
   //Sends the climbed boulders to the database
   const URL = "http://127.0.0.1:3000/";
 

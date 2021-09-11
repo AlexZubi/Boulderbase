@@ -14,6 +14,10 @@ export const SearchTable = ({ setData }) => {
         Header: "Grade",
         accessor: "grade",
       },
+      {
+        Header: "Area",
+        accessor: "area",
+      },
     ],
     []
   );

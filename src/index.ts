@@ -2,7 +2,8 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 import { addToDbSingle, getFromDb } from "./userSql";
-import queryDistributor, { update, webscrape } from "./queryDistributor";
+import queryDistributor, { webscrape } from "./queryDistributor";
+import { update } from "./update";
 
 app.use(express.json());
 app.use(cors());
@@ -12,24 +13,24 @@ app.use(
   })
 );
 
-app.post("/", (req, res) => {
+app.post("/", (req: any, res: any) => {
   //Adds the clicked boulders to the so-far climbed database
   addToDbSingle(req.body);
 });
 
-app.get("/database", async (req, res) => {
+app.get("/database", async (req: any, res: any) => {
   //Gets the values from the database
   let result = await getFromDb();
   res.send(result.rows);
 });
 
-app.get('/:crag', async (req, res) => {
+app.get("/:crag", async (req: any, res: any) => {
   //Testfunction
   const { crag } = req.params;
-  console.log(await webscrape(crag))
-})
+  console.log(await webscrape(crag));
+});
 
-app.get("/boulder/:crag", async (req, res) => {
+app.get("/boulder/:crag", async (req: any, res: any) => {
   //Gets all the boulders from the scraper
   try {
     const { crag } = req.params;
