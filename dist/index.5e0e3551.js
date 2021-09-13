@@ -21107,7 +21107,6 @@ parcelHelpers.defineInteropFlag(exports);
 var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
 var _searchArea = require("../SearchArea");
-var _searchAreaDefault = parcelHelpers.interopDefault(_searchArea);
 var _reactRouterDom = require("react-router-dom");
 var _toMiddleware = require("./toMiddleware");
 var _searchTable = require("../SearchTable");
@@ -21120,17 +21119,14 @@ var root = function root() {
     var onClick = function onClick() {
         _toMiddleware.fetchDatabase(setFetch);
     };
-    _react.useEffect(function() {
-        console.log('This might be the end, my friend:' + searchedBoulder);
-    });
     return(/*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.BrowserRouter, null, /*#__PURE__*/ _reactDefault.default.createElement("div", {
         className: "Root"
     }, /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Route, {
         path: "/",
         exact: true,
         render: function render(props) {
-            return(/*#__PURE__*/ _reactDefault.default.createElement(_reactDefault.default.Fragment, null, /*#__PURE__*/ _reactDefault.default.createElement("h1", null, "Search Area..."), /*#__PURE__*/ _reactDefault.default.createElement(_searchAreaDefault.default, {
-                onSearch: _toMiddleware.searchBoulders(setSearched)
+            return(/*#__PURE__*/ _reactDefault.default.createElement(_reactDefault.default.Fragment, null, /*#__PURE__*/ _reactDefault.default.createElement("h1", null, "Search Area..."), /*#__PURE__*/ _reactDefault.default.createElement(_searchArea.Area, {
+                onSearch: setSearched
             }), /*#__PURE__*/ _reactDefault.default.createElement(_getButton.ShowClimbedButton, {
                 onClick: onClick
             }), /*#__PURE__*/ _reactDefault.default.createElement(_searchTable.SearchTable, {
@@ -21184,26 +21180,187 @@ exports.export = function(dest, destName, get) {
 },{}],"2i169":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Area", function() {
+    return Area;
+});
 var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
 var _tableCss = require("./styles/table.css");
+var __awaiter = undefined && undefined.__awaiter || function(thisArg, _arguments, P, generator) {
+    var adopt = function adopt(value) {
+        return value instanceof P ? value : new P(function(resolve) {
+            resolve(value);
+        });
+    };
+    return new (P || (P = Promise))(function(resolve, reject) {
+        var fulfilled = function fulfilled(value) {
+            try {
+                step(generator.next(value));
+            } catch (e) {
+                reject(e);
+            }
+        };
+        var rejected = function rejected(value) {
+            try {
+                step(generator["throw"](value));
+            } catch (e) {
+                reject(e);
+            }
+        };
+        var step = function step(result) {
+            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        };
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = undefined && undefined.__generator || function(thisArg, body) {
+    var verb = function verb(n) {
+        return function(v) {
+            return step([
+                n,
+                v
+            ]);
+        };
+    };
+    var step = function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while(_)try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [
+                op[0] & 2,
+                t.value
+            ];
+            switch(op[0]){
+                case 0:
+                case 1:
+                    t = op;
+                    break;
+                case 4:
+                    _.label++;
+                    return {
+                        value: op[1],
+                        done: false
+                    };
+                case 5:
+                    _.label++;
+                    y = op[1];
+                    op = [
+                        0
+                    ];
+                    continue;
+                case 7:
+                    op = _.ops.pop();
+                    _.trys.pop();
+                    continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                        _ = 0;
+                        continue;
+                    }
+                    if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                        _.label = op[1];
+                        break;
+                    }
+                    if (op[0] === 6 && _.label < t[1]) {
+                        _.label = t[1];
+                        t = op;
+                        break;
+                    }
+                    if (t && _.label < t[2]) {
+                        _.label = t[2];
+                        _.ops.push(op);
+                        break;
+                    }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop();
+                    continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) {
+            op = [
+                6,
+                e
+            ];
+            y = 0;
+        } finally{
+            f = t = 0;
+        }
+        if (op[0] & 5) throw op[1];
+        return {
+            value: op[0] ? op[1] : void 0,
+            done: true
+        };
+    };
+    var _ = {
+        label: 0,
+        sent: function sent() {
+            if (t[0] & 1) throw t[1];
+            return t[1];
+        },
+        trys: [],
+        ops: []
+    }, f, y, t, g;
+    return g = {
+        next: verb(0),
+        "throw": verb(1),
+        "return": verb(2)
+    }, typeof Symbol === "function" && (g[Symbol.iterator] = function() {
+        return this;
+    }), g;
+};
 var Area = function Area(_a) {
     var onSearch = _a.onSearch;
     var _b = _react.useState(""), area = _b[0], setArea = _b[1];
+    var _c = _react.useState(""), error = _c[0], setError = _c[1];
     var onSubmit = function onSubmit(e) {
-        //Gets all the boulders from the webscraper
-        e.preventDefault();
-        if (!area) {
-            alert("Please add an area");
-            return;
-        }
-        onSearch(area);
-        setArea("");
+        return __awaiter(void 0, void 0, void 0, function() {
+            var getBoulders = function getBoulders(area1) {
+                var URL1 = "http://localhost:3000/boulder/" + area1;
+                var boulders = fetch(URL1, {
+                    method: "GET",
+                    credentials: "same-origin"
+                }).then(function(res) {
+                    return res.json();
+                }).catch(function(err) {
+                    return console.log(err.message);
+                });
+                return boulders;
+            };
+            return __generator(this, function(_a1) {
+                switch(_a1.label){
+                    case 0:
+                        //Gets all the boulders from the webscrape
+                        e.preventDefault();
+                        if (!area) {
+                            alert("Please add an area");
+                            return [
+                                2 /*return*/ 
+                            ];
+                        }
+                        return [
+                            4 /*yield*/ ,
+                            getBoulders(area).then(function(res) {
+                                if (res == null) throw Error("Could not contact server");
+                                if (res.length === 0) throw Error("Area not found");
+                                setError(null);
+                                onSearch(res);
+                            }).catch(function(err) {
+                                setError(err.message);
+                            })
+                        ];
+                    case 1:
+                        _a1.sent();
+                        return [
+                            2 /*return*/ 
+                        ];
+                }
+            });
+        });
     };
     return(/*#__PURE__*/ _reactDefault.default.createElement("form", {
         className: "area-form",
         onSubmit: onSubmit
-    }, /*#__PURE__*/ _reactDefault.default.createElement("div", {
+    }, error && /*#__PURE__*/ _reactDefault.default.createElement("div", null, error), /*#__PURE__*/ _reactDefault.default.createElement("div", {
         className: "form-control"
     }, /*#__PURE__*/ _reactDefault.default.createElement("input", {
         type: "text",
@@ -21219,9 +21376,6 @@ exports.default = Area; //# sourceMappingURL=SearchArea.js.map
 },{"react":"51PfK","@parcel/transformer-js/src/esmodule-helpers.js":"5jFUd","./styles/table.css":"hZkQV"}],"hZkQV":[function() {},{}],"lBUkV":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "searchBoulders", function() {
-    return searchBoulders;
-});
 parcelHelpers.export(exports, "fetchDatabase", function() {
     return fetchDatabase;
 });
@@ -21350,59 +21504,9 @@ var __generator = undefined && undefined.__generator || function(thisArg, body) 
         return this;
     }), g;
 };
-var searchBoulders = function searchBoulders(setBoulders) {
-    return function(area) {
-        return __awaiter(void 0, void 0, void 0, function() {
-            var URL1, res, data, err_1;
-            return __generator(this, function(_a) {
-                switch(_a.label){
-                    case 0:
-                        _a.trys.push([
-                            0,
-                            3,
-                            ,
-                            4
-                        ]);
-                        URL1 = "http://localhost:3000/boulder/" + area;
-                        return [
-                            4 /*yield*/ ,
-                            fetch(URL1, {
-                                method: "GET",
-                                credentials: "same-origin"
-                            })
-                        ];
-                    case 1:
-                        res = _a.sent();
-                        return [
-                            4 /*yield*/ ,
-                            res.json()
-                        ];
-                    case 2:
-                        data = _a.sent();
-                        if (Object.keys(data).length === 0) throw Error("Area not found");
-                        setBoulders(data);
-                        return [
-                            3 /*break*/ ,
-                            4
-                        ];
-                    case 3:
-                        err_1 = _a.sent();
-                        return [
-                            2 /*return*/ ,
-                            err_1
-                        ];
-                    case 4:
-                        return [
-                            2 /*return*/ 
-                        ];
-                }
-            });
-        });
-    };
-};
 var fetchDatabase = function fetchDatabase(setFetch) {
     return __awaiter(void 0, void 0, void 0, function() {
-        var URL1, res, data, err_2;
+        var URL1, res, data, err_1;
         return __generator(this, function(_a) {
             switch(_a.label){
                 case 0:
@@ -21434,8 +21538,8 @@ var fetchDatabase = function fetchDatabase(setFetch) {
                         4
                     ];
                 case 3:
-                    err_2 = _a.sent();
-                    console.log(err_2);
+                    err_1 = _a.sent();
+                    console.log(err_1);
                     return [
                         3 /*break*/ ,
                         4
@@ -24663,10 +24767,6 @@ var SearchTable = function SearchTable(_a) {
             {
                 Header: "Grade",
                 accessor: "grade"
-            },
-            {
-                Header: "Area",
-                accessor: "area"
             }, 
         ];
     }, []);

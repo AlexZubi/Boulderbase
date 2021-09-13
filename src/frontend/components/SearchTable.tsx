@@ -14,14 +14,9 @@ export const SearchTable = ({ setData }) => {
         Header: "Grade",
         accessor: "grade",
       },
-      {
-        Header: "Area",
-        accessor: "area",
-      },
     ],
     []
   );
-
   const data = useMemo(() => setData, [setData]);
 
   const [selection, selectBoulder] = useState({});

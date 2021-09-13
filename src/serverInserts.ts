@@ -7,7 +7,7 @@ export function newScrapedSection(cragName: string) {
   //Saves the areas and date of the scraped section to a table
   try {
     clientImp.query(
-      "INSERT INTO scraped (name) VALUES ($1) ON CONFLICT (name) DO NOTHING",
+      "INSERT INTO scraped (name) VALUES ($1)",
       [cragName]
     );
   } catch (err) {

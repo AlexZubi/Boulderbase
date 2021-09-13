@@ -1,5 +1,4 @@
 const { client } = require("./database");
-import { newScrapedSection } from "./serverInserts";
 import { getSection, getBoulderNames } from "./webscrape";
 let clientImp: any;
 client.then((data: any) => (clientImp = data));
@@ -27,7 +26,6 @@ export default async function queryDistributor(cragName: string): Promise<any> {
 
 function newQuery(cragName: string): Promise<any> {
   //Handles a query which supplied a name that is not present in the "scraped"-table
-  newScrapedSection(cragName);
   return webscrape(cragName);
 }
 

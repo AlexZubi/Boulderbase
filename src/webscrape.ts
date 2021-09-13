@@ -1,8 +1,7 @@
 const cheerio = require("cheerio");
 const fetch = require("node-fetch");
-import { url } from "inspector";
 import { forEach } from "lodash";
-import { scrapedBoulders } from "./serverInserts";
+import { newScrapedSection, scrapedBoulders } from "./serverInserts";
 
 export function getSection(cragName: string) {
   //Gets the second section of a supplied area
@@ -32,6 +31,7 @@ export async function getBoulderNames(area: string[]) {
   const boulder = {
     name: String,
     grade: String,
+    area: String,
   };
   let boulderList = [];
   const areaConst = 1;
@@ -40,6 +40,7 @@ export async function getBoulderNames(area: string[]) {
       if (!validURL(area[link])) {
         throw Error("Area not found");
       }
+      newScrapedSection(area[areaConst])
       return fetch(area[link], { method: "GET" })
         .then((res: any) => res.text())
         .then((html: any) => {
@@ -55,13 +56,13 @@ export async function getBoulderNames(area: string[]) {
         });
     } catch (err) {
       console.log(err);
+      console.log("Server is listening...");
     }
   }
-  return await getBoulderInfo(area)
-    .then(() => {
-      scrapedBoulders(boulderList, area[areaConst]);
-      return boulderList;
-    })
+  return await getBoulderInfo(area).then(() => {
+    scrapedBoulders(boulderList, area[areaConst]);
+    return boulderList;
+  });
 }
 
 function validURL(link: string) {
