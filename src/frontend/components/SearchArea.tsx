@@ -6,14 +6,14 @@ export const Area = ({ onSearch }) => {
   const [error, setError] = useState("");
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    //Gets all the boulders from the webscrape
+    //Gets the boulders from the supplied area
     e.preventDefault();
     if (!area) {
       alert("Please add an area");
       return;
     }
     function getBoulders(area: string) {
-      let URL = "http://localhost:3000/boulder/" + area;
+      const URL = "http://localhost:3000/boulder/" + area;
       const boulders = fetch(URL, {
         method: "GET",
         credentials: "same-origin",
@@ -39,7 +39,6 @@ export const Area = ({ onSearch }) => {
         setError(err.message);
       });
   };
-
   return (
     <form className="area-form" onSubmit={onSubmit}>
       {error && <div>{error}</div>}

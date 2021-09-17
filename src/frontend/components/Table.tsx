@@ -1,30 +1,21 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useTable } from "react-table";
 import { sendClimbed } from "./root/toMiddleware";
+import clickHelper from "./root/clickHelper";
 import "./styles/table.css";
-export const SearchTable = ({ setData }) => {
-  //Table for the scraped boulders of the supplied area
-  const columns = useMemo(
-    () => [
-      {
-        Header: "Name",
-        accessor: "name",
-      },
-      {
-        Header: "Grade",
-        accessor: "grade",
-      },
-    ],
-    []
-  );
-  const data = useMemo(() => setData, [setData]);
+export const Table = ({ data, columns }) => {
+  columns = useMemo(() => columns, []);
 
   const [selection, selectBoulder] = useState({});
 
   useEffect(() => {
     async function toDatabase() {
       try {
-        sendClimbed(selection);
+        if (clickHelper(selection)) {
+          sendClimbed(selection, function(data){
+            console.log(data)
+          });
+        }
       } catch (err) {
         console.log(err);
       }

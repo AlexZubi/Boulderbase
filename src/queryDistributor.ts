@@ -1,27 +1,29 @@
-const { client } = require("./database");
+import { connection } from "./connection";
 import { getSection, getBoulderNames } from "./webscrape";
-let clientImp: any;
-client.then((data: any) => (clientImp = data));
 
-export default async function queryDistributor(cragName: string): Promise<any> {
+export default async function queryDistributor(
+  cragName: string,
+  supplyResult: Function
+): Promise<any> {
   //Does an initial nameCheck resulting in the type of query and hands it to the respective function
-  function checkName(cragName: string) {
+  function checkName(cragName: string, outdatedSections: Function) {
     if (cragName != null) {
-      return clientImp.query("SELECT name from scraped WHERE name = ($1)", [
-        cragName,
-      ]);
+      connection
+        .query("SELECT name from scraped WHERE name = ($1)", [cragName])
+        .then((res) => outdatedSections(res));
     }
   }
-  function distribute(data: any) {
+  checkName(cragName, async function (data) {
     if (Object.keys(data.rows).length === 0) {
       //If name wasn't in the table
-      return newQuery(cragName);
+      supplyResult(await newQuery(cragName));
     } else {
       //If name was in the table
-      return reapeatingQuery(cragName);
+      reapeatingQuery(cragName, function (data) {
+        supplyResult(data);
+      });
     }
-  }
-  return checkName(cragName).then((res: any) => distribute(res));
+  });
 }
 
 function newQuery(cragName: string): Promise<any> {
@@ -29,21 +31,22 @@ function newQuery(cragName: string): Promise<any> {
   return webscrape(cragName);
 }
 
-async function reapeatingQuery(cragName: string): Promise<any> {
+function reapeatingQuery(cragName: string, supplyQueryResult: Function) {
   //Handles a query which supplied a name that is already present in the "scraped"-table
-  return clientImp
-    .query("SELECT name, grade, area FROM scrapedBoulders WHERE area = ($1)", [
-      cragName,
-    ])
-    .then((data: any) => data.rows);
+  function queryRepetition() {
+    connection
+      .query("SELECT name, grade FROM scrapedBoulders WHERE area = ($1)", [
+        cragName,
+      ])
+      .then((res) => {
+        supplyQueryResult(res.rows);
+      });
+  }
+  queryRepetition();
 }
 
 export async function webscrape(cragName: string) {
-  try {
-    const getArea = await getSection(cragName);
-    const getBoulder = await getBoulderNames(getArea);
-    return getBoulder;
-  } catch (err) {
-    console.log(err);
-  }
+  const getArea = await getSection(cragName);
+  const getBoulder = await getBoulderNames(getArea);
+  return getBoulder;
 }

@@ -36,18 +36,25 @@ CREATE TABLE test (
     date date NOT NULL DEFAULT CURRENT_DATE
 );
 
-
-
--- Setzt die automatisch fortlaufende ID einer Tabelle auf 1 zurück.
-
-/* SELECT setval(pg_get_serial_sequence('boulders', 'boulder_id')
-	   , COALESCE(max(boulder_id) + 1, 1)
+/*
+SELECT setval(pg_get_serial_sequence('boulders', 'id')
+	   , COALESCE(max(id) + 1, 1)
 	   , false)
 FROM boulders;
 
+SELECT setval(pg_get_serial_sequence('scrapedBoulders', 'id')
+	   , COALESCE(max(id) + 1, 1)
+	   , false)
+FROM scrapedBoulders;
+
+SELECT setval(pg_get_serial_sequence('scraped', 'id')
+	   , COALESCE(max(id) + 1, 1)
+	   , false)
+FROM scraped;
 
  for(var key in zulu) {
           for(var innerKey in zulu[key]) {
             console.log("Key: " + innerKey + " value: " + zulu[key][innerKey]);
          }      
       }
+*/

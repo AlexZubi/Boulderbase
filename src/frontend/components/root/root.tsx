@@ -2,14 +2,16 @@ import React, { useState } from "react";
 import { Area } from "../SearchArea";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { fetchDatabase } from "./toMiddleware";
-import { SearchTable } from "../SearchTable";
+import { Table } from "../Table";
 import { ShowClimbedButton } from "../GetButton";
-import { DatabaseTable } from "../DatabaseTable";
 import { GoBackButton } from "../GoBackButton";
+import columnsHelper from "./columnsHelper";
 
 const root = () => {
   const [searchedBoulder, setSearched] = useState([]); //Sets the state to the result of the webscraper
   const [fetchedBoulders, setFetch] = useState([]); //Sets the state to the fetched entries of the climbs database
+  const search = 0
+  const fetch = 1
 
   const onClick = () => {
     fetchDatabase(setFetch);
@@ -27,7 +29,7 @@ const root = () => {
               <Area onSearch={setSearched} />
               <ShowClimbedButton onClick={onClick} />
 
-              <SearchTable setData={searchedBoulder} />
+              <Table data={searchedBoulder} columns={columnsHelper(search)} />
             </>
           )}
         />
@@ -37,7 +39,7 @@ const root = () => {
           render={(props) => (
             <>
               <GoBackButton />
-              <DatabaseTable setData={fetchedBoulders} />
+              <Table data={fetchedBoulders} columns={columnsHelper(fetch)} />
             </>
           )}
         />

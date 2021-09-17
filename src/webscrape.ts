@@ -2,6 +2,7 @@ const cheerio = require("cheerio");
 const fetch = require("node-fetch");
 import { forEach } from "lodash";
 import { newScrapedSection, scrapedBoulders } from "./serverInserts";
+import { boulderConst } from "./boulderType";
 
 export function getSection(cragName: string) {
   //Gets the second section of a supplied area
@@ -10,11 +11,11 @@ export function getSection(cragName: string) {
   let i = 0;
 
   return fetch(URL, { method: "GET" })
-    .then((res) => res.text())
-    .then((html) => {
+    .then((res: Response) => res.text())
+    .then((html: String) => {
       const $ = cheerio.load(html);
 
-      $(".name").each((i: any, ele: any) => {
+      $(".name").each((i: number, ele: string) => {
         climbingAreas.push($(ele).find("a").attr("href"));
       });
       forEach(climbingAreas, function (area) {
@@ -28,29 +29,24 @@ export function getSection(cragName: string) {
 export async function getBoulderNames(area: string[]) {
   //Gets all the boulders of a supplied section
   const link = 0;
-  const boulder = {
-    name: String,
-    grade: String,
-    area: String,
-  };
   let boulderList = [];
   const areaConst = 1;
-  async function getBoulderInfo(area: any) {
+  async function getBoulderInfo(area: string[]) {
     try {
       if (!validURL(area[link])) {
         throw Error("Area not found");
       }
-      newScrapedSection(area[areaConst])
+      newScrapedSection(area[areaConst]);
       return fetch(area[link], { method: "GET" })
-        .then((res: any) => res.text())
-        .then((html: any) => {
+        .then((res: Response) => res.text())
+        .then((html: string) => {
           const $ = cheerio.load(html);
 
-          $(".route-block").each((i: any, ele: any) => {
-            boulderList[i] = Object.create(boulder);
+          $(".route-block").each((i: number, ele: string) => {
+            boulderList[i] = { boulderConst };
             boulderList[i].name = $(ele).find(".lfont").text();
           });
-          $(".grade").each((i: any, ele: any) => {
+          $(".grade").each((i: number, ele: string) => {
             boulderList[i].grade = $(ele).text();
           });
         });
@@ -67,7 +63,7 @@ export async function getBoulderNames(area: string[]) {
 
 function validURL(link: string) {
   //Checks if input is a valid URL
-  let url: any;
+  let url: URL;
   try {
     url = new URL(link);
   } catch (_) {
