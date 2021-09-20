@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Area } from "../SearchArea";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { fetchDatabase } from "./toMiddleware";
@@ -29,7 +29,7 @@ const root = () => {
               <Area onSearch={setSearched} />
               <ShowClimbedButton onClick={onClick} />
 
-              <Table data={searchedBoulder} columns={columnsHelper(search)} />
+              <Table tableData={searchedBoulder} columns={columnsHelper(search)} />
             </>
           )}
         />
@@ -39,7 +39,7 @@ const root = () => {
           render={(props) => (
             <>
               <GoBackButton />
-              <Table data={fetchedBoulders} columns={columnsHelper(fetch)} />
+              <Table tableData={fetchedBoulders} columns={columnsHelper(fetch)} />
             </>
           )}
         />

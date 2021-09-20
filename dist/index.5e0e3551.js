@@ -21133,7 +21133,7 @@ var root = function root() {
             }), /*#__PURE__*/ _reactDefault.default.createElement(_getButton.ShowClimbedButton, {
                 onClick: onClick
             }), /*#__PURE__*/ _reactDefault.default.createElement(_table.Table, {
-                data: searchedBoulder,
+                tableData: searchedBoulder,
                 columns: _columnsHelperDefault.default(search)
             })));
         }
@@ -21142,7 +21142,7 @@ var root = function root() {
         exact: true,
         render: function render(props) {
             return(/*#__PURE__*/ _reactDefault.default.createElement(_reactDefault.default.Fragment, null, /*#__PURE__*/ _reactDefault.default.createElement(_goBackButton.GoBackButton, null), /*#__PURE__*/ _reactDefault.default.createElement(_table.Table, {
-                data: fetchedBoulders,
+                tableData: fetchedBoulders,
                 columns: _columnsHelperDefault.default(fetch)
             })));
         }
@@ -21743,13 +21743,37 @@ var __generator = undefined && undefined.__generator || function(thisArg, body) 
         return this;
     }), g;
 };
+var __spreadArray = undefined && undefined.__spreadArray || function(to, from) {
+    for(var i = 0, il = from.length, j = to.length; i < il; i++, j++)to[j] = from[i];
+    return to;
+};
 var Table = function Table(_a) {
-    var data = _a.data, columns = _a.columns;
+    var tableData = _a.tableData, columns = _a.columns;
     columns = _react.useMemo(function() {
         return columns;
-    }, []);
+    }, [
+        columns
+    ]);
     var _b = _react.useState({
     }), selection = _b[0], selectBoulder = _b[1];
+    var _c = _react.useState(null), sortConfig = _c[0], setSortConfig = _c[1];
+    var data = null;
+    var requestSort = function requestSort(key) {
+        var direction = "ascending";
+        if (sortConfig !== null) {
+            if (sortConfig.key === key && sortConfig.direction === "ascending") direction = "descending";
+        }
+        setSortConfig({
+            key: key,
+            direction: direction
+        });
+    };
+    data = __spreadArray([], tableData);
+    if (sortConfig !== null) data.sort(function(a, b) {
+        if (a[sortConfig.key] < b[sortConfig.key]) return sortConfig.direction === "ascending" ? -1 : 1;
+        if (a[sortConfig.key] > b[sortConfig.key]) return sortConfig.direction === "ascending" ? 1 : -1;
+        return 0;
+    });
     _react.useEffect(function() {
         var toDatabase = function toDatabase() {
             return __awaiter(this, void 0, void 0, function() {
@@ -21769,16 +21793,21 @@ var Table = function Table(_a) {
         };
         if (Object.keys(selection).length > 0) toDatabase();
     });
-    var _c = _reactTable.useTable({
+    var _d = _reactTable.useTable({
         columns: columns,
         data: data
-    }), getTableProps = _c.getTableProps, getTableBodyProps = _c.getTableBodyProps, headerGroups = _c.headerGroups, footerGroups = _c.footerGroups, rows = _c.rows, prepareRow = _c.prepareRow;
+    }), getTableProps = _d.getTableProps, getTableBodyProps = _d.getTableBodyProps, headerGroups = _d.headerGroups, footerGroups = _d.footerGroups, rows = _d.rows, prepareRow = _d.prepareRow;
     return(/*#__PURE__*/ _reactDefault.default.createElement(_reactDefault.default.Fragment, null, /*#__PURE__*/ _reactDefault.default.createElement("table", __assign({
     }, getTableProps()), /*#__PURE__*/ _reactDefault.default.createElement("thead", null, headerGroups.map(function(headerGroup) {
         return(/*#__PURE__*/ _reactDefault.default.createElement("tr", __assign({
         }, headerGroup.getHeaderGroupProps()), headerGroup.headers.map(function(column) {
             return(/*#__PURE__*/ _reactDefault.default.createElement("th", __assign({
-            }, column.getHeaderProps()), column.render("Header")));
+            }, column.getHeaderProps()), /*#__PURE__*/ _reactDefault.default.createElement("button", {
+                type: "button",
+                onClick: function onClick() {
+                    return requestSort(column.id);
+                }
+            }, column.render("Header"))));
         })));
     })), /*#__PURE__*/ _reactDefault.default.createElement("tbody", __assign({
     }, getTableBodyProps()), rows.map(function(row) {

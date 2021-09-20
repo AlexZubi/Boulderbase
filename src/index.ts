@@ -17,14 +17,12 @@ app.post("/", (req, res) => {
   //Adds the clicked boulders to the so-far climbed database
   addToDbSingle(req.body)
     .then(() => res.sendStatus(200))
-    .catch((err) => console.log(err.message));
+    .catch((err) => console.log(err));
 });
 
 app.get("/database", async (req, res) => {
   //Gets the values from the database
-  await getFromDb(function (data) {
-    res.send(data.rows);
-  });
+  getFromDb().then((boulderList) => res.send(boulderList))
 });
 
 app.get("/", async (req, res) => {
