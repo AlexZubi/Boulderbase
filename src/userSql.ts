@@ -2,7 +2,7 @@ const getConnection = require("./database");
 import map from "lodash/map";
 import { boulderType } from "./boulderType";
 
-export async function addToDbSingle(boulder: boulderType) {
+export async function addToDb(boulder: boulderType) {
   //Adds the clicked boulder to the "so-far climbed"-database
   getConnection(function (err, client) {
     client
@@ -22,6 +22,19 @@ export async function addToDbSingle(boulder: boulderType) {
       .then(client.release());
   });
 }
+export async function deleteFromDb(boulder: boulderType) {
+  //Deletes the supplied boulder from the "so-far climbed"-database
+  getConnection(function (err, client) {
+    client
+      .query("DELETE FROM boulders WHERE (name, grade, area) = ($1, $2, $3)", [
+        boulder.name,
+        boulder.grade,
+        boulder.area,
+      ])
+      .then(client.release());
+  });
+}
+
 export async function getFromDb() {
   //Gets all boulder from the "so-far climbed"-database
   return new Promise((resolve, reject) => {

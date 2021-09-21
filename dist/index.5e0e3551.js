@@ -21387,6 +21387,9 @@ parcelHelpers.export(exports, "fetchDatabase", function() {
 parcelHelpers.export(exports, "sendClimbed", function() {
     return sendClimbed;
 });
+parcelHelpers.export(exports, "deleteClimbed", function() {
+    return deleteClimbed;
+});
 var __awaiter = undefined && undefined.__awaiter || function(thisArg, _arguments, P, generator) {
     var adopt = function adopt(value) {
         return value instanceof P ? value : new P(function(resolve) {
@@ -21557,7 +21560,7 @@ var fetchDatabase = function fetchDatabase(setFetch) {
         });
     });
 };
-var sendClimbed = function sendClimbed(selectBoulders, cb) {
+var sendClimbed = function sendClimbed(selectBoulders, res) {
     var postData = function postData(url, data) {
         if (url === void 0) url = "";
         if (data === void 0) data = {
@@ -21581,7 +21584,7 @@ var sendClimbed = function sendClimbed(selectBoulders, cb) {
                         ];
                     case 1:
                         response = _a.sent();
-                        cb(response);
+                        res(response);
                         return [
                             2 /*return*/ 
                         ];
@@ -21593,6 +21596,46 @@ var sendClimbed = function sendClimbed(selectBoulders, cb) {
     var URL1 = "http://127.0.0.1:3000/";
     try {
         postData(URL1, selectBoulders);
+    } catch (err) {
+        console.log(err);
+    }
+};
+var deleteClimbed = function deleteClimbed(boulder, res) {
+    var deleteBoulder = function deleteBoulder(url, data) {
+        if (url === void 0) url = "";
+        if (data === void 0) data = {
+        };
+        return __awaiter(this, void 0, void 0, function() {
+            var response;
+            return __generator(this, function(_a) {
+                switch(_a.label){
+                    case 0:
+                        return [
+                            4 /*yield*/ ,
+                            fetch(url, {
+                                method: "DELETE",
+                                mode: "cors",
+                                credentials: "same-origin",
+                                headers: {
+                                    "Content-Type": "application/json"
+                                },
+                                body: JSON.stringify(data)
+                            })
+                        ];
+                    case 1:
+                        response = _a.sent();
+                        res(response);
+                        return [
+                            2 /*return*/ 
+                        ];
+                }
+            });
+        });
+    };
+    //Sends a delete request from the "boulders"-database to the middleware
+    var URL1 = "http://127.0.0.1:3000/";
+    try {
+        deleteBoulder(URL1, boulder);
     } catch (err) {
         console.log(err);
     }
@@ -21757,7 +21800,7 @@ var Table = function Table(_a) {
     var _b = _react.useState({
     }), selection = _b[0], selectBoulder = _b[1];
     var _c = _react.useState(null), sortConfig = _c[0], setSortConfig = _c[1];
-    var data = null;
+    var data = __spreadArray([], tableData);
     var requestSort = function requestSort(key) {
         var direction = "ascending";
         if (sortConfig !== null) {
@@ -21768,7 +21811,6 @@ var Table = function Table(_a) {
             direction: direction
         });
     };
-    data = __spreadArray([], tableData);
     if (sortConfig !== null) data.sort(function(a, b) {
         if (a[sortConfig.key] < b[sortConfig.key]) return sortConfig.direction === "ascending" ? -1 : 1;
         if (a[sortConfig.key] > b[sortConfig.key]) return sortConfig.direction === "ascending" ? 1 : -1;
@@ -21780,6 +21822,9 @@ var Table = function Table(_a) {
                 return __generator(this, function(_a1) {
                     try {
                         if (_clickHelperDefault.default(selection)) _toMiddleware.sendClimbed(selection, function(data1) {
+                            console.log(data1);
+                        });
+                        else _toMiddleware.deleteClimbed(selection, function(data1) {
                             console.log(data1);
                         });
                     } catch (err) {

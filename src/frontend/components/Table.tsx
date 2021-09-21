@@ -1,14 +1,14 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useTable } from "react-table";
-import { sendClimbed } from "./root/toMiddleware";
+import { sendClimbed, deleteClimbed } from "./root/toMiddleware";
 import clickHelper from "./root/clickHelper";
 import "./styles/table.css";
 export const Table = ({ tableData, columns }) => {
   columns = useMemo(() => columns, [columns]);
   const [selection, selectBoulder] = useState({});
   const [sortConfig, setSortConfig] = useState(null);
+  let data = [...tableData];
 
-  let data = null;
   const requestSort = (key) => {
     let direction = "ascending";
     if (sortConfig !== null) {
@@ -18,7 +18,6 @@ export const Table = ({ tableData, columns }) => {
     }
     setSortConfig({ key, direction });
   };
-  data = [...tableData];
   if (sortConfig !== null) {
     data.sort((a, b) => {
       if (a[sortConfig.key] < b[sortConfig.key]) {
@@ -38,7 +37,10 @@ export const Table = ({ tableData, columns }) => {
           sendClimbed(selection, function (data) {
             console.log(data);
           });
-        }
+        } else {
+          deleteClimbed(selection, function (data) {
+            console.log(data);
+        })}
       } catch (err) {
         console.log(err);
       }
@@ -86,7 +88,8 @@ export const Table = ({ tableData, columns }) => {
               >
                 {row.cells.map((cell) => {
                   return (
-                    <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                    <td {...cell.getCellProps()}>
+                      {cell.render("Cell")}</td>
                   );
                 })}
               </tr>

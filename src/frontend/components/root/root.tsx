@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Area } from "../SearchArea";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { fetchDatabase } from "./toMiddleware";
