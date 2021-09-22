@@ -12,8 +12,6 @@ CREATE TABLE boulders (
     area VARCHAR(20)
 );
 
-DELETE FROM boulders WHERE boulder_id > 0;
-
 -- "FRONTEND" Table
 --Table to store past scrapes with their respective date
 CREATE TABLE scraped (
@@ -30,31 +28,3 @@ CREATE TABLE scrapedBoulders (
     grade VARCHAR(6),
     area VARCHAR(20)
 );
-
-CREATE TABLE test (
-    name VARCHAR(30),
-    date date NOT NULL DEFAULT CURRENT_DATE
-);
-
-/*
-SELECT setval(pg_get_serial_sequence('boulders', 'id')
-	   , COALESCE(max(id) + 1, 1)
-	   , false)
-FROM boulders;
-
-SELECT setval(pg_get_serial_sequence('scrapedBoulders', 'id')
-	   , COALESCE(max(id) + 1, 1)
-	   , false)
-FROM scrapedBoulders;
-
-SELECT setval(pg_get_serial_sequence('scraped', 'id')
-	   , COALESCE(max(id) + 1, 1)
-	   , false)
-FROM scraped;
-
- for(var key in zulu) {
-          for(var innerKey in zulu[key]) {
-            console.log("Key: " + innerKey + " value: " + zulu[key][innerKey]);
-         }      
-      }
-*/
