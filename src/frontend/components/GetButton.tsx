@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import "./styles/table.css";
 
 export const ShowClimbedButton = ({ onClick }) => {
-  //Gets the so-far climbed boulders and stores them in an useState in root
+  //Gets the so-far climbed boulders (values of "boulders" database) and stores them in a state in root
   return (
     <div>
       <Link to="/database">

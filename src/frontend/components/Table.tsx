@@ -1,54 +1,27 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
+import orderBy from "lodash/orderBy";
 import { useTable } from "react-table";
-import { sendClimbed, deleteClimbed } from "./root/toMiddleware";
-import clickHelper from "./root/clickHelper";
+import addDeleteHelper from "../helper/tableHelper/addDeleteHelper";
+import clickRowHelper from "../helper/tableHelper/clickRowHelper";
 import "./styles/table.css";
-export const Table = ({ tableData, columns }) => {
+export const Table = ({ tableData, columns, deleteBoulder }) => {
   columns = useMemo(() => columns, [columns]);
-  const [selection, selectBoulder] = useState({});
-  const [sortConfig, setSortConfig] = useState(null);
+  const [sortedData, setSortedData] = useState([]);
+  const [sortingKey, setSortingKey] = useState(null);
   let data = [...tableData];
 
-  const requestSort = (key) => {
-    let direction = "ascending";
-    if (sortConfig !== null) {
-      if (sortConfig.key === key && sortConfig.direction === "ascending") {
-        direction = "descending";
-      }
+  function requestSort(key) {
+    if (sortingKey !== key) {
+      setSortedData(orderBy(data, key, ["asc"]));
+      setSortingKey(key);
+    } else {
+      setSortedData(orderBy(data, key, ["desc"]));
+      setSortingKey(null);
     }
-    setSortConfig({ key, direction });
-  };
-  if (sortConfig !== null) {
-    data.sort((a, b) => {
-      if (a[sortConfig.key] < b[sortConfig.key]) {
-        return sortConfig.direction === "ascending" ? -1 : 1;
-      }
-      if (a[sortConfig.key] > b[sortConfig.key]) {
-        return sortConfig.direction === "ascending" ? 1 : -1;
-      }
-      return 0;
-    });
   }
-
-  useEffect(() => {
-    async function toDatabase() {
-      try {
-        if (clickHelper(selection)) {
-          sendClimbed(selection, function (data) {
-            console.log(data);
-          });
-        } else {
-          deleteClimbed(selection, function (data) {
-            console.log(data);
-        })}
-      } catch (err) {
-        console.log(err);
-      }
-    }
-    if (Object.keys(selection).length > 0) {
-      toDatabase();
-    }
-  });
+  if (sortedData.length > 0) {
+    data = [...sortedData];
+  }
 
   const {
     getTableProps,
@@ -84,12 +57,16 @@ export const Table = ({ tableData, columns }) => {
             return (
               <tr
                 {...row.getRowProps()}
-                onClick={() => selectBoulder(row.original)}
+                onClick={() => {
+                  addDeleteHelper(row.original);
+                  if (!clickRowHelper(row.original)) {
+                    deleteBoulder(row.original);
+                  }
+                }}
               >
                 {row.cells.map((cell) => {
                   return (
-                    <td {...cell.getCellProps()}>
-                      {cell.render("Cell")}</td>
+                    <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
                   );
                 })}
               </tr>

@@ -6,7 +6,7 @@ export const Area = ({ onSearch }) => {
   const [error, setError] = useState("");
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    //Gets the boulders from the supplied area
+    //Gets the boulders from the second section of a supplied area
     e.preventDefault();
     if (!area) {
       alert("Please add an area");

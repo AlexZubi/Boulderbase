@@ -3,7 +3,7 @@ import map from "lodash/map";
 import { boulderType } from "./boulderType";
 
 export async function addToDb(boulder: boulderType) {
-  //Adds the clicked boulder to the "so-far climbed"-database
+  //Adds the clicked boulder to the "boulders" database
   getConnection(function (err, client) {
     client
       .query("SELECT area FROM scrapedboulders WHERE name = ($1)", [
@@ -23,7 +23,7 @@ export async function addToDb(boulder: boulderType) {
   });
 }
 export async function deleteFromDb(boulder: boulderType) {
-  //Deletes the supplied boulder from the "so-far climbed"-database
+  //Deletes the supplied boulder from the "boulders" database
   getConnection(function (err, client) {
     client
       .query("DELETE FROM boulders WHERE (name, grade, area) = ($1, $2, $3)", [
@@ -34,9 +34,8 @@ export async function deleteFromDb(boulder: boulderType) {
       .then(client.release());
   });
 }
-
 export async function getFromDb() {
-  //Gets all boulder from the "so-far climbed"-database
+  //Gets all boulder from the "boulders" database
   return new Promise((resolve, reject) => {
     getConnection(function (err, client) {
       client

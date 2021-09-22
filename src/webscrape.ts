@@ -5,7 +5,7 @@ import { newScrapedSection, scrapedBoulders } from "./serverInserts";
 import { boulderConst } from "./boulderType";
 
 export function getSection(cragName: string) {
-  //Gets the second section of a supplied area
+  //Gets the second section of a supplied area (second section temporarily for simplicity reasons)
   let URL = `https://27crags.com/site/search?qs=${cragName}`;
   let climbingAreas = [];
   let i = 0;
