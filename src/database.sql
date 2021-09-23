@@ -1,3 +1,4 @@
+-- File for the creation of the database plus neccessary tables
 -- User Database
 CREATE DATABASE climbs;
 
@@ -13,7 +14,7 @@ CREATE TABLE boulders (
 );
 
 -- "FRONTEND" Table
---Table to store past scrapes with their respective date
+-- Table to store past scrapes with their respective date
 CREATE TABLE scraped (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100) UNIQUE,
@@ -21,7 +22,7 @@ CREATE TABLE scraped (
 );
 
 -- "BACKEND" Table
---Table to store the results of past scrapes
+-- Table to store the results of past scrapes
 CREATE TABLE scrapedBoulders (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100) UNIQUE,

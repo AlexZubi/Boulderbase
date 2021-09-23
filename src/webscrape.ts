@@ -1,7 +1,7 @@
 const cheerio = require("cheerio");
 const fetch = require("node-fetch");
 import { forEach } from "lodash";
-import { newScrapedSection, scrapedBoulders } from "./serverInserts";
+import { newScrapedSection, scrapedBoulders } from "./scrapingInserts";
 import { boulderConst } from "./boulderType";
 
 export function getSection(cragName: string) {

@@ -1,5 +1,8 @@
+import {AiFillSignal} from "react-icons/ai"
+
 export default function columnsHelper(selection: number) {
   //Supplies the right column-structure to the respective table
+
   const baseColumns = [
     {
       Header: "Name",

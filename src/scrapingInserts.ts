@@ -1,5 +1,5 @@
-import forEach from "lodash/forEach";
 const getConnection = require("./database");
+import forEach from "lodash/forEach";
 import { boulderType } from "./boulderType";
 
 export function newScrapedSection(cragName: String) {

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Area } from "../SearchArea";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import { fetchDatabase } from "../../helper/rootHelper/toMiddlewareHelper";
+import { fetchDatabase } from "../../helper/requestHelper";
 import { Table } from "../Table";
-import { ShowClimbedButton } from "../GetButton";
+import { ShowClimbedButton } from "../ShowClimbedButton";
 import { GoBackButton } from "../GoBackButton";
-import columnsHelper from "../../helper/rootHelper/columnsHelper";
+import columnsHelper from "../../helper/columnsHelper";
 
 const root = () => {
   const [searchedBoulder, setSearched] = useState([]); //Sets the state to the result of the webscraper
@@ -32,7 +32,7 @@ const root = () => {
           exact
           render={(props) => (
             <>
-              <h1>Search Area...</h1>
+              <h1 className={"header"}>Search Area...</h1>
               <Area onSearch={setSearched} />
               <ShowClimbedButton onClick={onClick} />
 
@@ -45,7 +45,7 @@ const root = () => {
           )}
         />
         <Route
-          path="/database"
+          path="/table"
           exact
           render={(props) => (
             <>

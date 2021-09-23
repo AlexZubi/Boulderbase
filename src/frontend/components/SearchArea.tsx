@@ -41,7 +41,6 @@ export const Area = ({ onSearch }) => {
   };
   return (
     <form className="area-form" onSubmit={onSubmit}>
-      {error && <div>{error}</div>}
       <div className="form-control">
         <input
           type="text"
@@ -50,6 +49,7 @@ export const Area = ({ onSearch }) => {
           onChange={(e) => setArea(e.target.value)}
         />
       </div>
+      {error && <div className={'searchError'}>{error}</div>}
     </form>
   );
 };

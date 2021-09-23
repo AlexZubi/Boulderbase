@@ -11,12 +11,12 @@ export const fetchDatabase = async (setFetch) => {
   }
 };
 
-export const sendClimbed = (selectBoulders: any, res) => {
+export const sendClimbed = (selectBoulders: any) => {
   //Sends the climbed boulders to the database
   const URL = "http://127.0.0.1:3000/";
 
-  async function postData(url = "", data = {}) {
-    const response = await fetch(url, {
+  function postData(url = "", data = {}) {
+    fetch(url, {
       method: "POST",
       mode: "cors",
       credentials: "same-origin",
@@ -25,21 +25,16 @@ export const sendClimbed = (selectBoulders: any, res) => {
       },
       body: JSON.stringify(data),
     });
-    res(response);
   }
-  try {
-    postData(URL, selectBoulders);
-  } catch (err) {
-    console.log(err);
-  }
+  postData(URL, selectBoulders);
 };
 
-export const deleteClimbed = (boulder, res) => {
+export const deleteClimbed = (boulder) => {
   //Sends a delete request from the "boulders"-database to the middleware
   const URL = "http://127.0.0.1:3000/";
 
-  async function deleteBoulder(url = "", data = {}) {
-    const response = await fetch(url, {
+  function deleteBoulder(url = "", data = {}) {
+    fetch(url, {
       method: "DELETE",
       mode: "cors",
       credentials: "same-origin",
@@ -48,11 +43,6 @@ export const deleteClimbed = (boulder, res) => {
       },
       body: JSON.stringify(data),
     });
-    res(response);
   }
-  try {
-    deleteBoulder(URL, boulder);
-  } catch (err) {
-    console.log(err);
-  }
+  deleteBoulder(URL, boulder);
 };

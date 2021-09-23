@@ -1,8 +1,9 @@
 import React, { useMemo, useState } from "react";
+import { IoMdCheckmark } from "react-icons/io";
+import { IoMdClose } from "react-icons/io";
 import orderBy from "lodash/orderBy";
 import { useTable } from "react-table";
-import addDeleteHelper from "../helper/tableHelper/addDeleteHelper";
-import clickRowHelper from "../helper/tableHelper/clickRowHelper";
+import { sendClimbed, deleteClimbed } from "../helper/requestHelper";
 import "./styles/table.css";
 export const Table = ({ tableData, columns, deleteBoulder }) => {
   columns = useMemo(() => columns, [columns]);
@@ -10,7 +11,7 @@ export const Table = ({ tableData, columns, deleteBoulder }) => {
   const [sortingKey, setSortingKey] = useState(null);
   let data = [...tableData];
 
-  function requestSort(key) {
+  function requestSort(key: String) {
     if (sortingKey !== key) {
       setSortedData(orderBy(data, key, ["asc"]));
       setSortingKey(key);
@@ -55,18 +56,37 @@ export const Table = ({ tableData, columns, deleteBoulder }) => {
           {rows.map((row) => {
             prepareRow(row);
             return (
-              <tr
-                {...row.getRowProps()}
-                onClick={() => {
-                  addDeleteHelper(row.original);
-                  if (!clickRowHelper(row.original)) {
-                    deleteBoulder(row.original);
-                  }
-                }}
-              >
-                {row.cells.map((cell) => {
+              <tr {...row.getRowProps()}>
+                {row.cells.map((cell, index) => {
                   return (
-                    <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                    <td {...cell.getCellProps()}>
+                      {cell.render("Cell")}
+                      {index === 0 && row.original.area == null ? (
+                        <div
+                          className={"addIcon"}
+                          onClick={() => {
+                            sendClimbed(row.original);
+                          }}
+                        >
+                          {index === 0 && row.original.area == null ? (
+                            <IoMdCheckmark />
+                          ) : null}
+                        </div>
+                      ) : null}
+                      {index === 0 && row.original.area != null ? (
+                        <div
+                          className={"deleteIcon"}
+                          onClick={() => {
+                            deleteBoulder(row.original);
+                            deleteClimbed(row.original);
+                          }}
+                        >
+                          {index === 0 && row.original.area != null ? (
+                            <IoMdClose />
+                          ) : null}
+                        </div>
+                      ) : null}
+                    </td>
                   );
                 })}
               </tr>

@@ -1,7 +1,7 @@
 const getConnection = require("./database");
 import forEach from "lodash/forEach";
 import map from "lodash/map";
-import { existingScrapedSection, scrapedBoulders } from "./serverInserts";
+import { existingScrapedSection, scrapedBoulders } from "./scrapingInserts";
 import { webscrape } from "./queryDistributor";
 
 export function update() {
