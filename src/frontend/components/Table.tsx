@@ -1,6 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { IoMdCheckmark } from "react-icons/io";
-import { IoMdClose } from "react-icons/io";
+import { IoMdCheckmark, IoMdClose } from "react-icons/io";
 import orderBy from "lodash/orderBy";
 import { useTable } from "react-table";
 import { sendClimbed, deleteClimbed } from "../helper/requestHelper";
@@ -68,9 +67,7 @@ export const Table = ({ tableData, columns, deleteBoulder }) => {
                             sendClimbed(row.original);
                           }}
                         >
-                          {index === 0 && row.original.area == null ? (
-                            <IoMdCheckmark />
-                          ) : null}
+                          <IoMdCheckmark />
                         </div>
                       ) : null}
                       {index === 0 && row.original.area != null ? (
@@ -81,9 +78,7 @@ export const Table = ({ tableData, columns, deleteBoulder }) => {
                             deleteClimbed(row.original);
                           }}
                         >
-                          {index === 0 && row.original.area != null ? (
-                            <IoMdClose />
-                          ) : null}
+                          <IoMdClose />
                         </div>
                       ) : null}
                     </td>
