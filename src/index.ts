@@ -1,9 +1,11 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const Request = express.Request
 import { update } from "./update";
 import { addToDb, deleteFromDb, getFromDb } from "./userSql";
 import queryDistributor from "./queryDistributor";
+import { BoulderType } from "./boulderType";
 
 app.use(express.json());
 app.use(cors());
@@ -13,9 +15,9 @@ app.use(
   })
 );
 
-app.post("/", (req, res) => {
+app.post("/", (req: Request, res) => {
   //Handles the query to add the supplied boulder to the "boulders"-database
-  addToDb(req.body)
+  addToDb(req.body as BoulderType)
     .then(() => res.sendStatus(200))
     .catch((err) => console.log(err));
 });

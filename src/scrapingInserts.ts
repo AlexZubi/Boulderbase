@@ -1,9 +1,9 @@
 const getConnection = require("./database");
 import forEach from "lodash/forEach";
-import { boulderType } from "./boulderType";
+import { BoulderType } from "./boulderType";
 
 export function newScrapedSection(cragName: String) {
-  //Saves the areas and date of the scraped section to the "scraped" database. Date defaults to now()
+  //Saves the areas and date of the scraped section to the "scraped" table. Date defaults to now()
   getConnection(function (err, client) {
     client.query(
       "INSERT INTO scraped (name) VALUES ($1) ON CONFLICT (name) DO NOTHING",
@@ -19,9 +19,9 @@ export function existingScrapedSection(cragName: String) {
     ]).then(client.release());;
   });
 }
-export function scrapedBoulders(boulders: boulderType[], area: String) {
+export function scrapedBoulders(boulders: BoulderType[], area: String) {
   //Saves the boulders of the scraping to the "scrapedBoulders" database
-    forEach(boulders, function (boulder: boulderType) {
+    forEach(boulders, function (boulder: BoulderType) {
       getConnection(function (err, client) {
       client.query(
         "INSERT INTO scrapedBoulders (name, grade, area) VALUES ($1, $2, $3) ON CONFLICT (name) DO NOTHING",

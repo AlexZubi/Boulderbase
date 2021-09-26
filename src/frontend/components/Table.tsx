@@ -1,103 +1,73 @@
-import React, { useMemo, useState } from "react";
-import { IoMdCheckmark, IoMdClose } from "react-icons/io";
+import React, { useState } from "react";
+import PropTypes from "prop-types";
 import orderBy from "lodash/orderBy";
-import { useTable } from "react-table";
-import { sendClimbed, deleteClimbed } from "../helper/requestHelper";
 import "./styles/table.css";
-export const Table = ({ tableData, columns, deleteBoulder }) => {
-  columns = useMemo(() => columns, [columns]);
+export const Table = ({ tableData, headingColumns, deleteBoulder }) => {
+  let tableClass = "table-container__table";
   const [sortedData, setSortedData] = useState([]);
   const [sortingKey, setSortingKey] = useState(null);
-  let data = [...tableData];
 
   function requestSort(key: String) {
     if (sortingKey !== key) {
-      setSortedData(orderBy(data, key, ["asc"]));
+      setSortedData(orderBy(tableData, key.toLowerCase(), ["asc"]));
       setSortingKey(key);
     } else {
-      setSortedData(orderBy(data, key, ["desc"]));
+      setSortedData(orderBy(tableData, key.toLowerCase(), ["desc"]));
       setSortingKey(null);
     }
   }
   if (sortedData.length > 0) {
-    data = [...sortedData];
+    tableData = [...sortedData];
   }
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    footerGroups,
-    rows,
-    prepareRow,
-  } = useTable({
-    columns,
-    data,
+  const data = tableData.map((row, index) => {
+    let rowData = [];
+    let i = 0;
+
+    for (const key in row) {
+      rowData.push({
+        key: headingColumns[i],
+        val: row[key],
+      });
+      i++;
+    }
+
+    return (
+      <tr key={index}>
+        {rowData.map((data, index) => (
+          <td key={index} data-heading={data.key}>
+            {data.val}
+          </td>
+        ))}
+      </tr>
+    );
   });
 
   return (
-    <>
-      <table {...getTableProps()}>
+    <div className="table-container">
+      <div className="table-container__title"></div>
+      <table className={tableClass}>
         <thead>
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()}>
-                  <button type="button" onClick={() => requestSort(column.id)}>
-                    {column.render("Header")}
-                  </button>
-                </th>
-              ))}
-            </tr>
-          ))}
+          <tr>
+            {headingColumns.map((col, index) => (
+              <th key={index}>
+                <button type="button" onClick={() => requestSort(col)}>
+                  {col}
+                </button>
+              </th>
+            ))}
+          </tr>
         </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map((cell, index) => {
-                  return (
-                    <td {...cell.getCellProps()}>
-                      {cell.render("Cell")}
-                      {index === 0 && row.original.area == null ? (
-                        <div
-                          className={"addIcon"}
-                          onClick={() => {
-                            sendClimbed(row.original);
-                          }}
-                        >
-                          <IoMdCheckmark />
-                        </div>
-                      ) : null}
-                      {index === 0 && row.original.area != null ? (
-                        <div
-                          className={"deleteIcon"}
-                          onClick={() => {
-                            deleteBoulder(row.original);
-                            deleteClimbed(row.original);
-                          }}
-                        >
-                          <IoMdClose />
-                        </div>
-                      ) : null}
-                    </td>
-                  );
-                })}
-              </tr>
-            );
-          })}
-        </tbody>
-        <tfoot>
-          {footerGroups.map((footerGroup) => (
-            <tr {...footerGroup.getFooterGroupProps()}>
-              {footerGroup.headers.map((column) => (
-                <td {...column.getFooterProps()}>{column.render("Footer")}</td>
-              ))}
-            </tr>
-          ))}
-        </tfoot>
+        <tbody>{data}</tbody>
       </table>
-    </>
+    </div>
   );
 };
+
+Table.propTypes = {
+  tableData: PropTypes.arrayOf(PropTypes.object).isRequired,
+  headingColumns: PropTypes.arrayOf(PropTypes.string).isRequired,
+  deleteBoulder: PropTypes.func,
+};
+
+export default Table;

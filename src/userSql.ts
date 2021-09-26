@@ -1,8 +1,8 @@
 const getConnection = require("./database");
 import map from "lodash/map";
-import { boulderType } from "./boulderType";
+import { BoulderType } from "./boulderType";
 
-export async function addToDb(boulder: boulderType) {
+export async function addToDb(boulder: BoulderType) {
   //Adds the clicked boulder to the "boulders" database
   getConnection(function (err, client) {
     client
@@ -22,7 +22,7 @@ export async function addToDb(boulder: boulderType) {
       .then(client.release());
   });
 }
-export async function deleteFromDb(boulder: boulderType) {
+export async function deleteFromDb(boulder: BoulderType) {
   //Deletes the supplied boulder from the "boulders" database
   getConnection(function (err, client) {
     client
