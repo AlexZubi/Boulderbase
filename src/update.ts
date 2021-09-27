@@ -1,10 +1,11 @@
-const getConnection = require("./database");
 import forEach from "lodash/forEach";
 import map from "lodash/map";
 import { existingScrapedSection, scrapedBoulders } from "./scrapingInserts";
 import { webscrape } from "./queryDistributor";
 
-export function update() {
+const getConnection = require("./database");
+
+export function update(): void {
   //Function to update the database automatically once the server starts
   console.log("Updating data...");
   getConnection(function (err, client) {
@@ -17,7 +18,7 @@ export function update() {
           outDatedSections(res.rows);
         });
     }
-    function updateDatabase(outdatedValues) {
+    function updateDatabase(outdatedValues): void {
       const areas = map(outdatedValues, "name");
       forEach(areas, function (area: string) {
         existingScrapedSection(area);

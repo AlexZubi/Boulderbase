@@ -1,4 +1,4 @@
-export const fetchDatabase = async (setFetch) => {
+export const fetchDatabase = async (setFetch: any) => {
   //Gets the boulders from the database
   try {
     let URL = "http://localhost:3000/database/";

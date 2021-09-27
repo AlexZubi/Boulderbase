@@ -1,18 +1,19 @@
-const cheerio = require("cheerio");
-const fetch = require("node-fetch");
 import { forEach } from "lodash";
 import { newScrapedSection, scrapedBoulders } from "./scrapingInserts";
-import { boulderConst } from "./boulderType";
+import { BoulderType, boulderConst } from "./models/boulderType";
 
-export function getSection(cragName: string) {
+const cheerio = require("cheerio");
+const fetch = require("node-fetch");
+
+export function getSection(cragName: string): string[] {
   //Gets the second section of a supplied area (second section temporarily for simplicity reasons)
   let URL = `https://27crags.com/site/search?qs=${cragName}`;
-  let climbingAreas = [];
+  let climbingAreas: string[] = [];
   let i = 0;
 
   return fetch(URL, { method: "GET" })
     .then((res: Response) => res.text())
-    .then((html: String) => {
+    .then((html: string) => {
       const $ = cheerio.load(html);
 
       $(".name").each((i: number, ele: string) => {
@@ -26,12 +27,12 @@ export function getSection(cragName: string) {
     });
 }
 
-export async function getBoulderNames(area: string[]) {
+export async function getBoulderNames(area: string[]): Promise<BoulderType[]> {
   //Gets all the boulders of a supplied section
   const link = 0;
   let boulderList = [];
   const areaConst = 1;
-  async function getBoulderInfo(area: string[]) {
+  async function getBoulderInfo(area: string[]): Promise<BoulderType[]> {
     try {
       if (!validURL(area[link])) {
         throw Error("Area not found");
@@ -41,7 +42,7 @@ export async function getBoulderNames(area: string[]) {
         .then((res: Response) => res.text())
         .then((html: string) => {
           const $ = cheerio.load(html);
-
+          //const boulder: BoulderType = {}
           $(".route-block").each((i: number, ele: string) => {
             boulderList[i] = { boulderConst };
             boulderList[i].name = $(ele).find(".lfont").text();
@@ -61,7 +62,7 @@ export async function getBoulderNames(area: string[]) {
   });
 }
 
-function validURL(link: string) {
+function validURL(link: string): boolean {
   //Checks if input is a valid URL
   let url: URL;
   try {
