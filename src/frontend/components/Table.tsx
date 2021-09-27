@@ -71,9 +71,6 @@ export const Table = ({ boulderData, headingColumns, deleteBoulder }) => {
   );
 };
 
-// sendClimbed(boulder);
-// deleteBoulder ? deleteBoulder(boulder) : null;
-
 Table.propTypes = {
   boulderData: PropTypes.arrayOf(PropTypes.object).isRequired,
   headingColumns: PropTypes.arrayOf(PropTypes.string).isRequired,
