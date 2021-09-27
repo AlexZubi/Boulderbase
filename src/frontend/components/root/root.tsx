@@ -32,7 +32,7 @@ const root = () => {
               <Area onSearch={setSearched} />
               <ShowClimbedButton onClick={onClick} />
               <Table
-                tableData={searchedBoulder}
+                boulderData={searchedBoulder}
                 headingColumns={["Name", "Grade"]}
               />
             </>
@@ -45,7 +45,7 @@ const root = () => {
             <>
               <GoBackButton />
               <Table
-                tableData={fetchedBoulders}
+                boulderData={fetchedBoulders}
                 headingColumns={["Name", "Grade", "Area"]}
                 deleteBoulder={setDelete}
               />
