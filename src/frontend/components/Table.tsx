@@ -3,12 +3,14 @@ import PropTypes from "prop-types";
 import orderBy from "lodash/orderBy";
 import { sendClimbed, deleteClimbed } from "../helper/requestHelper";
 import { IoMdCheckmark, IoMdClose } from "react-icons/io";
+import { BoulderType } from "../components/types/boulderType"
 import "./styles/table.css";
+
 export const Table = ({ boulderData, headingColumns, deleteBoulder }) => {
   const [sortedData, setSortedData] = useState([]);
   const [sortingKey, setSortingKey] = useState(null);
 
-  function requestSort(key: String) {
+  function requestSort(key: string) {
     if (sortingKey !== key) {
       setSortedData(orderBy(boulderData, key.toLowerCase(), ["asc"]));
       setSortingKey(key);
@@ -26,7 +28,7 @@ export const Table = ({ boulderData, headingColumns, deleteBoulder }) => {
       <table>
         <thead>
           <tr>
-            {headingColumns.map((col, index: number) => (
+            {headingColumns.map((col: string, index: number) => (
               <th key={index}>
                 <button type="button" onClick={() => requestSort(col)}>
                   {col}
@@ -36,7 +38,7 @@ export const Table = ({ boulderData, headingColumns, deleteBoulder }) => {
           </tr>
         </thead>
         <tbody>
-          {boulderData.map((boulder, index: number) => (
+          {boulderData.map((boulder: BoulderType, index: number) => (
             <tr key={index}>
               <td>
                 {boulder.name}
