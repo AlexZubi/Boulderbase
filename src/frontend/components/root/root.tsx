@@ -5,11 +5,12 @@ import { fetchDatabase } from "../../helper/requestHelper";
 import { Table } from "../Table";
 import { ShowClimbedButton } from "../ShowClimbedButton";
 import { GoBackButton } from "../GoBackButton";
+import { BoulderType } from "../types/boulderType";
 
 const root = () => {
-  const [searchedBoulder, setSearched] = useState([]); //Sets the state to the result of the webscraper
-  const [fetchedBoulders, setFetch] = useState([]); //Sets the state to the fetched entries of the "boulders" database
-  const [toDelete, setDelete] = useState(null);
+  const [searchedBoulders, setSearched] = useState<BoulderType[]>([]); //Sets the state to the result of the webscraper
+  const [fetchedBoulders, setFetch] = useState<BoulderType[]>([]); //Sets the state to the fetched entries of the "boulders" database
+  const [toDelete, setDelete] = useState<BoulderType>(null);
   const onClick = () => {
     fetchDatabase(setFetch);
   };
@@ -32,7 +33,7 @@ const root = () => {
               <Area onSearch={setSearched} />
               <ShowClimbedButton onClick={onClick} />
               <Table
-                boulderData={searchedBoulder}
+                boulderData={searchedBoulders}
                 headingColumns={["Name", "Grade"]}
               />
             </>

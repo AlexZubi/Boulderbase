@@ -6,7 +6,7 @@ import { BoulderType } from "../components/types/boulderType";
 import "./styles/table.css";
 
 interface TableProps {
-  boulderData: object[];
+  boulderData: BoulderType[];
   headingColumns: string[];
   deleteBoulder?: (boulder: BoulderType) => void;
 }
@@ -16,8 +16,8 @@ export const Table = ({
   headingColumns,
   deleteBoulder,
 }: TableProps) => {
-  const [sortedData, setSortedData] = useState([]);
-  const [sortingKey, setSortingKey] = useState(null);
+  const [sortedData, setSortedData] = useState<BoulderType[]>([]);
+  const [sortingKey, setSortingKey] = useState<string>(null);
 
   function requestSort(key: string) {
     if (sortingKey !== key) {

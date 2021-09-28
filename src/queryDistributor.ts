@@ -40,7 +40,10 @@ function newQuery(cragName: string): Promise<BoulderType[]> {
   return webscrape(cragName);
 }
 
-function reapeatingQuery(cragName: string, supplyQueryResult: Function): void {
+function reapeatingQuery(
+  cragName: string,
+  supplyQueryResult: (res: BoulderType[]) => void
+): void {
   //Handles a query which supplied a name that is already present in the "scraped" database
   getConnection(function (err, client): void {
     client

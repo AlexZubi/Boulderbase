@@ -7,8 +7,8 @@ interface SearchProp {
 }
 
 export const Area = ({ onSearch }: SearchProp) => {
-  const [area, setArea] = useState("");
-  const [error, setError] = useState("");
+  const [area, setArea] = useState<string>("");
+  const [error, setError] = useState<string>("");
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     //Gets the boulders from the second section of a supplied area

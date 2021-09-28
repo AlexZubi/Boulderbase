@@ -9,7 +9,7 @@ export function update(): void {
   //Function to update the database automatically once the server starts
   console.log("Updating data...");
   getConnection(function (err, client): void {
-    function checkOutdated(outDatedSections: Function) {
+    function checkOutdated(outDatedSections: (res: object[]) => void) {
       client
         .query(
           "SELECT name FROM scraped WHERE scraping_date < now() - '7 days' :: interval"
