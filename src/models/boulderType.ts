@@ -3,8 +3,3 @@ export type BoulderType = {
     grade?: string,
     area?: string,
   };
-  export const boulderConst = {
-    name: String,
-    grade: String,
-    area: String,
-  };

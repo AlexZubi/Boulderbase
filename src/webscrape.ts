@@ -1,6 +1,6 @@
 import { forEach } from "lodash";
 import { newScrapedSection, scrapedBoulders } from "./scrapingInserts";
-import { BoulderType, boulderConst } from "./models/boulderType";
+import { BoulderType } from "./models/boulderType";
 
 const cheerio = require("cheerio");
 const fetch = require("node-fetch");
@@ -30,7 +30,7 @@ export function getSection(cragName: string): string[] {
 export async function getBoulderNames(area: string[]): Promise<BoulderType[]> {
   //Gets all the boulders of a supplied section
   const link = 0;
-  let boulderList = [];
+  let boulderList: BoulderType[] = [];
   const areaConst = 1;
   async function getBoulderInfo(area: string[]): Promise<BoulderType[]> {
     try {
@@ -42,13 +42,15 @@ export async function getBoulderNames(area: string[]): Promise<BoulderType[]> {
         .then((res: Response) => res.text())
         .then((html: string) => {
           const $ = cheerio.load(html);
-          //const boulder: BoulderType = {}
-          $(".route-block").each((i: number, ele: string) => {
-            boulderList[i] = { boulderConst };
-            boulderList[i].name = $(ele).find(".lfont").text();
-          });
-          $(".grade").each((i: number, ele: string) => {
-            boulderList[i].grade = $(ele).text();
+          $("tr").each((i: number, ele: string) => {
+            const boulder: BoulderType = {
+              name: $(ele).find(".lfont").text(),
+              grade: $(ele).find(".grade").text(),
+            };
+            //To exclude the table-header
+            if (i > 0) {
+              boulderList[i - 1] = boulder;
+            }
           });
         });
     } catch (err) {
