@@ -3,7 +3,7 @@ import { BoulderType } from "./models/boulderType";
 
 const getConnection = require("./database");
 
-export function newScrapedSection(cragName: String): void {
+export function newScrapedSection(cragName: string): void {
   //Saves the areas and date of the scraped section to the "scraped" table. Date defaults to now()
   getConnection(function (err, client): void {
     client
@@ -14,7 +14,7 @@ export function newScrapedSection(cragName: String): void {
       .then(client.release());
   });
 }
-export function existingScrapedSection(cragName: String): void {
+export function existingScrapedSection(cragName: string): void {
   //Updates the date of the section in the "scraped" database
   getConnection(function (err, client): void {
     client
@@ -24,9 +24,9 @@ export function existingScrapedSection(cragName: String): void {
       .then(client.release());
   });
 }
-export function scrapedBoulders(boulders: BoulderType[], area: String): void {
+export function scrapedBoulders(boulders: BoulderType[], area: string): void {
   //Saves the boulders of the scraping to the "scrapedBoulders" database
-  forEach(boulders, function (boulder: BoulderType) {
+  forEach(boulders, function (boulder: BoulderType): void {
     getConnection(function (err, client): void {
       client
         .query(

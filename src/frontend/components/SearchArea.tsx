@@ -1,7 +1,12 @@
 import React, { useState } from "react";
+import { BoulderType } from "./types/boulderType";
 import "./styles/table.css";
 
-export const Area = ({ onSearch }) => {
+interface SearchProp {
+  onSearch?: (boulder: BoulderType[]) => void;
+}
+
+export const Area = ({ onSearch }: SearchProp) => {
   const [area, setArea] = useState("");
   const [error, setError] = useState("");
 
@@ -49,7 +54,7 @@ export const Area = ({ onSearch }) => {
           onChange={(e) => setArea(e.target.value)}
         />
       </div>
-      {error && <div className={'searchError'}>{error}</div>}
+      {error && <div className={"searchError"}>{error}</div>}
     </form>
   );
 };

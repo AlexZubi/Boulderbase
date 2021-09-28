@@ -8,7 +8,10 @@ export default async function queryDistributor(
   supplyResult: (data: BoulderType[]) => void
 ): Promise<void> {
   //Does an initial nameCheck resulting in the type of query and hands it to the respective function
-  function checkName(cragName: string, outdatedSections: Function) {
+  function checkName(
+    cragName: string,
+    outdatedSections: (res: HTMLTableElement) => Promise<void>
+  ): void {
     if (cragName != null) {
       getConnection(function (err, client): void {
         client

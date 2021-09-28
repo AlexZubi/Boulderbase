@@ -8,7 +8,7 @@ const getConnection = require("./database");
 export function update(): void {
   //Function to update the database automatically once the server starts
   console.log("Updating data...");
-  getConnection(function (err, client) {
+  getConnection(function (err, client): void {
     function checkOutdated(outDatedSections: Function) {
       client
         .query(
@@ -18,9 +18,9 @@ export function update(): void {
           outDatedSections(res.rows);
         });
     }
-    function updateDatabase(outdatedValues): void {
+    function updateDatabase(outdatedValues: object[]): void {
       const areas = map(outdatedValues, "name");
-      forEach(areas, function (area: string) {
+      forEach(areas, function (area: string): void {
         existingScrapedSection(area);
         webscrape(area)
           .then((boulders) => scrapedBoulders(boulders, area))

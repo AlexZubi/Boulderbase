@@ -1,4 +1,6 @@
-export const fetchDatabase = async (setFetch: any) => {
+import { BoulderType } from "../components/types/boulderType";
+
+export const fetchDatabase = async (setFetch: (res: BoulderType[]) => void) => {
   //Gets the boulders from the database
   try {
     let URL = "http://localhost:3000/database/";
@@ -11,7 +13,7 @@ export const fetchDatabase = async (setFetch: any) => {
   }
 };
 
-export const sendClimbed = (selectBoulders: any) => {
+export const sendClimbed = (selectBoulders: BoulderType) => {
   //Sends the climbed boulders to the database
   const URL = "http://127.0.0.1:3000/";
 
@@ -29,7 +31,7 @@ export const sendClimbed = (selectBoulders: any) => {
   postData(URL, selectBoulders);
 };
 
-export const deleteClimbed = (boulder) => {
+export const deleteClimbed = (boulder: BoulderType) => {
   //Sends a delete request from the "boulders"-database to the middleware
   const URL = "http://127.0.0.1:3000/";
 

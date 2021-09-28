@@ -1,12 +1,21 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 import orderBy from "lodash/orderBy";
 import { sendClimbed, deleteClimbed } from "../helper/requestHelper";
 import { IoMdCheckmark, IoMdClose } from "react-icons/io";
-import { BoulderType } from "../components/types/boulderType"
+import { BoulderType } from "../components/types/boulderType";
 import "./styles/table.css";
 
-export const Table = ({ boulderData, headingColumns, deleteBoulder }) => {
+interface TableProps {
+  boulderData: object[];
+  headingColumns: string[];
+  deleteBoulder?: (boulder: BoulderType) => void;
+}
+
+export const Table = ({
+  boulderData,
+  headingColumns,
+  deleteBoulder,
+}: TableProps) => {
   const [sortedData, setSortedData] = useState([]);
   const [sortingKey, setSortingKey] = useState(null);
 
@@ -71,12 +80,6 @@ export const Table = ({ boulderData, headingColumns, deleteBoulder }) => {
       </table>
     </div>
   );
-};
-
-Table.propTypes = {
-  boulderData: PropTypes.arrayOf(PropTypes.object).isRequired,
-  headingColumns: PropTypes.arrayOf(PropTypes.string).isRequired,
-  deleteBoulder: PropTypes.func,
 };
 
 export default Table;
