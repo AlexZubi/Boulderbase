@@ -35,7 +35,7 @@ export async function deleteFromDb(boulder: BoulderType): Promise<void> {
       .then(client.release());
   });
 }
-export async function getFromDb(): Promise<void> {
+export async function getFromDb(): Promise<Response> {
   //Gets all boulder from the "boulders" database
   return new Promise((resolve, reject) => {
     getConnection(function (err, client) {
