@@ -2,19 +2,19 @@ import forEach from "lodash/forEach";
 import map from "lodash/map";
 import { existingScrapedSection, scrapedBoulders } from "./scrapingInserts";
 import { webscrape } from "./queryDistributor";
+import getConnection from "./database/initConnection";
 
-const getConnection = require("./database");
-
-export function update(): void {
+export function update() {
   //Function to update the database automatically once the server starts
   console.log("Updating data...");
-  getConnection(function (err, client): void {
+  return getConnection().then((client) => {
     function checkOutdated(outDatedSections: (res: object[]) => void) {
       client
         .query(
-          "SELECT name FROM scraped WHERE scraping_date < now() - '7 days' :: interval"
+          "SELECT name FROM webscraped_area WHERE scraping_date < now() - '7 days' :: interval"
         )
         .then((res) => {
+          client.release();
           outDatedSections(res.rows);
         });
     }
@@ -22,9 +22,7 @@ export function update(): void {
       const areas = map(outdatedValues, "name");
       forEach(areas, function (area: string): void {
         existingScrapedSection(area);
-        webscrape(area)
-          .then((boulders) => scrapedBoulders(boulders, area))
-          .then(() => client.release());
+        webscrape(area).then((boulders) => scrapedBoulders(boulders, area));
       });
     }
     checkOutdated(updateDatabase);

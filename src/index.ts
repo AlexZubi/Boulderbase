@@ -27,10 +27,6 @@ app.get("/database", async (req: Request, res: Response) => {
   getFromDb().then((boulderList) => res.send(boulderList));
 });
 
-app.get("/", async (req, res) => {
-  //Testfunction
-});
-
 app.get("/boulder/:crag", async (req: Request, res: Response) => {
   //Handles the query to get all the boulders of a supplied section from the scraper
   try {
@@ -52,6 +48,5 @@ app.delete("/", (req: Request, res: Response) => {
 
 app.listen(3000, async () => {
   //Starts the server and checks if updates to the database are neccessary
-  update();
-  console.log("Data updated. Server ready");
+  update().then(() => console.log("Data updated. Server ready"));
 });

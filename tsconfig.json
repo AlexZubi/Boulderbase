@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "rootDir": "src/frontend",
+    "rootDir": "src",
     "lib": ["es2015", "DOM"],
     "allowJs": true,
     "target": "es5",
@@ -13,5 +13,5 @@
     "noEmit": false,
   },
   "exclude": ["node_modules", "dist"],
-  "include": ["src/frontend"]
+  "include": ["src/**/*.ts"]
 }

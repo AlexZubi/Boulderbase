@@ -47,7 +47,6 @@ export async function getBoulderNames(area: string[]): Promise<BoulderType[]> {
               name: $(ele).find(".lfont").text(),
               grade: $(ele).find(".grade").text(),
             };
-            //To exclude the table-header
             if (i > 0) {
               boulderList[i - 1] = boulder;
             }

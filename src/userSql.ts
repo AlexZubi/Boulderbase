@@ -1,13 +1,12 @@
 import map from "lodash/map";
 import { BoulderType } from "./models/boulderType";
-
-const getConnection = require("./database");
+import getConnection from "./database/initConnection";
 
 export async function addToDb(boulder: BoulderType): Promise<void> {
   //Adds the clicked boulder to the "boulders" database
-  getConnection(function (err, client) {
+  getConnection().then((client) => {
     client
-      .query("SELECT area FROM scrapedboulders WHERE name = ($1)", [
+      .query("SELECT area FROM webscraped_boulder WHERE name = ($1)", [
         boulder.name,
       ])
       .then((res) => {
@@ -16,33 +15,33 @@ export async function addToDb(boulder: BoulderType): Promise<void> {
       })
       .then(() =>
         client.query(
-          "INSERT INTO boulders (name, grade, area) VALUES ($1, $2, $3) ON CONFLICT (name) DO NOTHING",
+          "INSERT INTO user_boulder (name, grade, area) VALUES ($1, $2, $3) ON CONFLICT (name) DO NOTHING",
           [boulder.name, boulder.grade, boulder.area]
         )
       )
-      .then(client.release());
+      .then(() => client.release());
   });
 }
+
 export async function deleteFromDb(boulder: BoulderType): Promise<void> {
   //Deletes the supplied boulder from the "boulders" database
-  getConnection(function (err, client) {
-    client
-      .query("DELETE FROM boulders WHERE (name, grade, area) = ($1, $2, $3)", [
-        boulder.name,
-        boulder.grade,
-        boulder.area,
-      ])
-      .then(client.release());
+  getConnection().then((client) => {
+    return client
+      .query(
+        "DELETE FROM user_boulder WHERE (name, grade, area) = ($1, $2, $3)",
+        [boulder.name, boulder.grade, boulder.area]
+      )
+      .then(() => client.release());
   });
 }
-export async function getFromDb(): Promise<Response> {
+export async function getFromDb(): Promise<BoulderType[]> {
   //Gets all boulder from the "boulders" database
-  return new Promise((resolve, reject) => {
-    getConnection(function (err, client) {
-      client
-        .query("SELECT name, grade, area FROM boulders")
-        .then((res) => resolve(res.rows))
-        .then(client.release());
-    });
+  return getConnection().then((client) => {
+    return client
+      .query("SELECT name, grade, area FROM user_boulder")
+      .then((res) => {
+        client.release();
+        return res.rows;
+      });
   });
 }
