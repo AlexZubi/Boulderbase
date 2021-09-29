@@ -1,4 +1,3 @@
--- User Database
 CREATE DATABASE boulderbase;
 
 \c boulderbase
