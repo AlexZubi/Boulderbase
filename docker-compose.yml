@@ -1,5 +1,0 @@
-version: "3"
-services: 
-  express_project:
-    image: first_try:latest
-    network_mode: "host"
