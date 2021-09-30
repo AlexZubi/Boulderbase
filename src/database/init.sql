@@ -19,8 +19,18 @@ CREATE TABLE webscraped_boulder (
 
 -- Table to store boulders added by user
 CREATE TABLE user_boulder (
-    boulder_id SERIAL PRIMARY KEY REFERENCES webscraped_boulder(boulder_id),
-    name VARCHAR(100) UNIQUE,
-    grade VARCHAR(6),
-    area VARCHAR(20)
+    boulder_id INTEGER PRIMARY KEY,
+    CONSTRAINT boulder_id FOREIGN KEY (boulder_id) REFERENCES webscraped_boulder(boulder_id)
 );
+
+
+/*
+"SELECT name, grade, area FROM user_boulder JOIN webscraped_boulder USING (boulder_id)"
+
+INSERT INTO user_boulder VALUES ((SELECT boulder_id FROM webscraped_boulder WHERE name = 'Tenor'));
+
+"DELETE FROM user_boulder WHERE (name, grade, area) = ($1, $2, $3)",
+
+"DELETE FROM user_boulder WHERE ((SELECT boulder_id FROM webscraped_boulder WHERE name = 'Tenor')) = boulder_id;",
+
+*/

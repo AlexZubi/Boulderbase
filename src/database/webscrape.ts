@@ -1,6 +1,6 @@
 import { forEach } from "lodash";
 import { newScrapedSection, scrapedBoulders } from "./scrapingInserts";
-import { BoulderType } from "./models/boulderType";
+import { BoulderType } from "../models/boulderType";
 
 const cheerio = require("cheerio");
 const fetch = require("node-fetch");

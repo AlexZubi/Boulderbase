@@ -1,6 +1,6 @@
 import { getSection, getBoulderNames } from "./webscrape";
-import { BoulderType } from "./models/boulderType";
-import getConnection from "./database/initConnection";
+import { BoulderType } from "../models/boulderType";
+import getConnection from "./initConnection";
 import { QueryResult } from "pg";
 
 export default async function queryDistributor(

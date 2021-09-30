@@ -2,9 +2,9 @@ import forEach from "lodash/forEach";
 import map from "lodash/map";
 import { existingScrapedSection, scrapedBoulders } from "./scrapingInserts";
 import { webscrape } from "./queryDistributor";
-import getConnection from "./database/initConnection";
+import getConnection from "./initConnection";
 
-export function update() {
+export function update(): Promise<void> {
   //Function to update the database automatically once the server starts
   console.log("Updating data...");
   return getConnection().then((client) => {
@@ -25,6 +25,6 @@ export function update() {
         webscrape(area).then((boulders) => scrapedBoulders(boulders, area));
       });
     }
-    checkOutdated(updateDatabase);
+    return checkOutdated(updateDatabase);
   });
 }

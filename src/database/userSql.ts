@@ -1,23 +1,15 @@
 import map from "lodash/map";
-import { BoulderType } from "./models/boulderType";
-import getConnection from "./database/initConnection";
+import { BoulderType } from "../models/boulderType";
+import getConnection from "./initConnection";
 
 export async function addToDb(boulder: BoulderType): Promise<void> {
   //Adds the clicked boulder to the "boulders" database
   getConnection().then((client) => {
     client
-      .query("SELECT area FROM webscraped_boulder WHERE name = ($1)", [
-        boulder.name,
-      ])
-      .then((res) => {
-        let area = map(res.rows, "area");
-        boulder.area = area[0];
-      })
-      .then(() =>
-        client.query(
-          "INSERT INTO user_boulder (name, grade, area) VALUES ($1, $2, $3) ON CONFLICT (name) DO NOTHING",
-          [boulder.name, boulder.grade, boulder.area]
-        )
+      .query(
+        "INSERT INTO user_boulder VALUES" +
+          "((SELECT boulder_id FROM webscraped_boulder WHERE name = ($1))) ON CONFLICT (boulder_id) DO NOTHING",
+        [boulder.name]
       )
       .then(() => client.release());
   });
@@ -28,7 +20,8 @@ export async function deleteFromDb(boulder: BoulderType): Promise<void> {
   getConnection().then((client) => {
     return client
       .query(
-        "DELETE FROM user_boulder WHERE (name, grade, area) = ($1, $2, $3)",
+        "DELETE FROM user_boulder WHERE " +
+          "((SELECT boulder_id FROM webscraped_boulder WHERE (name, grade, area) = ($1, $2, $3))) = boulder_id;",
         [boulder.name, boulder.grade, boulder.area]
       )
       .then(() => client.release());
@@ -38,7 +31,9 @@ export async function getFromDb(): Promise<BoulderType[]> {
   //Gets all boulder from the "boulders" database
   return getConnection().then((client) => {
     return client
-      .query("SELECT name, grade, area FROM user_boulder")
+      .query(
+        "SELECT name, grade, area FROM user_boulder JOIN webscraped_boulder USING (boulder_id)"
+      )
       .then((res) => {
         client.release();
         return res.rows;

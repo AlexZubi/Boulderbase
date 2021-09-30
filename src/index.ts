@@ -1,8 +1,8 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
-import { update } from "./update";
-import { addToDb, deleteFromDb, getFromDb } from "./userSql";
-import queryDistributor from "./queryDistributor";
+import { update } from "./database/update";
+import { addToDb, deleteFromDb, getFromDb } from "./database/userSql";
+import queryDistributor from "./database/queryDistributor";
 import { BoulderType } from "./models/boulderType";
 
 const app = express();

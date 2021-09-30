@@ -1,6 +1,6 @@
 import forEach from "lodash/forEach";
-import { BoulderType } from "./models/boulderType";
-import getConnection from "./database/initConnection";
+import { BoulderType } from "../models/boulderType";
+import getConnection from "./initConnection";
 
 export function newScrapedSection(cragName: string): Promise<void> {
   //Saves the areas and date of the scraped section to the "scraped" table. Date defaults to now()
