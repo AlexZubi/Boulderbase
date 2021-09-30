@@ -1,4 +1,3 @@
-import map from "lodash/map";
 import { BoulderType } from "../models/boulderType";
 import getConnection from "./initConnection";
 
@@ -21,7 +20,7 @@ export async function deleteFromDb(boulder: BoulderType): Promise<void> {
     return client
       .query(
         "DELETE FROM user_boulder WHERE " +
-          "((SELECT boulder_id FROM webscraped_boulder WHERE (name, grade, area) = ($1, $2, $3))) = boulder_id;",
+          "((SELECT boulder_id FROM webscraped_boulder WHERE (name, grade,area) = ($1, $2, $3))) = boulder_id;",
         [boulder.name, boulder.grade, boulder.area]
       )
       .then(() => client.release());
