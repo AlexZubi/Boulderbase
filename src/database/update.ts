@@ -2,7 +2,7 @@ import forEach from "lodash/forEach";
 import map from "lodash/map";
 import { existingScrapedSection, scrapedBoulders } from "./scrapingInserts";
 import { webscrape } from "./queryDistributor";
-import getConnection from "./initConnection";
+import getConnection from "../database/connectionPool";
 
 export function update(): Promise<void> {
   //Function to update the database automatically once the server starts

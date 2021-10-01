@@ -1,5 +1,5 @@
 import { BoulderType } from "../models/boulderType";
-import getConnection from "./initConnection";
+import getConnection from "../database/connectionPool";
 
 export async function addToDb(boulder: BoulderType): Promise<void> {
   //Adds the clicked boulder to the "boulders" database

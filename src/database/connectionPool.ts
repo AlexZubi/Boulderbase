@@ -1,6 +1,6 @@
 import { Pool } from "pg";
 
-export const pool = new Pool({
+const pool = new Pool({
   user: "postgres",
   password: "",
   database: "boulderbase",
@@ -8,3 +8,9 @@ export const pool = new Pool({
   port: 5432,
   max: 20,
 });
+
+var getConnection = function ( ) {
+  return pool.connect()
+}
+
+export default getConnection;
