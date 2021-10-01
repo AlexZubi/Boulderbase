@@ -1,5 +1,6 @@
 export type BoulderType = {
-    name?: string,
-    grade?: string,
-    area?: string,
-  };
+  boulder_id?: number,
+  name?: string,
+  grade?: string,
+  area?: string,
+};

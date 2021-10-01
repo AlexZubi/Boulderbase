@@ -24,16 +24,3 @@ export function existingScrapedSection(cragName: string): Promise<void> {
       .then(() => client.release());
   });
 }
-export function scrapedBoulders(boulders: BoulderType[], area: string): void {
-  //Saves the boulders of the scraping to the "scrapedBoulders" database
-  forEach(boulders, function (boulder: BoulderType): Promise<void> {
-    return getConnection().then((client) => {
-      client
-        .query(
-          "INSERT INTO webscraped_boulder (name, grade, area) VALUES ($1, $2, $3) ON CONFLICT (name) DO NOTHING",
-          [boulder.name, boulder.grade, area]
-        )
-        .then(() => client.release());
-    });
-  });
-}

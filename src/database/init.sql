@@ -12,7 +12,7 @@ CREATE TABLE webscraped_area (
 -- Table to store the results of past search requests
 CREATE TABLE webscraped_boulder (
     boulder_id SERIAL PRIMARY KEY,
-    name VARCHAR(100) UNIQUE,
+    name VARCHAR(100),
     grade VARCHAR(6),
     area VARCHAR(20)
 );

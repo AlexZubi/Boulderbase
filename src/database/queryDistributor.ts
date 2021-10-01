@@ -31,7 +31,12 @@ export default async function queryDistributor(
     async function (data: QueryResult<HTMLTableElement>): Promise<void> {
       if (Object.keys(data.rows).length === 0) {
         //If name wasn't in the "scraped" database
-        supplyResult(await newQuery(cragName));
+        const getArea = await getSection(cragName);
+        await getBoulderNames(getArea).then(() => {
+          reapeatingQuery(cragName, function (data: BoulderType[]): void {
+            supplyResult(data);
+          });
+        });
       } else {
         //If name was in the "scraped" database
         reapeatingQuery(cragName, function (data: BoulderType[]): void {
@@ -42,11 +47,6 @@ export default async function queryDistributor(
   );
 }
 
-function newQuery(cragName: string): Promise<BoulderType[]> {
-  //Handles a query which supplied a name that is not present in the "scraped" database
-  return webscrape(cragName);
-}
-
 function reapeatingQuery(
   cragName: string,
   supplyQueryResult: (res: BoulderType[]) => void
@@ -54,18 +54,14 @@ function reapeatingQuery(
   //Handles a query which supplied a name that is already present in the "scraped" database
   return getConnection().then((client) => {
     client
-      .query("SELECT name, grade FROM webscraped_boulder WHERE area = ($1)", [
-        cragName,
-      ])
+      .query(
+        "SELECT boulder_id, name, grade FROM webscraped_boulder WHERE area = ($1)",
+        [cragName]
+      )
       .then((res) => {
         client.release();
+        console.log(res.rows)
         supplyQueryResult(res.rows);
       });
   });
-}
-
-export async function webscrape(cragName: string): Promise<BoulderType[]> {
-  const getArea = await getSection(cragName);
-  const getBoulder = await getBoulderNames(getArea);
-  return getBoulder;
 }

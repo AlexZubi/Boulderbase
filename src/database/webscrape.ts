@@ -1,6 +1,7 @@
 import { forEach } from "lodash";
-import { newScrapedSection, scrapedBoulders } from "./scrapingInserts";
+import { newScrapedSection } from "./scrapingInserts";
 import { BoulderType } from "../models/boulderType";
+import getConnection from "../database/connectionPool";
 
 const cheerio = require("cheerio");
 const fetch = require("node-fetch");
@@ -27,29 +28,34 @@ export function getSection(cragName: string): string[] {
     });
 }
 
-export async function getBoulderNames(area: string[]): Promise<BoulderType[]> {
+export async function getBoulderNames(area: string[]): Promise<void> {
   //Gets all the boulders of a supplied section
   const link = 0;
-  let boulderList: BoulderType[] = [];
+  let y = 0;
   const areaConst = 1;
-  async function getBoulderInfo(area: string[]): Promise<BoulderType[]> {
+  async function getBoulderInfo(area: string[]): Promise<void> {
     try {
       if (!validURL(area[link])) {
         throw Error("Area not found");
       }
       newScrapedSection(area[areaConst]);
-      return fetch(area[link], { method: "GET" })
+      await fetch(area[link], { method: "GET" })
         .then((res: Response) => res.text())
-        .then((html: string) => {
-          const $ = cheerio.load(html);
-          $("tr").each((i: number, ele: string) => {
-            const boulder: BoulderType = {
-              name: $(ele).find(".lfont").text(),
-              grade: $(ele).find(".grade").text(),
-            };
-            if (i > 0) {
-              boulderList[i - 1] = boulder;
-            }
+        .then(async (html: string) => {
+            const $ = cheerio.load(html);
+            await getConnection().then( async (client) => {
+            await $("tr").each(async (i: number, ele: string) => {
+              let boulder: BoulderType = {
+                name: $(ele).find(".lfont").text(),
+                grade: $(ele).find(".grade").text(),
+              };
+              if (boulder.name.length > 0) {
+                await client.query(
+                  "INSERT INTO webscraped_boulder (name, grade, area) VALUES ($1, $2, $3) RETURNING boulder_id",
+                  [boulder.name, boulder.grade, area[areaConst]]
+                );
+              }
+            });
           });
         });
     } catch (err) {
@@ -57,10 +63,7 @@ export async function getBoulderNames(area: string[]): Promise<BoulderType[]> {
       console.log("Server is listening...");
     }
   }
-  return await getBoulderInfo(area).then(() => {
-    scrapedBoulders(boulderList, area[areaConst]);
-    return boulderList;
-  });
+  return await getBoulderInfo(area);
 }
 
 function validURL(link: string): boolean {

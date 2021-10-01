@@ -1,7 +1,6 @@
 import forEach from "lodash/forEach";
 import map from "lodash/map";
-import { existingScrapedSection, scrapedBoulders } from "./scrapingInserts";
-import { webscrape } from "./queryDistributor";
+import { existingScrapedSection } from "./scrapingInserts";
 import getConnection from "../database/connectionPool";
 
 export function update(): Promise<void> {
@@ -22,7 +21,6 @@ export function update(): Promise<void> {
       const areas = map(outdatedValues, "name");
       forEach(areas, function (area: string): void {
         existingScrapedSection(area);
-        webscrape(area).then((boulders) => scrapedBoulders(boulders, area));
       });
     }
     return checkOutdated(updateDatabase);
