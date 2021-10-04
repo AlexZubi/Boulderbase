@@ -6,9 +6,8 @@ export async function addToDb(boulder: BoulderType): Promise<void> {
   getConnection().then((client) => {
     client
       .query(
-        "INSERT INTO user_boulder VALUES" +
-          "((SELECT boulder_id FROM webscraped_boulder WHERE name = ($1))) ON CONFLICT (boulder_id) DO NOTHING",
-        [boulder.name]
+        "INSERT INTO user_boulder VALUES ($1) ON CONFLICT (boulder_id) DO NOTHING",
+        [boulder.boulder_id]
       )
       .then(() => client.release());
   });
@@ -19,9 +18,8 @@ export async function deleteFromDb(boulder: BoulderType): Promise<void> {
   getConnection().then((client) => {
     return client
       .query(
-        "DELETE FROM user_boulder WHERE " +
-          "((SELECT boulder_id FROM webscraped_boulder WHERE (name, grade,area) = ($1, $2, $3))) = boulder_id;",
-        [boulder.name, boulder.grade, boulder.area]
+        "DELETE FROM user_boulder WHERE ($1) = boulder_id;",
+        [boulder.boulder_id]
       )
       .then(() => client.release());
   });
