@@ -31,7 +31,6 @@ export function getSection(cragName: string): string[] {
 export async function getBoulderNames(area: string[]): Promise<void> {
   //Gets all the boulders of a supplied section
   const link = 0;
-  let y = 0;
   const areaConst = 1;
   async function getBoulderInfo(area: string[]): Promise<void> {
     try {
@@ -43,19 +42,21 @@ export async function getBoulderNames(area: string[]): Promise<void> {
         .then((res: Response) => res.text())
         .then(async (html: string) => {
             const $ = cheerio.load(html);
-            await getConnection().then( async (client) => {
-            await $("tr").each(async (i: number, ele: string) => {
+            getConnection().then( (client) => {
+            $("tr").each((i: number, ele: string) => {
               let boulder: BoulderType = {
                 name: $(ele).find(".lfont").text(),
                 grade: $(ele).find(".grade").text(),
               };
               if (boulder.name.length > 0) {
-                await client.query(
-                  "INSERT INTO webscraped_boulder (name, grade, area) VALUES ($1, $2, $3) RETURNING boulder_id",
+                client.query(
+                  "INSERT INTO webscraped_boulder (name, grade, area) VALUES ($1, $2, $3)",
                   [boulder.name, boulder.grade, area[areaConst]]
                 );
-              }
+                }
             });
+            console.log("Hello")
+            client.release();
           });
         });
     } catch (err) {

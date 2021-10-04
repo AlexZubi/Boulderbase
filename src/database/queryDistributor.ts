@@ -10,7 +10,7 @@ export default async function queryDistributor(
   //Does an initial nameCheck resulting in the type of query and hands it to the respective function
   function checkName(
     cragName: string,
-    outdatedSections: (res: QueryResult<HTMLTableElement>) => Promise<void>
+    checkedName: (res: QueryResult<HTMLTableElement>) => Promise<void>
   ): Promise<void> {
     if (cragName != null) {
       return getConnection().then((client) => {
@@ -20,7 +20,7 @@ export default async function queryDistributor(
           ])
           .then((res) => {
             client.release();
-            outdatedSections(res);
+            checkedName(res);
           });
       });
     }
@@ -30,16 +30,16 @@ export default async function queryDistributor(
     cragName,
     async function (data: QueryResult<HTMLTableElement>): Promise<void> {
       if (Object.keys(data.rows).length === 0) {
-        //If name wasn't in the "scraped" database
+        //If name wasn't in the "webscraped_area" table
         const getArea = await getSection(cragName);
         await getBoulderNames(getArea).then(() => {
-          reapeatingQuery(cragName, function (data: BoulderType[]): void {
+          handleQuery(cragName, function (data: BoulderType[]): void {
             supplyResult(data);
           });
         });
       } else {
-        //If name was in the "scraped" database
-        reapeatingQuery(cragName, function (data: BoulderType[]): void {
+        //If name was in the "webscraped_area" table
+        handleQuery(cragName, function (data: BoulderType[]): void {
           supplyResult(data);
         });
       }
@@ -47,11 +47,10 @@ export default async function queryDistributor(
   );
 }
 
-function reapeatingQuery(
+async function handleQuery(
   cragName: string,
   supplyQueryResult: (res: BoulderType[]) => void
 ): Promise<void> {
-  //Handles a query which supplied a name that is already present in the "scraped" database
   return getConnection().then((client) => {
     client
       .query(
