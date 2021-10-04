@@ -1,9 +1,9 @@
 import { getSection, getBoulderNames } from "./webscrape";
 import { BoulderType } from "../models/boulderType";
-import getConnection from "../database/connectionPool";
+import getConnection from "./connectionPool";
 import { QueryResult } from "pg";
 
-export default async function queryDistributor(
+export default async function distributeQuery(
   cragName: string,
   supplyResult: (data: BoulderType[]) => void
 ): Promise<void> {
@@ -59,7 +59,6 @@ async function handleQuery(
       )
       .then((res) => {
         client.release();
-        console.log(res.rows)
         supplyQueryResult(res.rows);
       });
   });

@@ -28,7 +28,7 @@ export function getSection(cragName: string): string[] {
     });
 }
 
-export async function getBoulderNames(area: string[]): Promise<void> {
+export function getBoulderNames(area: string[]): Promise<void> {
   //Gets all the boulders of a supplied section
   const link = 0;
   const areaConst = 1;
@@ -38,33 +38,30 @@ export async function getBoulderNames(area: string[]): Promise<void> {
         throw Error("Area not found");
       }
       newScrapedSection(area[areaConst]);
-      await fetch(area[link], { method: "GET" })
-        .then((res: Response) => res.text())
-        .then(async (html: string) => {
-            const $ = cheerio.load(html);
-            getConnection().then( (client) => {
-            $("tr").each((i: number, ele: string) => {
-              let boulder: BoulderType = {
-                name: $(ele).find(".lfont").text(),
-                grade: $(ele).find(".grade").text(),
-              };
-              if (boulder.name.length > 0) {
-                client.query(
-                  "INSERT INTO webscraped_boulder (name, grade, area) VALUES ($1, $2, $3)",
-                  [boulder.name, boulder.grade, area[areaConst]]
-                );
-                }
-            });
-            console.log("Hello")
-            client.release();
-          });
+      return getConnection().then(async (client) => {
+        const html = await fetch(area[link], { method: "GET" });
+        const result = await html.text();
+        const $ = await cheerio.load(result);
+        await $("tr").each((i: number, ele: string) => {
+          let boulder: BoulderType = {
+            name: $(ele).find(".lfont").text(),
+            grade: $(ele).find(".grade").text(),
+          };
+          if (boulder.name.length > 0) {
+            client.query(
+              "INSERT INTO webscraped_boulder (name, grade, area) VALUES ($1, $2, $3)",
+              [boulder.name, boulder.grade, area[areaConst]]
+            );
+          }
         });
+        client.release();
+      });
     } catch (err) {
       console.log(err);
       console.log("Server is listening...");
     }
   }
-  return await getBoulderInfo(area);
+  return getBoulderInfo(area);
 }
 
 function validURL(link: string): boolean {

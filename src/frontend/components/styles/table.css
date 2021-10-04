@@ -30,11 +30,13 @@ tfoot td {
   display: inherit;
   float: right;
   color: #4da85a;
+  cursor: pointer;
 }
 .deleteIcon {
   display: inherit;
   float: right;
   color: red;
+  cursor: pointer;
 }
 
 .header {

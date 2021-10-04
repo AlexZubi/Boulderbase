@@ -31,7 +31,7 @@ export async function getFromDb(): Promise<BoulderType[]> {
   return getConnection().then((client) => {
     return client
       .query(
-        "SELECT name, grade, area FROM user_boulder JOIN webscraped_boulder USING (boulder_id)"
+        "SELECT boulder_id, name, grade, area FROM user_boulder JOIN webscraped_boulder USING (boulder_id)"
       )
       .then((res) => {
         client.release();

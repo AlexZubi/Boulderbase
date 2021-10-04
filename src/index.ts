@@ -2,7 +2,7 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import { update } from "./database/update";
 import { addToDb, deleteFromDb, getFromDb } from "./database/userSql";
-import queryDistributor from "./database/queryDistributor";
+import distributeQuery from "./database/queryHandler";
 import { BoulderType } from "./models/boulderType";
 
 const app = express();
@@ -31,7 +31,7 @@ app.get("/boulder/:crag", async (req: Request, res: Response) => {
   //Handles the query to get all the boulders of a supplied section from the scraper
   try {
     const { crag } = req.params;
-    await queryDistributor(crag, function (result: BoulderType[]): void {
+    await distributeQuery(crag, function (result: BoulderType[]): void {
       res.json(result);
     });
   } catch (err) {

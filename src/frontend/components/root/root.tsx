@@ -8,8 +8,8 @@ import { GoBackButton } from "../GoBackButton";
 import { BoulderType } from "../types/boulderType";
 
 const root = () => {
-  const [searchedBoulders, setSearched] = useState<BoulderType[]>([]); //Sets the state to the result of the webscraper
-  const [fetchedBoulders, setFetch] = useState<BoulderType[]>([]); //Sets the state to the fetched entries of the "boulders" database
+  const [searchedBoulders, setSearched] = useState<BoulderType[]>(null); 
+  const [fetchedBoulders, setFetch] = useState<BoulderType[]>([]); 
   const [toDelete, setDelete] = useState<BoulderType>(null);
   const onClick = () => {
     fetchDatabase(setFetch);
@@ -32,10 +32,12 @@ const root = () => {
               <h1 className={"header"}>Search Area...</h1>
               <Area onSearch={setSearched} />
               <ShowClimbedButton onClick={onClick} />
-              <Table
-                boulderData={searchedBoulders}
-                headingColumns={["Name", "Grade"]}
-              />
+              {searchedBoulders ? (
+                <Table
+                  boulderData={searchedBoulders}
+                  headingColumns={["Name", "Grade"]}
+                />
+              ) : null}
             </>
           )}
         />
