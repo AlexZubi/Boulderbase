@@ -13,6 +13,7 @@ import "./styles/table.css";
 interface TableProps {
   boulderData: BoulderType[];
   fetchedBoulders?: BoulderType[];
+  setFetchedBoulders?: Promise<void>
   headingColumns: string[];
   deleteBoulder?: (boulder: BoulderType) => void;
 }

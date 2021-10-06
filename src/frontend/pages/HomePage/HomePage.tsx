@@ -32,6 +32,7 @@ const HomePage = ({
       {searchedBoulders ? (
         <Table
           boulderData={searchedBoulders}
+          setFetchedBoulders={fetchDatabase(setFetchedBoulders)}
           fetchedBoulders={fetchedBoulders}
           headingColumns={["Name", "Grade"]}
         />
