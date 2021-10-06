@@ -1,18 +1,25 @@
 import React, { useState } from "react";
 import orderBy from "lodash/orderBy";
 import { sendClimbed, deleteClimbed } from "../helper/requestHelper";
-import { IoMdCheckmark, IoMdClose } from "react-icons/io";
+import {
+  IoIosCheckmarkCircleOutline,
+  IoIosCheckmarkCircle,
+  IoMdClose,
+} from "react-icons/io";
+import find from "lodash/find";
 import { BoulderType } from "../components/types/boulderType";
 import "./styles/table.css";
 
 interface TableProps {
   boulderData: BoulderType[];
+  fetchedBoulders?: BoulderType[];
   headingColumns: string[];
   deleteBoulder?: (boulder: BoulderType) => void;
 }
 
 export const Table = ({
   boulderData,
+  fetchedBoulders,
   headingColumns,
   deleteBoulder,
 }: TableProps) => {
@@ -47,35 +54,43 @@ export const Table = ({
           </tr>
         </thead>
         <tbody>
-          {boulderData.map((boulder: BoulderType, index: number) => (
-            <tr key={index}>
-              <td>
-                {boulder.name}
-                {deleteBoulder ? (
-                  <div
-                    className={"deleteIcon"}
-                    onClick={() => {
-                      deleteBoulder(boulder);
-                      deleteClimbed(boulder);
-                    }}
-                  >
-                    <IoMdClose />
-                  </div>
-                ) : (
-                  <div
-                    className={"addIcon"}
-                    onClick={() => {
-                      sendClimbed(boulder);
-                    }}
-                  >
-                    <IoMdCheckmark />
-                  </div>
-                )}
-              </td>
-              <td>{boulder.grade}</td>
-              {deleteBoulder ? <td>{boulder.area}</td> : null}
-            </tr>
-          ))}
+          {boulderData.map((boulder: BoulderType, index: number) => {
+            console.log({ fetchedBoulders, boulder });
+
+            return (
+              <tr key={index}>
+                <td className="tableName__row">
+                  {boulder.name}
+                  {deleteBoulder ? (
+                    <div
+                      className={"deleteIcon"}
+                      onClick={() => {
+                        deleteBoulder(boulder);
+                        deleteClimbed(boulder);
+                      }}
+                    >
+                      <IoMdClose />
+                    </div>
+                  ) : (
+                    <div
+                      className={"addIcon"}
+                      onClick={() => {
+                        sendClimbed(boulder);
+                      }}
+                    >
+                      {find(fetchedBoulders, boulder) ? (
+                        <IoIosCheckmarkCircle />
+                      ) : (
+                        <IoIosCheckmarkCircleOutline />
+                      )}
+                    </div>
+                  )}
+                </td>
+                <td>{boulder.grade}</td>
+                {deleteBoulder ? <td>{boulder.area}</td> : null}
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>

@@ -7,7 +7,7 @@ interface SearchProp {
 }
 
 export const Area = ({ onSearch }: SearchProp) => {
-  const [area, setArea] = useState<string>("");
+  const [area, setArea] = useState<string>("Sudelfeld");
   const [error, setError] = useState<string>("");
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -50,7 +50,7 @@ export const Area = ({ onSearch }: SearchProp) => {
         <input
           type="text"
           placeholder="Area"
-          value={area}
+          value={"Sudelfeld" || area}
           onChange={(e) => setArea(e.target.value)}
         />
       </div>

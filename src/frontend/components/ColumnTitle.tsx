@@ -4,7 +4,7 @@ interface HeaderProp {
   title: string;
 }
 
-const Header = ({ title }: HeaderProp) => {
+const ColumnTitle = ({ title }: HeaderProp) => {
   return (
     <header className="header">
       <h1>{title}</h1>
@@ -12,4 +12,4 @@ const Header = ({ title }: HeaderProp) => {
   );
 };
 
-export default Header;
+export default ColumnTitle;
