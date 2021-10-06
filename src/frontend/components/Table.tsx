@@ -55,8 +55,6 @@ export const Table = ({
         </thead>
         <tbody>
           {boulderData.map((boulder: BoulderType, index: number) => {
-            console.log({ fetchedBoulders, boulder });
-
             return (
               <tr key={index}>
                 <td className="tableName__row">
