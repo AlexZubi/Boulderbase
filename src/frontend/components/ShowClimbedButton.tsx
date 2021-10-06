@@ -2,17 +2,11 @@ import React, { MouseEventHandler } from "react";
 import { Link } from "react-router-dom";
 import "./styles/button.css";
 
-interface ButtonProp {
-  onClick?: MouseEventHandler<HTMLButtonElement>;
-}
-
-export const ShowClimbedButton = ({ onClick }: ButtonProp) => {
+export const ShowClimbedButton = () => {
   return (
     <div>
       <Link to="/userTable">
-        <button className={"climbedBtn"} onClick={onClick}>
-          Show climbed boulders
-        </button>
+        <button className={"climbedBtn"}>Show climbed boulders</button>
       </Link>
     </div>
   );

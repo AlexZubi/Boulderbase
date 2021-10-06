@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Header from "../../components/header/Header";
 import { Area } from "../../components/SearchArea";
 import { ShowClimbedButton } from "../../components/ShowClimbedButton";
@@ -19,15 +18,11 @@ const HomePage = ({
   setFetchedBoulders,
   setSearched,
 }: HomePageProps) => {
-  const onClick = () => {
-    fetchDatabase(setFetchedBoulders);
-  };
-
   return (
     <>
       <Header title="Search Area...">
         <Area onSearch={setSearched} />
-        <ShowClimbedButton onClick={onClick} />
+        <ShowClimbedButton />
       </Header>
       {searchedBoulders ? (
         <Table
