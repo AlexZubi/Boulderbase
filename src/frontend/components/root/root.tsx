@@ -2,13 +2,12 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import HomePage from "../../pages/HomePage/HomePage";
-import { BoulderType } from "../../components/types/boulderType";
+import { Boulder } from "../types/common"
 import UserPage from "../../pages/userPage/userPage";
 
 const root = () => {
-  const [searchedBoulders, setSearched] = useState<BoulderType[]>(null);
-  const [fetchedBoulders, setFetchedBoulders] = useState<BoulderType[]>([]);
-  console.log({ searchedBoulders });
+  const [searchedBoulders, setSearched] = useState<Boulder[]>(null);
+  const [fetchedBoulders, setFetchedBoulders] = useState<Boulder[]>([]);
 
   return (
     <Router>

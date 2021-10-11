@@ -9,8 +9,4 @@ const pool = new Pool({
   max: 20,
 });
 
-var getConnection = function ( ) {
-  return pool.connect()
-}
-
-export default getConnection;
+export default () => pool.connect();

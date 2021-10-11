@@ -1,76 +1,67 @@
-import { forEach } from "lodash";
-import { newScrapedSection } from "./scrapingInserts";
-import { BoulderType } from "../models/boulderType";
-import getConnection from "../database/connectionPool";
+import { Boulder } from "../models/common";
+import { PoolClient, QueryResult } from "pg";
 
 const cheerio = require("cheerio");
 const fetch = require("node-fetch");
 
-export function getSection(cragName: string): string[] {
-  //Gets the second section of a supplied area (second section temporarily for simplicity reasons)
-  let URL = `https://27crags.com/site/search?qs=${cragName}`;
-  let climbingAreas: string[] = [];
+export function retrieveSectionLink(section: string): string {
+  const CLIMBING_AREA_INDEX = 1;
+  let URL = `https://27crags.com/site/search?qs=${section}`;
+  const climbingAreas: string[] = [];
   let i = 0;
 
   return fetch(URL, { method: "GET" })
-    .then((res: Response) => res.text())
+    .then((response: Response) => response.text())
     .then((html: string) => {
       const $ = cheerio.load(html);
 
-      $(".name").each((i: number, ele: string) => {
-        climbingAreas.push($(ele).find("a").attr("href"));
+      $(".name").each((index: number, element: string) => {
+        const href = $(element).find("a").attr("href");
+
+        climbingAreas.push(`https://27crags.com/${href}/routelist`);
       });
-      forEach(climbingAreas, function (area) {
-        climbingAreas[i] = `https://27crags.com/${area}/routelist`;
-        i++;
-      });
-      return [climbingAreas[1], cragName];
+      return climbingAreas[CLIMBING_AREA_INDEX];
     });
 }
 
-export function getBoulderNames(area: string[]): Promise<void> {
-  //Gets all the boulders of a supplied section
-  const link = 0;
-  const areaConst = 1;
-  async function getBoulderInfo(area: string[]): Promise<void> {
-    try {
-      if (!validURL(area[link])) {
-        throw Error("Area not found");
-      }
-      newScrapedSection(area[areaConst]);
-      return getConnection().then(async (client) => {
-        const html = await fetch(area[link], { method: "GET" });
-        const result = await html.text();
-        const $ = await cheerio.load(result);
-        await $("tr").each((i: number, ele: string) => {
-          let boulder: BoulderType = {
-            name: $(ele).find(".lfont").text(),
-            grade: $(ele).find(".grade").text(),
+export function saveBouldersForSection(
+  sectionLink: string,
+  section: string,
+  client: PoolClient
+): Promise<QueryResult[]> {
+  if (!isUrlvalid(sectionLink)) {
+    console.error("Area not found");
+  }
+  return fetch(sectionLink, { method: "GET" })
+    .then((response: Response) => {
+      return response.text();
+    })
+    .then((html: string) => {
+      return cheerio.load(html);
+    })
+    .then(($) => {
+      return Promise.all(
+        $("tr").map((index: number, element: string) => {
+          let boulder: Boulder = {
+            name: $(element).find(".lfont").text(),
+            grade: $(element).find(".grade").text(),
           };
-          if (boulder.name.length > 0) {
-            client.query(
+          if (boulder.name.length) {
+            return client.query(
               "INSERT INTO webscraped_boulder (name, grade, area) VALUES ($1, $2, $3)",
-              [boulder.name, boulder.grade, area[areaConst]]
+              [boulder.name, boulder.grade, section]
             );
           }
-        });
-        client.release();
-      });
-    } catch (err) {
-      console.log(err);
-      console.log("Server is listening...");
-    }
-  }
-  return getBoulderInfo(area);
+        })
+      );
+    });
 }
 
-function validURL(link: string): boolean {
-  //Checks if input is a valid URL
-  let url: URL;
+function isUrlvalid(link: string): boolean {
   try {
-    url = new URL(link);
+    const url = new URL(link);
+    return url.protocol === "http:" || url.protocol === "https:";
   } catch (_) {
     return false;
   }
-  return url.protocol === "http:" || url.protocol === "https:";
 }

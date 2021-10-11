@@ -20,5 +20,5 @@ CREATE TABLE webscraped_boulder (
 -- Table to store boulders added by user
 CREATE TABLE user_boulder (
     boulder_id INTEGER PRIMARY KEY,
-    CONSTRAINT boulder_id FOREIGN KEY (boulder_id) REFERENCES webscraped_boulder(boulder_id)
+    CONSTRAINT boulder_id_fk FOREIGN KEY (boulder_id) REFERENCES webscraped_boulder(boulder_id)
 );

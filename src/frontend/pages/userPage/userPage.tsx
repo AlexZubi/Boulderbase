@@ -1,18 +1,18 @@
 import Header from "../../components/header/Header";
 import { Table } from "../../components/Table";
 import { GoBackButton } from "../../components/GoBackButton";
-import { BoulderType } from "../../components/types/boulderType";
+import { Boulder } from "../../components/types/common";
 
 interface ResultsPageProps {
-  fetchedBoulders: BoulderType[];
-  setFetchedBoulders: (boulders: BoulderType[]) => void;
+  fetchedBoulders: Boulder[];
+  setFetchedBoulders: (boulders: Boulder[]) => void;
 }
 
 const UserPage = ({
   fetchedBoulders,
   setFetchedBoulders,
 }: ResultsPageProps) => {
-  const deleteBoulder = (boulderToDelete: BoulderType) => {
+  const deleteBoulder = (boulderToDelete: Boulder) => {
     const newFetch = fetchedBoulders.filter((boulder) => {
       return boulder != boulderToDelete;
     });

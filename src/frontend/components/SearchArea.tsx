@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { BoulderType } from "./types/boulderType";
+import { Boulder } from "./types/common";
 import "./styles/table.css";
 
 interface SearchProp {
-  onSearch?: (boulder: BoulderType[]) => void;
+  onSearch?: (boulder: Boulder[]) => void;
 }
 
 export const Area = ({ onSearch }: SearchProp) => {
-  const [area, setArea] = useState<string>("Sudelfeld");
+  const [area, setArea] = useState<string>("");
   const [error, setError] = useState<string>("");
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -50,7 +50,7 @@ export const Area = ({ onSearch }: SearchProp) => {
         <input
           type="text"
           placeholder="Area"
-          value={"Sudelfeld" || area}
+          value={area}
           onChange={(e) => setArea(e.target.value)}
         />
       </div>

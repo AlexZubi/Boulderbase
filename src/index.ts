@@ -1,9 +1,13 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
-import { update } from "./database/update";
-import { addToDb, deleteFromDb, getFromDb } from "./database/userSql";
-import distributeQuery from "./database/queryHandler";
-import { BoulderType } from "./models/boulderType";
+import { checkAndUpdateWebscrapedArea } from "./database/checkAndUpdateWebscrapedArea";
+import {
+  insertUserBoulder,
+  deleteUserBoulder,
+  retrieveUserBoulders,
+} from "./database/userBoulder";
+import retrieveBoulders from "./database/retrieveBoulders";
+import getConnection from "./database/connectionPool";
 
 const app = express();
 
@@ -15,38 +19,43 @@ app.use(
   })
 );
 
-app.post("/", (req: Request, res: Response) => {
-  //Handles the query to add the supplied boulder to the "boulders"-database
-  addToDb(req.body)
-    .then(() => res.sendStatus(200))
-    .catch((err) => console.log(err));
+app.post("/:id", (req: Request, res: Response) => {
+  const id: number = parseInt(req.params.id)
+  getConnection().then((client) => {
+    insertUserBoulder(id, client)
+      .then(() => res.sendStatus(200))
+      .then(() => client.release());
+  });
 });
 
 app.get("/database", async (req: Request, res: Response) => {
-  //Handles the query to get the values from the "boulders"-database
-  getFromDb().then((boulderList) => res.send(boulderList));
+  getConnection().then((client) =>
+    retrieveUserBoulders(client)
+      .then((boulderList) => res.send(boulderList))
+      .then(() => client.release())
+  );
 });
 
-app.get("/boulder/:crag", async (req: Request, res: Response) => {
-  //Handles the query to get all the boulders of a supplied section from the scraper
-  try {
-    const { crag } = req.params;
-    await distributeQuery(crag, function (result: BoulderType[]): void {
-      res.json(result);
-    });
-  } catch (err) {
-    console.log(err);
-  }
+app.get("/boulder/:section", (req: Request, res: Response) => {
+  const { section } = req.params;
+  retrieveBoulders(section).then((boulderList) => res.send(boulderList));
 });
 
-app.delete("/", (req: Request, res: Response) => {
-  //Handles the query to delete the supplied boulder from the "boulders"-database
-  deleteFromDb(req.body)
-    .then(() => res.sendStatus(200))
-    .catch((err) => console.log(err));
+app.delete("/boulders/:id", (req: Request, res: Response) => {
+  const id: number = parseInt(req.params.id)
+  getConnection().then((client) =>
+    deleteUserBoulder(id, client)
+      .then(() => res.sendStatus(200))
+      .then(() => client.release())
+  );
 });
 
 app.listen(3000, async () => {
-  //Starts the server and checks if updates to the database are neccessary
-  update().then(() => console.log("Data updated. Server ready"));
+  checkAndUpdateWebscrapedArea().then((updated) => {
+    if (!updated) {
+      console.log("No updates were necessary");
+    } else {
+      console.log("Data updated");
+    }
+  });
 });

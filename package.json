@@ -24,13 +24,19 @@
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-icons": "^4.2.0",
+    "react-icons": "^4.2.0"
+  },
+  "devDependencies": {
     "react-router-dom": "^5.2.1",
     "react-table": "^7.0.4",
     "request": "^2.88.2",
-    "ts-node": "^10.2.0"
-  },
-  "devDependencies": {
+    "ts-node": "^10.2.0",
+    "babel-preset-es2015": "^6.24.1",
+    "concurrently": "^6.2.2",
+    "parcel": "^2.0.0-nightly.690",
+    "prettier": "2.3.2",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.3.5",
     "@parcel/babel-preset-env": "^2.0.0-nightly.690",
     "@parcel/transformer-sass": "^2.0.0-nightly.690",
     "@parcel/transformer-svg-react": "^2.0.0-nightly.690",
@@ -47,13 +53,7 @@
     "@types/react": "^17.0.19",
     "@types/react-dom": "^17.0.9",
     "@types/react-router-dom": "^5.1.8",
-    "@types/react-table": "^7.0.14",
-    "babel-preset-es2015": "^6.24.1",
-    "concurrently": "^6.2.2",
-    "parcel": "^2.0.0-nightly.690",
-    "prettier": "2.3.2",
-    "ts-node-dev": "^1.1.8",
-    "typescript": "^4.3.5"
+    "@types/react-table": "^7.0.14"
   },
   "targets": {
     "client": {

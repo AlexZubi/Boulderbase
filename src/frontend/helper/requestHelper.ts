@@ -1,6 +1,6 @@
-import { BoulderType } from "../components/types/boulderType";
+import { Boulder } from "../components/types/common";
 
-export const fetchDatabase = async (setFetch: (res: BoulderType[]) => void) => {
+export const retrieveUserBoulders = async (setFetch: (res: Boulder[]) => void) => {
   //Gets the boulders from the database
   try {
     let URL = "http://localhost:3000/database/";
@@ -13,11 +13,11 @@ export const fetchDatabase = async (setFetch: (res: BoulderType[]) => void) => {
   }
 };
 
-export const sendClimbed = (selectBoulders: BoulderType) => {
+export const insertUserBoulder = (boulder_id: number) => {
   //Sends the climbed boulders to the database
-  const URL = "http://127.0.0.1:3000/";
+  const URL = "http://127.0.0.1:3000/" + boulder_id;
 
-  function postData(url = "", data = {}) {
+  function postData(url = "") {
     fetch(url, {
       method: "POST",
       mode: "cors",
@@ -25,26 +25,24 @@ export const sendClimbed = (selectBoulders: BoulderType) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
     });
   }
-  postData(URL, selectBoulders);
+  postData(URL);
 };
 
-export const deleteClimbed = (boulder: BoulderType) => {
+export const deleteUserBoulder = (boulder_id: number) => {
   //Sends a delete request from the "boulders"-database to the middleware
-  const URL = "http://127.0.0.1:3000/";
+  const URL = "http://127.0.0.1:3000/boulders/" + boulder_id;
 
-  function deleteBoulder(url = "", data = {}) {
+  function deleteBoulder(url = "") {
     fetch(url, {
       method: "DELETE",
       mode: "cors",
       credentials: "same-origin",
       headers: {
         "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
+      }
     });
   }
-  deleteBoulder(URL, boulder);
+  deleteBoulder(URL);
 };

@@ -1,21 +1,21 @@
 import React, { useState } from "react";
 import orderBy from "lodash/orderBy";
-import { sendClimbed, deleteClimbed } from "../helper/requestHelper";
+import { insertUserBoulder, deleteUserBoulder } from "../helper/requestHelper";
 import {
   IoIosCheckmarkCircleOutline,
   IoIosCheckmarkCircle,
   IoMdClose,
 } from "react-icons/io";
 import find from "lodash/find";
-import { BoulderType } from "../components/types/boulderType";
+import { Boulder } from "./types/common";
 import "./styles/table.css";
 
 interface TableProps {
-  boulderData: BoulderType[];
-  fetchedBoulders?: BoulderType[];
+  boulderData: Boulder[];
+  fetchedBoulders?: Boulder[];
   setFetchedBoulders?: Promise<void>
   headingColumns: string[];
-  deleteBoulder?: (boulder: BoulderType) => void;
+  deleteBoulder?: (boulder: Boulder) => void;
 }
 
 export const Table = ({
@@ -24,7 +24,7 @@ export const Table = ({
   headingColumns,
   deleteBoulder,
 }: TableProps) => {
-  const [sortedData, setSortedData] = useState<BoulderType[]>([]);
+  const [sortedData, setSortedData] = useState<Boulder[]>([]);
   const [sortingKey, setSortingKey] = useState<string>(null);
 
   function requestSort(key: string) {
@@ -55,7 +55,7 @@ export const Table = ({
           </tr>
         </thead>
         <tbody>
-          {boulderData.map((boulder: BoulderType, index: number) => {
+          {boulderData.map((boulder: Boulder, index: number) => {
             return (
               <tr key={index}>
                 <td className="tableName__row">
@@ -65,7 +65,7 @@ export const Table = ({
                       className={"deleteIcon"}
                       onClick={() => {
                         deleteBoulder(boulder);
-                        deleteClimbed(boulder);
+                        deleteUserBoulder(boulder.boulder_id);
                       }}
                     >
                       <IoMdClose />
@@ -74,7 +74,7 @@ export const Table = ({
                     <div
                       className={"addIcon"}
                       onClick={() => {
-                        sendClimbed(boulder);
+                        insertUserBoulder(boulder.boulder_id);
                       }}
                     >
                       {find(fetchedBoulders, boulder) ? (

@@ -2,14 +2,14 @@ import Header from "../../components/header/Header";
 import { Area } from "../../components/SearchArea";
 import { ShowClimbedButton } from "../../components/ShowClimbedButton";
 import { Table } from "../../components/Table";
-import { fetchDatabase } from "../../helper/requestHelper";
-import { BoulderType } from "../../components/types/boulderType";
+import { retrieveUserBoulders } from "../../helper/requestHelper";
+import { Boulder } from "../../components/types/common";
 
 interface HomePageProps {
-  fetchedBoulders: BoulderType[];
-  setFetchedBoulders: (boulders: BoulderType[]) => void;
-  searchedBoulders: BoulderType[];
-  setSearched: (boulders: BoulderType[]) => void;
+  fetchedBoulders: Boulder[];
+  setFetchedBoulders: (boulders: Boulder[]) => void;
+  searchedBoulders: Boulder[];
+  setSearched: (boulders: Boulder[]) => void;
 }
 
 const HomePage = ({
@@ -18,16 +18,19 @@ const HomePage = ({
   setFetchedBoulders,
   setSearched,
 }: HomePageProps) => {
+  const onClick = () => {
+    retrieveUserBoulders(setFetchedBoulders);
+  };
   return (
     <>
       <Header title="Search Area...">
         <Area onSearch={setSearched} />
-        <ShowClimbedButton />
+        <ShowClimbedButton onClick={onClick} />
       </Header>
       {searchedBoulders ? (
         <Table
           boulderData={searchedBoulders}
-          setFetchedBoulders={fetchDatabase(setFetchedBoulders)}
+          setFetchedBoulders={retrieveUserBoulders(setFetchedBoulders)}
           fetchedBoulders={fetchedBoulders}
           headingColumns={["Name", "Grade"]}
         />
