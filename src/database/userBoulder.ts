@@ -31,7 +31,6 @@ export async function deleteUserBoulder(
 export async function retrieveUserBoulders(
   client: PoolClient
 ): Promise<Boulder[]> {
-  //Gets all boulder from the "boulders" database
   return client
     .query(
       "SELECT boulder_id, name, grade, area FROM user_boulder JOIN webscraped_boulder USING (boulder_id)"

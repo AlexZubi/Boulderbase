@@ -1,12 +1,12 @@
 import { Pool } from "pg";
 
 const pool = new Pool({
-  user: "postgres",
-  password: "",
-  database: "boulderbase",
-  host: "localhost",
-  port: 5432,
-  max: 20,
+  user: process.env.user,
+  password: process.env.password,
+  database: process.env.database,
+  host: process.env.host,
+  port: parseInt(process.env.port)
+
 });
 
 export default () => pool.connect();
