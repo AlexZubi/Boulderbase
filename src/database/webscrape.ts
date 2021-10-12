@@ -8,7 +8,6 @@ export function retrieveSectionLink(section: string): string {
   const CLIMBING_AREA_INDEX = 1;
   let URL = `https://27crags.com/site/search?qs=${section}`;
   const climbingAreas: string[] = [];
-  let i = 0;
 
   return fetch(URL, { method: "GET" })
     .then((response: Response) => response.text())
