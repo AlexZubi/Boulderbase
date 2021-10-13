@@ -6,7 +6,7 @@
     "start": "node src/index.ts",
     "clean": "rm -rf .parcel-cache",
     "dev": "concurrently -k --kill-others-on-fail --restart-tries 3 npm:dev:*",
-    "dev:server": "NODE_ENV=development env-cmd --file .env.json ts-node-dev --no-notify --transpile-only ./src/index.ts",
+    "dev:server": "NODE_ENV=development env-cmd --file .env.local.json --fallback ts-node-dev --no-notify --transpile-only ./src/index.ts",
     "dev:client": "NODE_ENV=development parcel ./src/frontend/index.html --target client --no-hmr"
   },
   "author": "",
