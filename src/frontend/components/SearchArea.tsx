@@ -18,7 +18,7 @@ export const Area = ({ onSearch }: SearchProp) => {
       return;
     }
     function getBoulders(area: string) {
-      const URL = "http://localhost:3000/boulder/" + area;
+      const URL = "http://localhost:3000/boulders/" + area;
       const boulders = fetch(URL, {
         method: "GET",
         credentials: "same-origin",

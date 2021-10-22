@@ -3,7 +3,7 @@ import { Boulder } from "../components/types/common";
 export const retrieveUserBoulders = async (setFetch: (res: Boulder[]) => void) => {
   //Gets the boulders from the database
   try {
-    let URL = "http://localhost:3000/database/";
+    let URL = "http://localhost:3000/boulders";
 
     const res = await fetch(URL, { method: "GET", credentials: "same-origin" });
     const data = await res.json();
@@ -15,7 +15,7 @@ export const retrieveUserBoulders = async (setFetch: (res: Boulder[]) => void) =
 
 export const insertUserBoulder = (boulder_id: number) => {
   //Sends the climbed boulders to the database
-  const URL = "http://127.0.0.1:3000/" + boulder_id;
+  const URL = "http://127.0.0.1:3000/boulders/" + boulder_id;
 
   function postData(url = "") {
     fetch(url, {

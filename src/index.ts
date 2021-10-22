@@ -16,7 +16,7 @@ app.use(
   }),
 );
 
-app.post("/:id", (req: Request, res: Response) => {
+app.post("/boulders/:id", (req: Request, res: Response) => {
   const id: number = parseInt(req.params.id);
 
   getConnection().then((client) => {
@@ -26,7 +26,7 @@ app.post("/:id", (req: Request, res: Response) => {
   });
 });
 
-app.get("/database", async (req: Request, res: Response) => {
+app.get("/boulders", async (req: Request, res: Response) => {
   getConnection().then((client) =>
     retrieveUserBoulders(client)
       .then((boulderList) => res.send(boulderList))
@@ -34,7 +34,7 @@ app.get("/database", async (req: Request, res: Response) => {
   );
 });
 
-app.get("/boulder/:section", (req: Request, res: Response) => {
+app.get("/boulders/:section", (req: Request, res: Response) => {
   const {section} = req.params;
 
   retrieveBoulders(section).then((boulderList) => res.send(boulderList));
