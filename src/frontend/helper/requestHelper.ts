@@ -1,4 +1,4 @@
-import { Boulder } from "../components/types/common";
+import { Boulder } from "../../models/common"
 
 export const retrieveUserBoulders = async (setFetch: (res: Boulder[]) => void) => {
   //Gets the boulders from the database
@@ -7,7 +7,9 @@ export const retrieveUserBoulders = async (setFetch: (res: Boulder[]) => void) =
 
     const res = await fetch(URL, { method: "GET", credentials: "same-origin" });
     const data = await res.json();
+
     setFetch(data);
+
   } catch (err) {
     console.log(err);
   }

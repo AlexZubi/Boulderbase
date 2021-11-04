@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Boulder } from "./types/common";
+
+import { Boulder } from "../../models/common"
 import "./styles/table.css";
 
 interface SearchProp {
@@ -15,6 +16,7 @@ export const Area = ({ onSearch }: SearchProp) => {
     e.preventDefault();
     if (!area) {
       alert("Please add an area");
+
       return;
     }
     function getBoulders(area: string) {
@@ -24,9 +26,11 @@ export const Area = ({ onSearch }: SearchProp) => {
         credentials: "same-origin",
       })
         .then((res) => {
+
           return res.json();
         })
         .catch((err) => console.log(err.message));
+
       return boulders;
     }
     await getBoulders(area)
@@ -44,6 +48,7 @@ export const Area = ({ onSearch }: SearchProp) => {
         setError(err.message);
       });
   };
+
   return (
     <form className="area-form" onSubmit={onSubmit}>
       <div className="form-control">
@@ -58,4 +63,5 @@ export const Area = ({ onSearch }: SearchProp) => {
     </form>
   );
 };
+
 export default Area;

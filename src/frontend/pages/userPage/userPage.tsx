@@ -1,7 +1,7 @@
 import Header from "../../components/header/Header";
 import { Table } from "../../components/Table";
 import { GoBackButton } from "../../components/GoBackButton";
-import { Boulder } from "../../components/types/common";
+import { Boulder } from "../../../models/common"
 
 interface ResultsPageProps {
   fetchedBoulders: Boulder[];
@@ -14,6 +14,7 @@ const UserPage = ({
 }: ResultsPageProps) => {
   const deleteBoulder = (boulderToDelete: Boulder) => {
     const newFetch = fetchedBoulders.filter((boulder) => {
+
       return boulder != boulderToDelete;
     });
     setFetchedBoulders(newFetch);

@@ -3,7 +3,7 @@ import { Area } from "../../components/SearchArea";
 import { ShowClimbedButton } from "../../components/ShowClimbedButton";
 import { Table } from "../../components/Table";
 import { retrieveUserBoulders } from "../../helper/requestHelper";
-import { Boulder } from "../../components/types/common";
+import { Boulder } from "../../../models/common"
 
 interface HomePageProps {
   fetchedBoulders: Boulder[];
@@ -21,6 +21,7 @@ const HomePage = ({
   const onClick = () => {
     retrieveUserBoulders(setFetchedBoulders);
   };
+
   return (
     <>
       <Header title="Search Area...">

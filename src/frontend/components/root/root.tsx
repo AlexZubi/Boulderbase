@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import HomePage from "../../pages/HomePage/HomePage";
-import { Boulder } from "../types/common"
+import { Boulder } from "../../../models/common"
 import UserPage from "../../pages/userPage/userPage";
 
 const root = () => {

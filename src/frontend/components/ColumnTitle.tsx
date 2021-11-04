@@ -5,6 +5,7 @@ interface HeaderProp {
 }
 
 const ColumnTitle = ({ title }: HeaderProp) => {
+  
   return (
     <header className="header">
       <h1>{title}</h1>

@@ -1,7 +1,12 @@
-import express, {Request, Response} from "express";
+import express, { Request, Response } from "express";
 import cors from "cors";
-import {checkAndUpdateWebscrapedArea} from "./database/checkAndUpdateWebscrapedArea";
-import {deleteUserBoulder, insertUserBoulder, retrieveUserBoulders} from "./database/userBoulder";
+
+import { checkAndUpdateWebscrapedArea } from "./database/checkAndUpdateWebscrapedArea";
+import {
+  deleteUserBoulder,
+  insertUserBoulder,
+  retrieveUserBoulders,
+} from "./database/userBoulder";
 import retrieveBoulders from "./database/retrieveBoulders";
 import getConnection from "./database/connectionPool";
 
@@ -13,49 +18,77 @@ app.use(cors());
 app.use(
   express.urlencoded({
     extended: true,
-  }),
+  })
 );
 
 app.post("/boulders/:id", (req: Request, res: Response) => {
   const id: number = parseInt(req.params.id);
 
-  getConnection().then((client) => {
-    insertUserBoulder(id, client)
-      .then(() => res.sendStatus(200))
-      .then(() => client.release());
-  });
+  try {
+    getConnection().then((client) => {
+      insertUserBoulder(id, client)
+        .then(() => res.sendStatus(200))
+        .then(() => client.release());
+    });
+  } catch (error) {
+    console.error(error);
+  }
 });
 
 app.get("/boulders", async (req: Request, res: Response) => {
-  getConnection().then((client) =>
-    retrieveUserBoulders(client)
-      .then((boulderList) => res.send(boulderList))
-      .then(() => client.release()),
-  );
+  try {
+    getConnection().then((client) =>
+      retrieveUserBoulders(client)
+        .then((boulderList) => res.send(boulderList))
+        .then(() => client.release())
+    );
+  } catch (error) {
+    console.error(error);
+  }
 });
 
 app.get("/boulders/:section", (req: Request, res: Response) => {
-  const {section} = req.params;
+  const { section } = req.params;
 
-  retrieveBoulders(section).then((boulderList) => res.send(boulderList));
+  try {
+    getConnection().then((client) =>
+      retrieveBoulders(section, client)
+        .then((boulderList) => res.send(boulderList))
+        .then(() => client.release())
+    );
+  } catch (error) {
+    console.error(error);
+  }
 });
 
 app.delete("/boulders/:id", (req: Request, res: Response) => {
   const id: number = parseInt(req.params.id);
 
-  getConnection().then((client) =>
-    deleteUserBoulder(id, client)
-      .then(() => res.sendStatus(200))
-      .then(() => client.release()),
-  );
+  try {
+    getConnection().then((client) =>
+      deleteUserBoulder(id, client)
+        .then(() => res.sendStatus(200))
+        .then(() => client.release())
+    );
+  } catch (error) {
+    console.error(error);
+  }
 });
 
 app.listen(3000, async () => {
-  checkAndUpdateWebscrapedArea().then((updated) => {
-    if (!updated) {
-      console.log("No updates were necessary");
-    } else {
-      console.log("Data updated");
-    }
-  });
+  try {
+    getConnection().then((client) => {
+      checkAndUpdateWebscrapedArea(client)
+        .then((updated) => {
+          if (updated) {
+            console.log("Data updated");
+          } else {
+            console.log("No updates were necessary");
+          }
+        })
+        .then(() => client.release());
+    });
+  } catch (error) {
+    console.error(error);
+  }
 });

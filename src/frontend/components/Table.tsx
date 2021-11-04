@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import orderBy from "lodash/orderBy";
-import { insertUserBoulder, deleteUserBoulder } from "../helper/requestHelper";
 import {
   IoIosCheckmarkCircleOutline,
   IoIosCheckmarkCircle,
   IoMdClose,
 } from "react-icons/io";
 import find from "lodash/find";
-import { Boulder } from "./types/common";
+
+import { Boulder } from "../../models/common"
+import { insertUserBoulder, deleteUserBoulder } from "../helper/requestHelper";
 import "./styles/table.css";
 
 interface TableProps {
@@ -56,6 +57,7 @@ export const Table = ({
         </thead>
         <tbody>
           {boulderData.map((boulder: Boulder, index: number) => {
+
             return (
               <tr key={index}>
                 <td className="tableName__row">
