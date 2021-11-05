@@ -24,59 +24,43 @@ app.use(
 app.post("/boulders/:id", (req: Request, res: Response) => {
   const id: number = parseInt(req.params.id);
 
-  try {
     getConnection().then((client) => {
       insertUserBoulder(id, client)
         .then(() => res.sendStatus(200))
         .then(() => client.release());
     });
-  } catch (error) {
-    console.error(error);
-  }
+
 });
 
 app.get("/boulders", async (req: Request, res: Response) => {
-  try {
     getConnection().then((client) =>
       retrieveUserBoulders(client)
         .then((boulderList) => res.send(boulderList))
         .then(() => client.release())
     );
-  } catch (error) {
-    console.error(error);
-  }
 });
 
 app.get("/boulders/:section", (req: Request, res: Response) => {
   const { section } = req.params;
 
-  try {
     getConnection().then((client) =>
       retrieveBoulders(section, client)
         .then((boulderList) => res.send(boulderList))
         .then(() => client.release())
     );
-  } catch (error) {
-    console.error(error);
-  }
 });
 
 app.delete("/boulders/:id", (req: Request, res: Response) => {
   const id: number = parseInt(req.params.id);
-
-  try {
+  
     getConnection().then((client) =>
       deleteUserBoulder(id, client)
         .then(() => res.sendStatus(200))
         .then(() => client.release())
     );
-  } catch (error) {
-    console.error(error);
-  }
 });
 
 app.listen(3000, async () => {
-  try {
     getConnection().then((client) => {
       checkAndUpdateWebscrapedArea(client)
         .then((updated) => {
@@ -88,7 +72,4 @@ app.listen(3000, async () => {
         })
         .then(() => client.release());
     });
-  } catch (error) {
-    console.error(error);
-  }
 });
