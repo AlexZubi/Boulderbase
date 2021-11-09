@@ -9,7 +9,7 @@ export default function retrieveBoulders(
 
   return isAreaInDatabase(area, client)
     .then((retrievedArea) => {
-      if (!retrievedArea) {
+      if (retrievedArea) {
 
         return saveBoulders(area, client);
       }
@@ -49,14 +49,15 @@ function insertNewArea(
 
 function isAreaInDatabase(area: string, client: PoolClient): Promise<boolean> {
 
+  
   return client
     .query("SELECT name from webscraped_area WHERE name = ($1)", [area])
     .then((retrievedArea) => {
       if (retrievedArea.rows.length !== 0) {
-        
+
         return true;
       }
-
+      
       return false;
     });
 }
