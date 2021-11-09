@@ -1,9 +1,11 @@
+import React from "react";
+
 import Header from "../../components/header/Header";
 import { Area } from "../../components/SearchArea";
 import { ShowClimbedButton } from "../../components/ShowClimbedButton";
-import { Table } from "../../components/Table";
 import { retrieveUserBoulders } from "../../helper/requestHelper";
 import { Boulder } from "../../../models/common"
+import { BoulderGrid } from "../../components/BoulderGrid/BoulderGrid";
 
 interface HomePageProps {
   fetchedBoulders: Boulder[];
@@ -29,12 +31,7 @@ const HomePage = ({
         <ShowClimbedButton onClick={onClick} />
       </Header>
       {searchedBoulders ? (
-        <Table
-          boulderData={searchedBoulders}
-          setFetchedBoulders={retrieveUserBoulders(setFetchedBoulders)}
-          fetchedBoulders={fetchedBoulders}
-          headingColumns={["Name", "Grade"]}
-        />
+        <BoulderGrid boulderData={searchedBoulders}/>
       ) : null}
     </>
   );

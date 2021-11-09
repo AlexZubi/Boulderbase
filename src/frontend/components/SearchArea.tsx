@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import { Boulder } from "../../models/common"
-import "./styles/table.css";
+import "../components/Table/Table.scss";
 
 interface SearchProp {
   onSearch?: (boulder: Boulder[]) => void;
@@ -26,7 +26,8 @@ export const Area = ({ onSearch }: SearchProp) => {
         credentials: "same-origin",
       })
         .then((res) => {
-
+          console.log(res);
+          
           return res.json();
         })
         .catch((err) => console.log(err.message));

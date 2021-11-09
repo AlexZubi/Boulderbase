@@ -1,0 +1,22 @@
+.boulder-row {
+    
+  &--header {
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+
+  &__cells {
+    display: grid;
+    gap: 2px;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  &__cell {
+    height: 60px;
+    padding: 0 16px;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    overflow: hidden;
+  }
+}

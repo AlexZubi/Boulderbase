@@ -1,7 +1,9 @@
+import React from "react";
+
 import Header from "../../components/header/Header";
-import { Table } from "../../components/Table";
 import { GoBackButton } from "../../components/GoBackButton";
 import { Boulder } from "../../../models/common"
+import { BoulderGrid } from "../../components/BoulderGrid/BoulderGrid";
 
 interface ResultsPageProps {
   fetchedBoulders: Boulder[];
@@ -25,11 +27,7 @@ const UserPage = ({
       <Header title="Results">
         <GoBackButton />
       </Header>
-      <Table
-        boulderData={fetchedBoulders}
-        headingColumns={["Name", "Grade", "Area"]}
-        deleteBoulder={deleteBoulder}
-      />
+      <BoulderGrid boulderData={fetchedBoulders}/>
     </>
   );
 };

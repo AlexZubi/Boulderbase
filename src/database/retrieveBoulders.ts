@@ -29,7 +29,7 @@ function selectBoulders(section: string, client: PoolClient): Promise<Boulder[]>
 
   return client
     .query(
-      "SELECT boulder_id, name, grade FROM webscraped_boulder WHERE area = ($1)",
+      "SELECT boulder_id, name, grade, area FROM webscraped_boulder WHERE area = ($1)",
       [section]
     )
     .then((boulder) => {
