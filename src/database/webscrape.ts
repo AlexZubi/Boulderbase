@@ -20,15 +20,13 @@ export function retrieveSectionLink(section: string): string {
 
         climbingAreas.push(`https://27crags.com/${href}/routelist`);
       });
-      
+
       return climbingAreas[CLIMBING_AREA_INDEX];
     });
 }
 
 export function saveBouldersForSection(
-  sectionLink: string,
-  section: string,
-  client: PoolClient
+  sectionLink: string, section: string, client: PoolClient
 ): Promise<QueryResult[]> {
   if (!isUrlValid(sectionLink)) {
     

@@ -11,7 +11,7 @@ export default function retrieveBoulders(
     .then((retrievedArea) => {
       if (retrievedArea) {
 
-        return saveBoulders(area, client);
+        return selectBoulders(area, client);
       }
 
       return insertNewArea(area, client)
@@ -19,13 +19,13 @@ export default function retrieveBoulders(
         .then((link) => saveBouldersForSection(link, area, client))
         .then(() => {
 
-          return saveBoulders(area, client);
+          return selectBoulders(area, client);
         });
     })
     .catch((error) => console.error(error));
 }
 
-function saveBoulders(section: string, client: PoolClient): Promise<Boulder[]> {
+function selectBoulders(section: string, client: PoolClient): Promise<Boulder[]> {
 
   return client
     .query(
@@ -49,7 +49,6 @@ function insertNewArea(
 
 function isAreaInDatabase(area: string, client: PoolClient): Promise<boolean> {
 
-  
   return client
     .query("SELECT name from webscraped_area WHERE name = ($1)", [area])
     .then((retrievedArea) => {
@@ -57,7 +56,7 @@ function isAreaInDatabase(area: string, client: PoolClient): Promise<boolean> {
 
         return true;
       }
-      
+
       return false;
     });
 }
