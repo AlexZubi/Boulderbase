@@ -1,6 +1,32 @@
-import { Boulder } from "../../models/common"
+import { Boulder } from "../../models/common";
 
-export const retrieveUserBoulders = async (setFetch: (res: Boulder[]) => void) => {
+export const retrieveBoulders = (areaName: string) => {
+  const URL = "http://localhost:3000/boulders/" + areaName;
+
+  return fetch(URL, {
+    method: "GET",
+    credentials: "same-origin",
+  })
+    .then((boulders) => {
+      
+      return boulders.json();
+    })
+    .then((boulder) => {
+      if (boulder.length === 0) {
+        console.error("Area not found");
+      } else {
+
+        return boulder;
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+};
+
+export const retrieveUserBoulders = async (
+  setFetch: (res: Boulder[]) => void
+) => {
   //Gets the boulders from the database
   try {
     let URL = "http://localhost:3000/boulders";
@@ -9,9 +35,8 @@ export const retrieveUserBoulders = async (setFetch: (res: Boulder[]) => void) =
     const data = await res.json();
 
     setFetch(data);
-
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.error(error);
   }
 };
 
@@ -43,7 +68,7 @@ export const deleteUserBoulder = (boulder_id: number) => {
       credentials: "same-origin",
       headers: {
         "Content-Type": "application/json",
-      }
+      },
     });
   }
   deleteBoulder(URL);

@@ -1,9 +1,9 @@
 import React from "react";
 
 import Header from "../../components/header/Header";
-import { GoBackButton } from "../../components/GoBackButton";
 import { Boulder } from "../../../models/common"
 import { BoulderGrid } from "../../components/BoulderGrid/BoulderGrid";
+import { Button } from "../../components/Button/Button";
 
 interface ResultsPageProps {
   fetchedBoulders: Boulder[];
@@ -25,7 +25,7 @@ const UserPage = ({
   return (
     <>
       <Header title="Results">
-        <GoBackButton />
+        <Button label="Go Back" linkTo="/" />
       </Header>
       <BoulderGrid boulderData={fetchedBoulders}/>
     </>

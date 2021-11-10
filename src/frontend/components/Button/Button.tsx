@@ -1,0 +1,21 @@
+import React, { MouseEventHandler } from "react";
+import { Link } from "react-router-dom";
+
+import "./Button.scss";
+
+interface ButtonProps {
+  label: string;
+  linkTo: string;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
+}
+
+export const Button = ({ label, linkTo, onClick }: ButtonProps) => {
+
+  return (
+    <Link to={linkTo}>
+      <button className="button" onClick={onClick}>
+        <span className="button__label">{label}</span>
+      </button>
+    </Link>
+  );
+};

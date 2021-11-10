@@ -1,6 +1,7 @@
 import React from "react";
 
 import buildClassName from '../../helper/buildClassName';
+
 import "./BoulderRow.scss"
 
 export const BoulderHeaderRow = () => {

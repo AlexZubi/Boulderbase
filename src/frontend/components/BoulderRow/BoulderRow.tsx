@@ -2,6 +2,7 @@ import React from "react";
 
 import buildClassName from "../../helper/buildClassName";
 import { Boulder } from "../../../models/common";
+
 import "./BoulderRow.scss";
 
 interface BoulderRowProps {
