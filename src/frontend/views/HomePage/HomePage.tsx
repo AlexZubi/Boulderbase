@@ -9,14 +9,19 @@ import { Input } from "../../components/Input/Input";
 import { retrieveBoulders } from "../../helper/requests";
 
 interface HomePageProps {
+  searchedBoulders: Boulder[];
+  setSearchedBoulders: (boulders: Boulder[]) => void;
   setFetchedBoulders: (boulders: Boulder[]) => void;
 }
 
-const HomePage = ({ setFetchedBoulders }: HomePageProps) => {
+const HomePage = ({
+  searchedBoulders,
+  setSearchedBoulders,
+  setFetchedBoulders,
+}: HomePageProps) => {
   const [searchedArea, setSearchedArea] = useState(null);
-  const [searchedBoulders, setSearchedBoulders] = useState(null);
 
-  const handleUserRequest = () => {
+  const handleButtonClick = () => {
     retrieveUserBoulders(setFetchedBoulders);
   };
 
@@ -53,7 +58,7 @@ const HomePage = ({ setFetchedBoulders }: HomePageProps) => {
         </form>
         <Button
           label="Show climbed Boulders"
-          onClick={handleUserRequest}
+          onClick={handleButtonClick}
           linkTo="/userTable"
         />
       </Header>

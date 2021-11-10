@@ -1,22 +1,27 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import HomePage from "../../pages/HomePage/HomePage";
+import HomePage from "../HomePage/HomePage"
+import UserPage from "../UserPage/UserPage";
 import { Boulder } from "../../../models/common";
-import UserPage from "../../pages/userPage/userPage";
 
-const root = () => {
+import "./Main.scss"
+
+const Main = () => {
   const [fetchedBoulders, setFetchedBoulders] = useState<Boulder[]>([]);
+  const [searchedBoulders, setSearchedBoulders] = useState<Boulder[]>(null);
 
   return (
     <Router>
-      <div className="Root">
+      <div className="main">
         <Switch>
           <Route
             path="/"
             exact
             render={() => (
               <HomePage
+                searchedBoulders={searchedBoulders}
+                setSearchedBoulders={setSearchedBoulders}
                 setFetchedBoulders={setFetchedBoulders}
               />
             )}
@@ -37,4 +42,4 @@ const root = () => {
   );
 };
 
-export default root;
+export default Main;
