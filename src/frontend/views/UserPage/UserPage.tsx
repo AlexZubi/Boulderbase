@@ -1,6 +1,5 @@
 import React from "react";
 
-import Header from "../../components/header/Header";
 import { Boulder } from "../../../models/common"
 import { BoulderGrid } from "../../components/BoulderGrid/BoulderGrid";
 import { Button } from "../../components/Button/Button";
@@ -16,7 +15,6 @@ const UserPage = ({
 }: ResultsPageProps) => {
   const deleteBoulder = (boulderToDelete: Boulder) => {
     const newFetch = fetchedBoulders.filter((boulder) => {
-
       return boulder != boulderToDelete;
     });
     setFetchedBoulders(newFetch);
@@ -24,10 +22,8 @@ const UserPage = ({
 
   return (
     <>
-      <Header title="Results">
-        <Button label="Go Back" linkTo="/" />
-      </Header>
-      <BoulderGrid boulderData={fetchedBoulders}/>
+      <Button label="Go Back" linkTo="/" />
+      <BoulderGrid boulderData={fetchedBoulders} />
     </>
   );
 };

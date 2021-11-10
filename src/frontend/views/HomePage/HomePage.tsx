@@ -1,6 +1,5 @@
 import React, { ChangeEvent, useState } from "react";
 
-import Header from "../../components/header/Header";
 import { retrieveUserBoulders } from "../../helper/requests";
 import { Boulder } from "../../../models/common";
 import { BoulderGrid } from "../../components/BoulderGrid/BoulderGrid";
@@ -48,7 +47,6 @@ const HomePage = ({
 
   return (
     <>
-      <Header title="Search Area...">
         <form className="area-form" onSubmit={handleAreaSubmit}>
           <Input
             name="searchArea"
@@ -61,7 +59,6 @@ const HomePage = ({
           onClick={handleButtonClick}
           linkTo="/userTable"
         />
-      </Header>
       {searchedBoulders ? <BoulderGrid boulderData={searchedBoulders} /> : null}
     </>
   );

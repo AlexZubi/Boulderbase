@@ -1,16 +1,26 @@
-import React from "react";
+import React, { MouseEventHandler } from "react";
 
 import buildClassName from '../../helper/buildClassName';
+import { Button } from "../Button/Button";
 
 import "./BoulderRow.scss"
 
-export const BoulderHeaderRow = () => {
+interface BoulderHeaderRowProps {
+  sortByRow?: MouseEventHandler<HTMLButtonElement>;
+}
+
+const sortByRow = () => {
+  
+}
+
+export const BoulderHeaderRow = ({sortByRow}: BoulderHeaderRowProps) => {
+
     
   return (
     <div className={buildClassName("boulder-row", { header: true }, "boulder-row__cells")}>
-      <div className="boulder-row__cell">Name</div>
-      <div className="boulder-row__cell">Grade</div>
-      <div className="boulder-row__cell">Area</div>
+      <Button className="boulder-row__cell" label="Name" onClick={() => {label}}/>
+      <Button className="boulder-row__cell" label="Grade" onClick={() => sortByRow}/>
+      <Button className="boulder-row__cell" label="Area" onClick={() => sortByRow}/>
     </div>
   );
 };
