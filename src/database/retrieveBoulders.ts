@@ -32,10 +32,7 @@ function selectBoulders(section: string, client: PoolClient): Promise<Boulder[]>
       "SELECT boulder_id, name, grade, area FROM webscraped_boulder WHERE area = ($1)",
       [section]
     )
-    .then((boulder) => {
-
-      return boulder.rows;
-    });
+    .then((boulder) => boulder.rows);
 }
 function insertNewArea(
   section: string, client: PoolClient

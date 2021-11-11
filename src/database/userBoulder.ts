@@ -46,9 +46,6 @@ export async function retrieveUserBoulders(
     .query(
       "SELECT boulder_id, name, grade, area FROM user_boulder JOIN webscraped_boulder USING (boulder_id)"
     )
-    .then((boulder) => {
-
-      return boulder.rows;
-    })
+    .then((boulder) => boulder.rows)
     .catch((error) => console.error(error));
 }

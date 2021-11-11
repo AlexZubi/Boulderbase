@@ -14,7 +14,7 @@ import "./BoulderRow.scss";
 interface BoulderRowProps {
   boulder: Boulder;
   fetchedBoulders?: Boulder[];
-  setFetchedBoulders?;
+  setFetchedBoulders?: (boulder: Boulder[]) => void;
   onDelete?: (boulder: Boulder) => void;
 }
 

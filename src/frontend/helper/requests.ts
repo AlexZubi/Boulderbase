@@ -1,5 +1,3 @@
-import { Boulder } from "../../models/common";
-
 export const retrieveBoulders = (areaName: string) => {
   const URL = "http://localhost:3000/boulders/" + areaName;
 

@@ -4,9 +4,9 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import HomePage from "../HomePage/HomePage";
 import UserPage from "../UserPage/UserPage";
 import { Boulder } from "../../../models/common";
+import { retrieveUserBoulders } from "../../helper/requests";
 
 import "./Main.scss";
-import { retrieveUserBoulders } from "../../helper/requests";
 
 const Main = () => {
   const [fetchedBoulders, setFetchedBoulders] = useState<Boulder[]>([]);

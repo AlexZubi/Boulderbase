@@ -26,10 +26,7 @@ function retrieveOutdatedAreaIds(client: PoolClient): Promise<number[]> {
     .query(
       "SELECT area_id FROM webscraped_area WHERE scraping_date < now() - '7 days' :: interval"
     )
-    .then((areaIds) => {
-
-      return map(areaIds.rows, "area_id");
-    });
+    .then((areaIds) => map(areaIds.rows, "area_id"));
 }
 
 function updateSectionDates(sectionIds: number[], client: PoolClient) {

@@ -1,4 +1,4 @@
-import _ from "lodash";
+import { isArray, chain, flatMap, isObject, compact, concat } from "lodash"
 
 type ClassNameObject = {
   [key: string]: boolean;
@@ -7,18 +7,18 @@ type ClassNameObject = {
 type ClassName = string | ClassNameObject | null | undefined;
 
 function normalize(className: string | ClassNameObject | ClassName[]): ClassName[] {
-  return _.isArray(className) ? className : [className];
+  return isArray(className) ? className : [className];
 }
 
 function extractClassList(classNameObject: ClassNameObject): string[] {
-  return _.chain(classNameObject).pickBy().keys().value();
+  return chain(classNameObject).pickBy().keys().value();
 }
 
 function buildClassList(classNameList: ClassName[]): string[] {
-  const cleanList = _.compact(classNameList);
+  const cleanList = compact(classNameList);
 
-  return _.flatMap(cleanList, (className) =>
-    _.isObject(className) ? extractClassList(className) : className
+  return flatMap(cleanList, (className) =>
+    isObject(className) ? extractClassList(className) : className
   );
 }
 
@@ -32,5 +32,5 @@ export default function buildClassName(
   );
   const classNameList = buildClassList(normalize(classNames));
 
-  return _.concat(componentName, modifiersList, classNameList).join(" ");
+  return concat(componentName, modifiersList, classNameList).join(" ");
 }
