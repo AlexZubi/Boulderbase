@@ -4,6 +4,7 @@ import { orderBy } from "lodash";
 import { BoulderHeaderRow } from "../BoulderRow/BoulderHeaderRow";
 import { Boulder } from "../../../models/common";
 import { BoulderRow } from "../BoulderRow/BoulderRow";
+import labels from "../../text/labels"
 
 import "./BoulderGrid.scss";
 
@@ -28,9 +29,10 @@ export const BoulderGrid = ({ boulderData }: BoulderGridProps) => {
     if (sortedData.length > 0) {
       boulderData = [...sortedData];
     }
+
   return (
     <div className="boulder-grid">
-      <BoulderHeaderRow sortByRow={() => handleSort}/>
+      <BoulderHeaderRow labels={labels} onSort={handleSort}/>
       <div className="boulder-grid__rows">
         {boulderData?.map((boulder, index) => (
           <BoulderRow key={index} boulder={boulder} />
