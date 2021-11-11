@@ -1,15 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import HomePage from "../HomePage/HomePage"
+import HomePage from "../HomePage/HomePage";
 import UserPage from "../UserPage/UserPage";
 import { Boulder } from "../../../models/common";
 
-import "./Main.scss"
+import "./Main.scss";
+import { retrieveUserBoulders } from "../../helper/requests";
 
 const Main = () => {
   const [fetchedBoulders, setFetchedBoulders] = useState<Boulder[]>([]);
   const [searchedBoulders, setSearchedBoulders] = useState<Boulder[]>(null);
+
+  useEffect(() => {
+    retrieveUserBoulders().then((boulders) => setFetchedBoulders(boulders));
+  }, [])
 
   return (
     <Router>
@@ -22,6 +27,7 @@ const Main = () => {
               <HomePage
                 searchedBoulders={searchedBoulders}
                 setSearchedBoulders={setSearchedBoulders}
+                fetchedBoulders={fetchedBoulders}
                 setFetchedBoulders={setFetchedBoulders}
               />
             )}

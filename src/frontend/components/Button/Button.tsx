@@ -11,12 +11,14 @@ interface ButtonProps {
 }
 
 export const Button = ({ className, label, linkTo, onClick }: ButtonProps) => {
-
+  
   return (
-    <Link to={linkTo}>
-      <button className={className} onClick={onClick}>
-        <span className="button__label">{label}</span>
-      </button>
-    </Link>
+    <div className="button">
+      <Link to={linkTo ? linkTo : window.location.pathname}>
+        <button className={className} onClick={onClick}>
+          <span className="button__label">{label}</span>
+        </button>
+      </Link>
+    </div>
   );
 };

@@ -8,7 +8,7 @@ export const retrieveBoulders = (areaName: string) => {
     credentials: "same-origin",
   })
     .then((boulders) => {
-      
+    
       return boulders.json();
     })
     .then((boulder) => {
@@ -24,37 +24,25 @@ export const retrieveBoulders = (areaName: string) => {
     });
 };
 
-export const retrieveUserBoulders = async (
-  setFetch: (res: Boulder[]) => void
-) => {
-  //Gets the boulders from the database
-  try {
-    let URL = "http://localhost:3000/boulders";
+export const retrieveUserBoulders = () => {
+  let URL = "http://localhost:3000/boulders/";
 
-    const res = await fetch(URL, { method: "GET", credentials: "same-origin" });
-    const data = await res.json();
-
-    setFetch(data);
-  } catch (error) {
-    console.error(error);
-  }
+  return fetch(URL, { method: "GET", credentials: "same-origin" }).then(
+    (boulders) => boulders.json()
+  );
 };
 
 export const insertUserBoulder = (boulder_id: number) => {
-  //Sends the climbed boulders to the database
   const URL = "http://127.0.0.1:3000/boulders/" + boulder_id;
 
-  function postData(url = "") {
-    fetch(url, {
-      method: "POST",
-      mode: "cors",
-      credentials: "same-origin",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-  }
-  postData(URL);
+  return fetch(URL, {
+    method: "POST",
+    mode: "cors",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 };
 
 export const deleteUserBoulder = (boulder_id: number) => {

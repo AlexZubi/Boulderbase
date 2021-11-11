@@ -9,6 +9,7 @@ import { retrieveBoulders } from "../../helper/requests";
 
 interface HomePageProps {
   searchedBoulders: Boulder[];
+  fetchedBoulders: Boulder[];
   setSearchedBoulders: (boulders: Boulder[]) => void;
   setFetchedBoulders: (boulders: Boulder[]) => void;
 }
@@ -16,12 +17,13 @@ interface HomePageProps {
 const HomePage = ({
   searchedBoulders,
   setSearchedBoulders,
+  fetchedBoulders,
   setFetchedBoulders,
 }: HomePageProps) => {
   const [searchedArea, setSearchedArea] = useState(null);
 
   const handleButtonClick = () => {
-    retrieveUserBoulders(setFetchedBoulders);
+    retrieveUserBoulders().then((boulders) => setFetchedBoulders(boulders));
   };
 
   const handleAreaChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -47,19 +49,25 @@ const HomePage = ({
 
   return (
     <>
-        <form className="area-form" onSubmit={handleAreaSubmit}>
-          <Input
-            name="searchArea"
-            placeholder="Area"
-            onChange={handleAreaChange}
-          />
-        </form>
-        <Button
-          label="Show climbed Boulders"
-          onClick={handleButtonClick}
-          linkTo="/userTable"
+      <form className="area-form" onSubmit={handleAreaSubmit}>
+        <Input
+          name="searchArea"
+          placeholder="Area"
+          onChange={handleAreaChange}
         />
-      {searchedBoulders ? <BoulderGrid boulderData={searchedBoulders} /> : null}
+      </form>
+      <Button
+        label="Show climbed Boulders"
+        linkTo="/userTable"
+        onClick={handleButtonClick}
+      />
+      {searchedBoulders ? (
+        <BoulderGrid
+          boulderData={searchedBoulders}
+          fetchedBoulders={fetchedBoulders}
+          setFetchedBoulders={setFetchedBoulders}
+        />
+      ) : null}
     </>
   );
 };
