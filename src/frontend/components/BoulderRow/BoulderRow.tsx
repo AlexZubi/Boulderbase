@@ -28,6 +28,7 @@ export const BoulderRow = ({
   return (
     <div className="boulder-row">
       <div className="boulder-row__cells">
+      <div className="boulder-row__cell"></div>
         <div className="boulder-row__cell">
           {boulder.name}
           {onDelete ? (

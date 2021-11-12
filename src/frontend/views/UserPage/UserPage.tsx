@@ -2,7 +2,6 @@ import React from "react";
 
 import { Boulder } from "../../../models/common";
 import { BoulderGrid } from "../../components/BoulderGrid/BoulderGrid";
-import { Button } from "../../components/Button/Button";
 
 interface ResultsPageProps {
   fetchedBoulders: Boulder[];
@@ -22,13 +21,10 @@ const UserPage = ({
   };
 
   return (
-    <>
-      <Button label="Go Back" linkTo="/" />
       <BoulderGrid
         boulderData={fetchedBoulders}
         deleteBoulder={deleteBoulder}
       />
-    </>
   );
 };
 

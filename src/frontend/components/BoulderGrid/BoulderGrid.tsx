@@ -10,6 +10,7 @@ import "./BoulderGrid.scss";
 
 interface BoulderGridProps {
   boulderData?: Boulder[];
+  setSearchedBoulders?: (boulder: Boulder[]) => void;
   fetchedBoulders?: Boulder[];
   setFetchedBoulders?: (boulder: Boulder[]) => void;
   deleteBoulder?: (boulder: Boulder) => void;
@@ -17,9 +18,10 @@ interface BoulderGridProps {
 
 export const BoulderGrid = ({
   boulderData,
-  deleteBoulder,
+  setSearchedBoulders,
   fetchedBoulders,
   setFetchedBoulders,
+  deleteBoulder,
 }: BoulderGridProps) => {
   const [sortedData, setSortedData] = useState<Boulder[]>([]);
   const [sortingKey, setSortingKey] = useState<string>(null);
@@ -40,7 +42,12 @@ export const BoulderGrid = ({
 
   return (
     <div className="boulder-grid">
-      <BoulderHeaderRow labels={labels} onSort={handleSort} />
+      <BoulderHeaderRow
+        labels={labels}
+        onSort={handleSort}
+        setSearchedBoulders={setSearchedBoulders}
+        setFetchedBoulders={setFetchedBoulders}
+      />
       <div className="boulder-grid__rows">
         {boulderData?.map((boulder, index) => (
           <BoulderRow
