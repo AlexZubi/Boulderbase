@@ -23,8 +23,8 @@ export const BoulderGrid = ({
   setFetchedBoulders,
   deleteBoulder,
 }: BoulderGridProps) => {
-  const [sortedData, setSortedData] = useState<Boulder[]>([]);
-  const [sortingKey, setSortingKey] = useState<string>(null);
+  const [sortedData, setSortedData] = useState([]);
+  const [sortingKey, setSortingKey] = useState(null);
 
   const handleSort = (key: string) => {
     if (sortingKey !== key) {

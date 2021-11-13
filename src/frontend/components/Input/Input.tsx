@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, FormEvent, FormEventHandler } from "react";
+import React, { ChangeEventHandler } from "react";
 
 interface InputProps {
   name: string;

@@ -12,7 +12,7 @@ const UserPage = ({
   fetchedBoulders,
   setFetchedBoulders,
 }: ResultsPageProps) => {
-  const deleteBoulder = (boulderToDelete: Boulder) => {
+  const handleDelete = (boulderToDelete: Boulder) => {
     const newFetch = fetchedBoulders.filter((boulder) => {
 
       return boulder != boulderToDelete;
@@ -23,7 +23,7 @@ const UserPage = ({
   return (
       <BoulderGrid
         boulderData={fetchedBoulders}
-        deleteBoulder={deleteBoulder}
+        deleteBoulder={handleDelete}
       />
   );
 };
