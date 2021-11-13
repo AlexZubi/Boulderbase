@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { orderBy } from "lodash";
 
-import { BoulderHeaderRow } from "../BoulderRow/BoulderHeaderRow";
+import { BoulderHeaderRow } from "../BoulderHeaderRow/BoulderHeaderRow";
 import { Boulder } from "../../../models/common";
 import { BoulderRow } from "../BoulderRow/BoulderRow";
 import labels from "../../text/labels";

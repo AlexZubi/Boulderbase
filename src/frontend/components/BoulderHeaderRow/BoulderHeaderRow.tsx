@@ -6,7 +6,7 @@ import buildClassName from "../../helper/buildClassName";
 import { Button } from "../Button/Button";
 import { Input } from "../Input/Input";
 
-import "./BoulderRow.scss";
+import "./BoulderHeaderRow.scss";
 
 interface BoulderHeaderRowProps {
   labels: string[];
@@ -51,9 +51,9 @@ export const BoulderHeaderRow = ({
   return (
     <div
       className={buildClassName(
-        "boulder-row",
+        "boulder-header-row",
         { header: true },
-        "boulder-row__cells"
+        "boulder-header-row__cells"
       )}
     >
       <form className="area-form" onSubmit={handleAreaSubmit}>
@@ -69,7 +69,7 @@ export const BoulderHeaderRow = ({
         return (
           <Button
             key={label}
-            className="boulder-row__cell"
+            className="boulder-header-row__cell"
             label={label}
             onClick={() => onSort(label)}
           />

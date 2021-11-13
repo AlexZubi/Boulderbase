@@ -29,21 +29,14 @@ export function saveBouldersForSection(
   sectionLink: string, section: string, client: PoolClient
 ): Promise<QueryResult[]> {
   if (!isUrlValid(sectionLink)) {
-    
     console.error("Area not found");
   } else {
-      
+
     return fetch(sectionLink, { method: "GET" })
-      .then((response: Response) => {
-
-        return response.text();
-      })
-      .then((html: string) => {
-
-        return cheerio.load(html);
-      })
+      .then((response: Response) => response.text())
+      .then((html: string) => cheerio.load(html))
       .then(($) => {
-
+        
         return Promise.all(
           $("tr").map((index: number, element: string) => {
             let boulder: Boulder = {
@@ -69,7 +62,6 @@ function isUrlValid(link: string): boolean {
 
     return url.protocol === "http:" || url.protocol === "https:";
   } catch (_) {
-      
     return false;
   }
 }
