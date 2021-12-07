@@ -4,7 +4,7 @@ import { orderBy } from "lodash";
 import { BoulderHeaderRow } from "../BoulderHeaderRow/BoulderHeaderRow";
 import { Boulder } from "../../../models/common";
 import { BoulderRow } from "../BoulderRow/BoulderRow";
-import { tableHeader } from "../../text/labels";
+import { tableHeader } from "../../constants/labels";
 
 interface BoulderGridProps {
   boulderData?: Boulder[];
