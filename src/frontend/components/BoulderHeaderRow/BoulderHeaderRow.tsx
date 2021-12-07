@@ -9,7 +9,7 @@ import { Input } from "../Input/Input";
 import "./BoulderHeaderRow.scss";
 
 interface BoulderHeaderRowProps {
-  labels: string[];
+  labels: object;
   onSort?: (label: string) => void;
   setSearchedBoulders: (boulder: Boulder[]) => void;
   setFetchedBoulders: (boulder: Boulder[]) => void;
@@ -64,8 +64,7 @@ export const BoulderHeaderRow = ({
         />
       </form>
 
-      {labels.map((label) => {
-
+      {Object.values(labels).map((label) => {
         return (
           <Button
             key={label}

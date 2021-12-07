@@ -4,7 +4,7 @@ import { orderBy } from "lodash";
 import { BoulderHeaderRow } from "../BoulderHeaderRow/BoulderHeaderRow";
 import { Boulder } from "../../../models/common";
 import { BoulderRow } from "../BoulderRow/BoulderRow";
-import labels from "../../text/labels";
+import { tableHeader } from "../../text/labels";
 
 import "./BoulderGrid.scss";
 
@@ -43,7 +43,7 @@ export const BoulderGrid = ({
   return (
     <div className="boulder-grid">
       <BoulderHeaderRow
-        labels={labels}
+        labels={tableHeader}
         onSort={handleSort}
         setSearchedBoulders={setSearchedBoulders}
         setFetchedBoulders={setFetchedBoulders}
