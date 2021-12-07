@@ -72,7 +72,7 @@ export const BoulderHeaderRow = ({
       <div>
         {window.location.pathname == "/" ? (
           <Button
-            label="Show climbed Boulders"
+            label="User Table"
             linkTo="/userTable"
             onClick={handleButtonClick}
           />
