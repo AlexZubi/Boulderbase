@@ -6,8 +6,6 @@ import { Boulder } from "../../../models/common";
 import { BoulderRow } from "../BoulderRow/BoulderRow";
 import { tableHeader } from "../../text/labels";
 
-import "./BoulderGrid.scss";
-
 interface BoulderGridProps {
   boulderData?: Boulder[];
   setSearchedBoulders?: (boulder: Boulder[]) => void;

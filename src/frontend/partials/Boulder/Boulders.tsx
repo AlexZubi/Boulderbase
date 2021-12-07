@@ -2,14 +2,12 @@ import React from "react";
 import find from "lodash/find";
 
 import { Boulder } from "../../../models/common";
-import { IconButton } from "../IconButton/IconButton";
+import { IconButton } from "../../components/IconButton/IconButton";
 import {
   insertUserBoulder,
   deleteUserBoulder,
   retrieveUserBoulders,
 } from "../../helper/requests";
-
-import "./Boulders.scss";
 
 interface BoulderRowProps {
   boulder: Boulder;
@@ -24,7 +22,6 @@ export const Boulders = ({
   fetchedBoulders,
   setFetchedBoulders,
 }: BoulderRowProps) => {
-    
   return (
     <div className="boulder__cells">
       <div className="boulder__cell">

@@ -3,8 +3,6 @@ import React from "react";
 import { Boulder } from "../../../models/common";
 import { Boulders } from "../Boulder/Boulders";
 
-import "./BoulderRow.scss";
-
 interface BoulderRowProps {
   boulder: Boulder;
   fetchedBoulders?: Boulder[];
@@ -18,7 +16,6 @@ export const BoulderRow = ({
   setFetchedBoulders,
   onDelete,
 }: BoulderRowProps) => {
-
   return (
     <div className="boulder-row">
       <div className="boulder-row__cells">

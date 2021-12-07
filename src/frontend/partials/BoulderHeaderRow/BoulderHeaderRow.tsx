@@ -3,10 +3,8 @@ import React, { ChangeEvent, useState } from "react";
 import { Boulder } from "../../../models/common";
 import { retrieveBoulders, retrieveUserBoulders } from "../../helper/requests";
 import buildClassName from "../../helper/buildClassName";
-import { Button } from "../Button/Button";
-import { Input } from "../Input/Input";
-
-import "./BoulderHeaderRow.scss";
+import { Button } from "../../components/Button/Button";
+import { Input } from "../../components/Input/Input";
 
 interface BoulderHeaderRowProps {
   labels: object;
