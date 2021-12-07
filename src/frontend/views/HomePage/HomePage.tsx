@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Boulder } from "../../../models/common";
-import { BoulderGrid } from "../../components/BoulderGrid/BoulderGrid";
+import { BoulderGrid } from "../../partials/BoulderGrid/BoulderGrid";
 
 interface HomePageProps {
   searchedBoulders: Boulder[];
@@ -15,15 +15,14 @@ const HomePage = ({
   setSearchedBoulders,
   fetchedBoulders,
   setFetchedBoulders,
-}: HomePageProps) => {  
-
+}: HomePageProps) => {
   return (
-        <BoulderGrid
-          boulderData={searchedBoulders}
-          fetchedBoulders={fetchedBoulders}
-          setFetchedBoulders={setFetchedBoulders}
-          setSearchedBoulders={setSearchedBoulders}
-        />
+    <BoulderGrid
+      boulderData={searchedBoulders}
+      fetchedBoulders={fetchedBoulders}
+      setFetchedBoulders={setFetchedBoulders}
+      setSearchedBoulders={setSearchedBoulders}
+    />
   );
 };
 

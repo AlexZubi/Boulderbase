@@ -64,12 +64,9 @@ export const BoulderHeaderRow = ({
 
       {Object.values(labels).map((label) => {
         return (
-          <Button
-            key={label}
-            className="boulder-header-row__cell"
-            label={label}
-            onClick={() => onSort(label)}
-          />
+          <div className="boulder-header-row__cell">
+            <Button key={label} label={label} onClick={() => onSort(label)} />
+          </div>
         );
       })}
       <div>

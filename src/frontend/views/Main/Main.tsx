@@ -6,15 +6,13 @@ import UserPage from "../UserPage/UserPage";
 import { Boulder } from "../../../models/common";
 import { retrieveUserBoulders } from "../../helper/requests";
 
-import "./Main.scss";
-
 const Main = () => {
   const [fetchedBoulders, setFetchedBoulders] = useState<Boulder[]>([]);
   const [searchedBoulders, setSearchedBoulders] = useState<Boulder[]>(null);
 
   useEffect(() => {
     retrieveUserBoulders().then((boulders) => setFetchedBoulders(boulders));
-  }, [])
+  }, []);
 
   return (
     <Router>

@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Boulder } from "../../../models/common";
-import { BoulderGrid } from "../../components/BoulderGrid/BoulderGrid";
+import { BoulderGrid } from "../../partials/BoulderGrid/BoulderGrid";
 
 interface ResultsPageProps {
   fetchedBoulders: Boulder[];
@@ -14,17 +14,13 @@ const UserPage = ({
 }: ResultsPageProps) => {
   const handleDelete = (boulderToDelete: Boulder) => {
     const newFetch = fetchedBoulders.filter((boulder) => {
-
       return boulder != boulderToDelete;
     });
     setFetchedBoulders(newFetch);
   };
 
   return (
-      <BoulderGrid
-        boulderData={fetchedBoulders}
-        deleteBoulder={handleDelete}
-      />
+    <BoulderGrid boulderData={fetchedBoulders} deleteBoulder={handleDelete} />
   );
 };
 
