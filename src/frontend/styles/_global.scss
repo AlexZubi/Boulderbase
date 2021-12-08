@@ -2,9 +2,11 @@
   --gbb-color-white: #ffffff;
   --gbb-color-primary: #ede9e1;
   --gbb-color-grey: #b6b6b6;
-  --gbb-color-red: #f41631;
+  --gbb-color-bright-red: #f41631;
+  --gbb-color-orange-red: #e34140;
   --gbb-color-dark: #303030;
 }
 body {
   background: var(--gbb-color-primary);
+  font-family: "Roboto";
 }

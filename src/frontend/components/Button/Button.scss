@@ -3,13 +3,24 @@
   cursor: pointer;
   padding: 8px 16px;
   text-transform: uppercase;
-  color: var(--gbb-color-grey);
-  border: 2px solid var(--gbb-color-grey);
-  border-radius: 4px;
-  transition: color 0.25s ease-in-out, border 0.25s ease-in-out;
 
-  &:hover {
+  &--grey {
+    color: var(--gbb-color-grey);
+    border: 2px solid var(--gbb-color-grey);
+    border-radius: 4px;
+    transition: color 0.25s ease-in-out, border 0.25s ease-in-out;
+
+    &:hover {
+      color: var(--gbb-color-white);
+      border: 2px solid var(--gbb-color-white);
+    }
+  }
+
+  &--red {
+    width: 120px;
+    background-color: var(--gbb-color-bright-red);
     color: var(--gbb-color-white);
-    border: 2px solid var(--gbb-color-white);
+    border: 2px solid var(--gbb-color-red);
+    border-radius: 4px;
   }
 }

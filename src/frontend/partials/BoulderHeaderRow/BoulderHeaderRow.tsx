@@ -70,15 +70,12 @@ export const BoulderHeaderRow = ({
         );
       })}
       <div>
-        {window.location.pathname == "/" ? (
-          <Button
-            label="User Table"
-            linkTo="/userTable"
-            onClick={handleButtonClick}
-          />
-        ) : (
-          <Button label="Go Back" linkTo="/" />
-        )}
+        <Button
+          color="red"
+          label={window.location.pathname == "/" ? "User Table" : "Go Back"}
+          linkTo={window.location.pathname == "/" ? "/userTable" : "/"}
+          onClick={window.location.pathname == "/" ? handleButtonClick : null}
+        />
       </div>
     </div>
   );
