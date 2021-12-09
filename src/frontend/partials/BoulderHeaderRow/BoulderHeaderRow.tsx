@@ -69,7 +69,7 @@ export const BoulderHeaderRow = ({
           </div>
         );
       })}
-      <div>
+      <div className="boulder-header-row__button">
         <Button
           color="red"
           label={window.location.pathname == "/" ? "User Table" : "Go Back"}

@@ -14,5 +14,12 @@
     flex-flow: row wrap;
     align-items: center;
     overflow: hidden;
+    transition: box-shadow 0.4s ease-in-out;
+    transition: transform 0.3s ease-in-out;
+
+    &:hover {
+      transform: scale(1.05, 1.05);
+      box-shadow: 0 0 20px 0 rgb(0 0 0 / 30%);
+    }
   }
 }

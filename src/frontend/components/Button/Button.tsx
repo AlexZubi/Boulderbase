@@ -19,7 +19,10 @@ export const Button = ({
   const className = `button button--${color} `;
 
   return (
-    <Link to={linkTo ? linkTo : window.location.pathname}>
+    <Link
+      className="button__link"
+      to={linkTo ? linkTo : window.location.pathname}
+    >
       <button className={className} onClick={onClick}>
         <span className="button__label">{label}</span>
       </button>

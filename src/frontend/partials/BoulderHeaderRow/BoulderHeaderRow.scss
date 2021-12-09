@@ -13,11 +13,17 @@
 
   &__cell {
     height: 60px;
-    padding: 0 16px;
     display: flex;
     flex-flow: row wrap;
     align-items: center;
     overflow: hidden;
     border: none;
+  }
+
+  &__button {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    padding: 12px 10px;
   }
 }
