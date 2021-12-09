@@ -2,13 +2,14 @@
   &--header {
     text-transform: uppercase;
     font-weight: bold;
+    background-color: var(--gbb-color-dark);
   }
 
   &__cells {
     display: grid;
     gap: 2px;
-    grid-template-columns: repeat(5, 1fr);
-    background-color: var(--gbb-color-dark);
+    margin-left: 20%;
+    grid-template-columns: repeat(4, 1fr);
   }
 
   &__cell {
@@ -24,6 +25,6 @@
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
-    padding: 14px 20px;
+    padding: 14px 10px;
   }
 }
