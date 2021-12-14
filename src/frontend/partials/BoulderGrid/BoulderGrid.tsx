@@ -72,7 +72,7 @@ export const BoulderGrid = ({
       <form className="boulder-grid__search-bar" onSubmit={handleAreaSubmit}>
         <Input
           name="searchArea"
-          placeholder="Area"
+          placeholder="Search area..."
           onChange={handleAreaChange}
         />
       </form>

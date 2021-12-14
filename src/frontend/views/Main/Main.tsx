@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import HomePage from "../HomePage/HomePage";
+import ResultPage from "../ResultPage/ResultPage";
 import UserPage from "../UserPage/UserPage";
 import { Boulder } from "../../../models/common";
 import { retrieveUserBoulders } from "../../helper/requests";
