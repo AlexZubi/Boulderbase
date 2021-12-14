@@ -1,11 +1,16 @@
 :root {
   --gbb-color-white: #ffffff;
   --gbb-color-primary: #ede9e1;
+  --gbb-color-green: #346d36;
   --gbb-color-grey: #b6b6b6;
   --gbb-color-red: #f41631;
   --gbb-color-dark: #303030;
 
   --gbb-color-red-hover: #f4546a;
+
+  --gbb-radius-default: 4px;
+
+  --gbb-font-default: "Roboto";
 }
 body {
   background: var(--gbb-color-primary);

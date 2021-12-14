@@ -8,17 +8,14 @@ interface InputProps {
 }
 
 export const Input = ({ name, onChange, value, placeholder }: InputProps) => {
-
   return (
-    <div>
-        <input
-          className="input"
-          type="text"
-          name={name}
-          onChange={onChange}
-          value={value}
-          placeholder={placeholder}
-        />
-    </div>
+    <input
+      className="input"
+      type="text"
+      name={name}
+      onChange={onChange}
+      value={value}
+      placeholder={placeholder}
+    />
   );
 };
