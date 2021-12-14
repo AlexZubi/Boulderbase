@@ -23,19 +23,16 @@ const Main = () => {
             path="/"
             exact
             render={() => (
-              <HomePage
-                searchedBoulders={searchedBoulders}
-                setSearchedBoulders={setSearchedBoulders}
-                fetchedBoulders={fetchedBoulders}
-                setFetchedBoulders={setFetchedBoulders}
-              />
+              <HomePage setSearchedBoulders={setSearchedBoulders} />
             )}
           />
           <Route
-            path="/userTable"
+            path="/resultPage"
             exact
             render={() => (
-              <UserPage
+              <ResultPage
+                searchedBoulders={searchedBoulders}
+                setSearchedBoulders={setSearchedBoulders}
                 fetchedBoulders={fetchedBoulders}
                 setFetchedBoulders={setFetchedBoulders}
               />
