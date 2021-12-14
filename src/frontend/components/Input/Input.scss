@@ -1,15 +1,14 @@
 .input {
-  height: 50px;
-  font-size: 18px;
+  height: 60px;
+  font-size: 22px;
   padding: 0px 16px;
-  font: var(--gbb-font-default);
   width: 500px;
   border-radius: var(--gbb-radius-default);
   border: none;
   outline: none;
 
   &::placeholder {
-    font-size: 18px;
+    font-size: 22px;
     opacity: 0.5;
   }
 }
