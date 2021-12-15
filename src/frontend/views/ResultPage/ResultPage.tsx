@@ -65,6 +65,9 @@ const ResultPage = ({
             </span>
           </div>
         </div>
+        <div className="resultpage__container__result-element">
+          <BoulderGrid boulderData={searchedBoulders} />
+        </div>
       </div>
     </div>
   );
