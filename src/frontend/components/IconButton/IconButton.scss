@@ -1,8 +1,19 @@
 .iconButton {
   padding: 8px;
   display: flex;
+  color: var(--gbb-color-green);
+  background-color: transparent;
   align-items: center;
   cursor: pointer;
   border: 0;
   border-radius: 50%;
+
+  &--icon {
+    font-size: 18px;
+  }
+
+  &--label {
+    font-size: 18px;
+    padding-left: 16px;
+  }
 }

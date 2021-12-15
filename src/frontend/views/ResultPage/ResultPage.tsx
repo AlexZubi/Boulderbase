@@ -1,8 +1,10 @@
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import React, { ChangeEvent, useState } from "react";
 
 var background = require("../../assets/Background1.jpg");
 import { Boulder } from "../../../models/common";
 import { Button } from "../../components/Button/Button";
+import { IconButton } from "../../components/IconButton/IconButton";
 import { Input } from "../../components/Input/Input";
 import { retrieveBoulders } from "../../helper/requests";
 import { BoulderGrid } from "../../partials/BoulderGrid/BoulderGrid";
@@ -44,20 +46,24 @@ const ResultPage = ({
     <div className="resultpage">
       <img className="resultpage__background" src={background} />
       <div className="resultpage__container">
-        <div className="resultpage__container__input-element">
-          <Input
-            name="SearchArea"
-            placeholder="Search climbing area"
-            onChange={handleAreaChange}
-          />
-          <span className="resultpage__container__input-element--button">
-            <Button
-              label="Search"
-              color="green"
-              linkTo="/resultPage"
-              onClick={handleAreaSubmit}
+        <div className="resultpage__container__header-element">
+          <div className="resultpage__container__header-element__back-button">
+            <IconButton
+              icon={faArrowLeft}
+              label="Back to starting page"
+              linkTo="/"
             />
-          </span>
+          </div>
+          <div className="resultpage__container__header-element__input-element">
+            <Input
+              name="SearchArea"
+              placeholder="Search climbing area"
+              onChange={handleAreaChange}
+            />
+            <span className="resultpage__container__header-element__button">
+              <Button label="Search" onClick={handleAreaSubmit} />
+            </span>
+          </div>
         </div>
       </div>
     </div>

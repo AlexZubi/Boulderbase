@@ -5,7 +5,7 @@
   &__background {
     height: 100%;
     width: 100%;
-    filter: blur(5px);
+    filter: blur(4px);
   }
 
   &__container {
@@ -17,14 +17,21 @@
 
     grid-template-rows: 150px 1fr;
 
-    &__input-element {
-      display: flex;
+    &__header-element {
+      display: grid;
       margin-top: 30px;
       width: 100%;
-      justify-content: center;
+      grid-template-columns: 300px 0.245fr 1fr;
 
-      &--button {
+      &__button {
         padding: 0px 16px;
+      }
+      &__back-button {
+        padding-left: 20px;
+      }
+
+      &__input-element {
+        grid-column-start: 3;
       }
     }
     .input {

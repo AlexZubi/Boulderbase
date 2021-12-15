@@ -4,14 +4,14 @@ import { Link } from "react-router-dom";
 import "./Button.scss";
 
 interface ButtonProps {
-  color?: "grey" | "red" | "green";
+  color?: "green";
   label: string;
   linkTo?: string;
   onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
 export const Button = ({
-  color = "grey",
+  color = "green",
   label,
   linkTo,
   onClick,
