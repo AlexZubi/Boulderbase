@@ -34,15 +34,14 @@ const HomePage = ({ setSearchedBoulders }: HomePageProps) => {
 
   return (
     <div className="homepage">
-      <div className="homepage__image"></div>
-      <img className="homepage__image--file" src={background}></img>
-      <div className="homepage__image__input-element">
+      <img className="homepage__image" src={background} />
+      <div className="homepage__input-element">
         <Input
           name="SearchArea"
           placeholder="Search climbing area"
           onChange={handleAreaChange}
         />
-        <span className="homepage__image__input-element--button">
+        <span className="homepage__input-element--button">
           <Button
             label="Search"
             color="green"
