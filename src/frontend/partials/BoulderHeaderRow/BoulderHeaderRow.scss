@@ -1,23 +1,26 @@
 .boulder-header-row {
   margin: 0 20%;
   height: 40px;
+  position: sticky;
+  top: 0;
 
   &--header {
-    font-weight: bold;
     background-color: var(--gbb-color-white);
   }
 
   &__cells {
     display: grid;
-    margin-left: 20%;
-    grid-template-columns: repeat(4, 1fr);
+    width: 80%;
+    grid-template-columns: repeat(3, 1fr);
   }
 
   &__cell {
-    height: 60px;
+    height: 40px;
+    padding: 0 8px;
     display: flex;
-    flex-flow: row wrap;
     align-items: center;
+
+    flex-flow: row wrap;
     overflow: hidden;
     border: none;
   }

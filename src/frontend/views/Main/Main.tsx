@@ -33,8 +33,6 @@ const Main = () => {
               <ResultPage
                 searchedBoulders={searchedBoulders}
                 setSearchedBoulders={setSearchedBoulders}
-                fetchedBoulders={fetchedBoulders}
-                setFetchedBoulders={setFetchedBoulders}
               />
             )}
           />

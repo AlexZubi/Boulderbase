@@ -1,15 +1,14 @@
 .boulder-grid {
   width: 100%;
-  height: auto;
+  height: 75%;
   overflow: auto;
   display: grid;
   grid-template-rows: 60px 1fr;
-  gap: 20px;
 
   &__rows {
     height: 100%;
     display: grid;
-    gap: 25px;
+    gap: 20px;
     grid-auto-rows: min-content;
   }
 }
