@@ -1,8 +1,10 @@
 .boulder-header-row {
+  margin: 0 20%;
+  height: 40px;
+
   &--header {
-    text-transform: uppercase;
     font-weight: bold;
-    background-color: var(--gbb-color-dark);
+    background-color: var(--gbb-color-white);
   }
 
   &__cells {
@@ -18,12 +20,5 @@
     align-items: center;
     overflow: hidden;
     border: none;
-  }
-
-  &__button {
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
-    padding: 14px 10px;
   }
 }

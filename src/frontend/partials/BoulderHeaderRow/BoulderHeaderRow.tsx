@@ -1,26 +1,14 @@
-import React, { ChangeEvent, useState } from "react";
+import React from "react";
 
-import { Boulder } from "../../../models/common";
-import { retrieveBoulders, retrieveUserBoulders } from "../../helper/requests";
-import buildClassName from "../../helper/buildClassName";
 import { Button } from "../../components/Button/Button";
-import { Input } from "../../components/Input/Input";
+import buildClassName from "../../helper/buildClassName";
 
 interface BoulderHeaderRowProps {
   labels: object;
   onSort?: (label: string) => void;
-  setFetchedBoulders: (boulder: Boulder[]) => void;
 }
 
-export const BoulderHeaderRow = ({
-  labels,
-  onSort,
-  setFetchedBoulders,
-}: BoulderHeaderRowProps) => {
-  const handleButtonClick = () => {
-    retrieveUserBoulders().then((boulders) => setFetchedBoulders(boulders));
-  };
-
+export const BoulderHeaderRow = ({ labels, onSort }: BoulderHeaderRowProps) => {
   return (
     <div className={buildClassName("boulder-header-row", { header: true })}>
       <div className="boulder-header-row__cells">
@@ -31,14 +19,6 @@ export const BoulderHeaderRow = ({
             </div>
           );
         })}
-        <div className="boulder-header-row__button">
-          <Button
-            color="red"
-            label={window.location.pathname == "/" ? "User Table" : "Go Back"}
-            linkTo={window.location.pathname == "/" ? "/userTable" : "/"}
-            onClick={window.location.pathname == "/" ? handleButtonClick : null}
-          />
-        </div>
       </div>
     </div>
   );

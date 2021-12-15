@@ -36,11 +36,7 @@ export const BoulderGrid = ({
   }
   return (
     <div className="boulder-grid">
-      <BoulderHeaderRow
-        labels={tableHeader}
-        onSort={handleSort}
-        setFetchedBoulders={setFetchedBoulders}
-      />
+      <BoulderHeaderRow labels={tableHeader} onSort={handleSort} />
       <div className="boulder-grid__rows">
         {boulderData?.map((boulder, index) => (
           <BoulderRow
