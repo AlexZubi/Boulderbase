@@ -34,7 +34,7 @@ const HomePage = ({ setSearchedBoulders }: HomePageProps) => {
 
   return (
     <div className="homepage">
-      <img className="homepage__image" src={background} />
+      <img className="homepage__background" src={background} />
       <div className="homepage__input-element">
         <Input
           name="SearchArea"

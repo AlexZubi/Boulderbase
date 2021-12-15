@@ -42,21 +42,23 @@ const ResultPage = ({
   };
   return (
     <div className="resultpage">
-      <img className="resultpage__image" src={background} />
-      <div className="resultpage__input-element">
-        <Input
-          name="SearchArea"
-          placeholder="Search climbing area"
-          onChange={handleAreaChange}
-        />
-        <span className="resultpage__input-element--button">
-          <Button
-            label="Search"
-            color="green"
-            linkTo="/resultPage"
-            onClick={handleAreaSubmit}
+      <img className="resultpage__background" src={background} />
+      <div className="resultpage__container">
+        <div className="resultpage__container__input-element">
+          <Input
+            name="SearchArea"
+            placeholder="Search climbing area"
+            onChange={handleAreaChange}
           />
-        </span>
+          <span className="resultpage__container__input-element--button">
+            <Button
+              label="Search"
+              color="green"
+              linkTo="/resultPage"
+              onClick={handleAreaSubmit}
+            />
+          </span>
+        </div>
       </div>
     </div>
   );
