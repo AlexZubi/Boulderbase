@@ -8,6 +8,7 @@
 
   &__icon {
     &--green {
+      font-size: 22px;
       color: var(--gbb-color-green);
       background-color: transparent;
 
@@ -16,6 +17,7 @@
       }
     }
     &--grey {
+      font-size: 22px;
       color: var(--gbb-border-color-default);
 
       &:hover {
