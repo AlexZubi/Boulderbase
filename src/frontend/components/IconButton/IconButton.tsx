@@ -30,7 +30,7 @@ export const IconButton = ({
         <span className={className}>
           <FontAwesomeIcon icon={icon} />
         </span>
-        <label className="iconButton--label">{label}</label>
+        <div className="iconButton--label">{label}</div>
       </button>
     </Link>
   );
