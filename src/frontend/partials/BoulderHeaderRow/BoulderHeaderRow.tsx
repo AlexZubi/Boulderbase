@@ -9,8 +9,6 @@ interface BoulderHeaderRowProps {
 }
 
 export const BoulderHeaderRow = ({ labels, onSort }: BoulderHeaderRowProps) => {
-  const handleSort = (label: string) => onSort(label);
-
   return (
     <div className="boulder-header-row">
       <div className="boulder-header-row__container">
@@ -18,7 +16,7 @@ export const BoulderHeaderRow = ({ labels, onSort }: BoulderHeaderRowProps) => {
           return (
             <div key={label} className="boulder-header-row__container__cell">
               {label}
-              <IconButton icon={faSort} onClick={() => handleSort(label)} />
+              <IconButton icon={faSort} onClick={() => onSort(label)} />
             </div>
           );
         })}
