@@ -12,11 +12,15 @@ import { BoulderGrid } from "../../partials/BoulderGrid/BoulderGrid";
 interface ResultPageProps {
   searchedBoulders: Boulder[];
   setSearchedBoulders: (boulders: Boulder[]) => void;
+  fetchedBoulders: Boulder[];
+  setFetchedBoulders: (boulders: Boulder[]) => void;
 }
 
 const ResultPage = ({
   searchedBoulders,
+  fetchedBoulders,
   setSearchedBoulders,
+  setFetchedBoulders,
 }: ResultPageProps) => {
   const [searchedArea, setSearchedArea] = useState(null);
 
@@ -62,7 +66,11 @@ const ResultPage = ({
           </div>
         </div>
         <div className="resultpage__container__result-element">
-          <BoulderGrid boulderData={searchedBoulders} />
+          <BoulderGrid
+            boulderData={searchedBoulders}
+            fetchedBoulders={fetchedBoulders}
+            setFetchedBoulders={setFetchedBoulders}
+          />
         </div>
       </div>
     </div>

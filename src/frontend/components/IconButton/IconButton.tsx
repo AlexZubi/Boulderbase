@@ -6,7 +6,8 @@ import { Link } from "react-router-dom";
 
 interface IconButtonProps {
   icon?: IconProp;
-  label?: String;
+  label?: string;
+  color?: "green" | "grey";
   linkTo?: string;
   onClick?: MouseEventHandler<HTMLButtonElement>;
 }
@@ -14,16 +15,19 @@ interface IconButtonProps {
 export const IconButton = ({
   icon,
   label,
+  color = "green",
   linkTo,
   onClick,
 }: IconButtonProps) => {
+  const className = `iconButton__icon--${color}`;
+
   return (
     <Link
       className="button__link"
       to={linkTo ? linkTo : window.location.pathname}
     >
       <button className="iconButton" onClick={onClick}>
-        <span className="iconButton--icon">
+        <span className={className}>
           <FontAwesomeIcon icon={icon} />
         </span>
         <label className="iconButton--label">{label}</label>

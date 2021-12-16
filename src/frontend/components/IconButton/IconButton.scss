@@ -1,24 +1,33 @@
 .iconButton {
   display: flex;
   height: 30px;
-  color: var(--gbb-color-green);
-  background-color: transparent;
   align-items: center;
   cursor: pointer;
   border: 0;
   border-radius: 50%;
 
-  &--icon {
-    font-size: 18px;
+  &__icon {
+    &--green {
+      color: var(--gbb-color-green);
+      background-color: transparent;
+
+      &:hover {
+        color: var(--gbb-color-green-hover);
+      }
+    }
+    &--grey {
+      color: grey;
+
+      &:hover {
+        color: var(--gbb-color-green);
+      }
+    }
   }
 
   &--label {
+    color: var(--gbb-color-green);
     pointer-events: none;
     font-size: 18px;
     padding-left: 16px;
-  }
-
-  &:hover {
-    color: var(--gbb-color-green-hover);
   }
 }

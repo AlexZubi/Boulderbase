@@ -1,5 +1,6 @@
 import React from "react";
 import find from "lodash/find";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
 
 import { Boulder } from "../../../models/common";
 import { IconButton } from "../../components/IconButton/IconButton";
@@ -24,11 +25,13 @@ export const Boulders = ({
 }: BoulderRowProps) => {
   return (
     <div className="boulder__cells">
+      <div className="boulder__cell">{boulder.name}</div>
+      <div className="boulder__cell">{boulder.grade}</div>
       <div className="boulder__cell">
-        {boulder.name}
+        {boulder.area}
         {onDelete ? (
           <IconButton
-            icon="coffee"
+            icon={faStar}
             onClick={() => {
               onDelete(boulder);
               deleteUserBoulder(boulder.boulder_id);
@@ -43,15 +46,13 @@ export const Boulders = ({
             }}
           >
             {find(fetchedBoulders, boulder) ? (
-              <IconButton icon="coffee" />
+              <IconButton icon={faStar} color="green" />
             ) : (
-              <IconButton icon="check-square" />
+              <IconButton icon={faStar} color="grey" />
             )}
           </div>
         )}
       </div>
-      <div className="boulder__cell">{boulder.grade}</div>
-      <div className="boulder__cell">{boulder.area}</div>
     </div>
   );
 };
