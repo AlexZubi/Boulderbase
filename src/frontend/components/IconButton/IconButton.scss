@@ -16,7 +16,7 @@
       }
     }
     &--grey {
-      color: grey;
+      color: var(--gbb-border-color-default);
 
       &:hover {
         color: var(--gbb-color-green);
