@@ -16,6 +16,7 @@ export const Input = ({ name, onChange, value, placeholder }: InputProps) => {
       onChange={onChange}
       value={value}
       placeholder={placeholder}
+      autoComplete="off"
     />
   );
 };

@@ -7,6 +7,10 @@
   border: none;
   outline: none;
 
+  & select {
+    display: none;
+  }
+
   &::placeholder {
     font-size: 22px;
     opacity: 0.5;

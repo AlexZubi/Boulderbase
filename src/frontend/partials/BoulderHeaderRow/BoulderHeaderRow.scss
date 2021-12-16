@@ -2,26 +2,20 @@
   margin: 0 20%;
   height: 40px;
   position: sticky;
+  background-color: var(--gbb-color-white);
   top: 0;
 
-  &--header {
-    background-color: var(--gbb-color-white);
-  }
-
-  &__cells {
+  &__container {
     display: grid;
-    width: 80%;
     grid-template-columns: repeat(3, 1fr);
-  }
+    gap: 2px;
 
-  &__cell {
-    height: 40px;
-    padding: 0 8px;
-    display: flex;
-    align-items: center;
-
-    flex-flow: row wrap;
-    overflow: hidden;
-    border: none;
+    &__cell {
+      display: flex;
+      height: 40px;
+      padding: 0 16px;
+      align-items: center;
+      width: 100%;
+    }
   }
 }

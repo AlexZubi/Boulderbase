@@ -1,7 +1,7 @@
 import React from "react";
+import { faSort } from "@fortawesome/free-solid-svg-icons";
 
-import { Button } from "../../components/Button/Button";
-import buildClassName from "../../helper/buildClassName";
+import { IconButton } from "../../components/IconButton/IconButton";
 
 interface BoulderHeaderRowProps {
   labels: object;
@@ -9,13 +9,16 @@ interface BoulderHeaderRowProps {
 }
 
 export const BoulderHeaderRow = ({ labels, onSort }: BoulderHeaderRowProps) => {
+  const handleSort = (label: string) => onSort(label);
+
   return (
-    <div className={buildClassName("boulder-header-row", { header: true })}>
-      <div className="boulder-header-row__cells">
+    <div className="boulder-header-row">
+      <div className="boulder-header-row__container">
         {Object.values(labels).map((label) => {
           return (
-            <div className="boulder-header-row__cell">
-              <label>{label}</label>
+            <div key={label} className="boulder-header-row__container__cell">
+              {label}
+              <IconButton icon={faSort} onClick={() => handleSort(label)} />
             </div>
           );
         })}
