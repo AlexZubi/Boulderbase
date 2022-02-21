@@ -1,0 +1,25 @@
+.button {
+  background: transparent;
+  font: var(--gbb-font-default);
+  font-size: 18px;
+  cursor: pointer;
+  padding: 8px 16px;
+
+  &__link {
+    height: 30px;
+  }
+
+  &--green {
+    height: 60px;
+    font-size: 22px;
+    width: 140px;
+    background-color: var(--gbb-color-green);
+    color: var(--gbb-color-white);
+    border: none;
+    border-radius: var(--gbb-radius-default);
+
+    &:hover {
+      background-color: var(--gbb-color-green-hover);
+    }
+  }
+}

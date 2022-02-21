@@ -1,0 +1,18 @@
+.input {
+  height: 60px;
+  font-size: 22px;
+  padding: 0px 16px;
+  width: 500px;
+  border-radius: var(--gbb-radius-default);
+  border: none;
+  outline: none;
+
+  & select {
+    display: none;
+  }
+
+  &::placeholder {
+    font-size: 22px;
+    opacity: 0.5;
+  }
+}

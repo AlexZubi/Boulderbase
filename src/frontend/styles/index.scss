@@ -1,0 +1,16 @@
+@charset "utf-8";
+
+@import "./reset";
+@import "./global";
+
+@import "../components/Button/Button.scss";
+@import "../components/IconButton/IconButton.scss";
+@import "../components/Input/Input.scss";
+
+@import "../partials/Boulder/Boulders.scss";
+@import "../partials/BoulderGrid/BoulderGrid.scss";
+@import "../partials/BoulderHeaderRow/BoulderHeaderRow.scss";
+@import "../partials/BoulderRow/BoulderRow.scss";
+
+@import "../views/ResultPage/ResultPage.scss";
+@import "../views/HomePage/HomePage.scss";

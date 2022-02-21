@@ -1,0 +1,35 @@
+.iconButton {
+  display: flex;
+  height: 30px;
+  align-items: center;
+  cursor: pointer;
+  border: 0;
+  background-color: transparent;
+
+  &__icon {
+    &--green {
+      font-size: 22px;
+      color: var(--gbb-color-green);
+      background-color: transparent;
+
+      &:hover {
+        color: var(--gbb-color-green-hover);
+      }
+    }
+    &--grey {
+      font-size: 22px;
+      color: var(--gbb-border-color-default);
+
+      &:hover {
+        color: var(--gbb-color-green);
+      }
+    }
+  }
+
+  &--label {
+    color: var(--gbb-color-green);
+    pointer-events: none;
+    font-size: 18px;
+    padding-left: 16px;
+  }
+}

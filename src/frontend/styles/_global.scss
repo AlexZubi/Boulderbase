@@ -1,0 +1,18 @@
+:root {
+  --gbb-color-white: #ffffff;
+  --gbb-color-primary: #ede9e1;
+  --gbb-color-green: #346d36;
+
+  --gbb-color-green-hover: #3d7f3f;
+
+  --gbb-radius-default: 4px;
+
+  --gbb-font-default: "Roboto";
+
+  --gbb-border-color-default: #cacaca;
+}
+body {
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  font-family: "Roboto";
+}

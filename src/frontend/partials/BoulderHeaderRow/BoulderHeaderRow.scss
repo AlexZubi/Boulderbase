@@ -1,0 +1,21 @@
+.boulder-header-row {
+  margin: 0 20%;
+  height: 40px;
+  position: sticky;
+  background-color: var(--gbb-color-white);
+  top: 0;
+
+  &__container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+
+    &__cell {
+      display: flex;
+      height: 40px;
+      padding: 0 16px;
+      align-items: center;
+      width: 100%;
+    }
+  }
+}
