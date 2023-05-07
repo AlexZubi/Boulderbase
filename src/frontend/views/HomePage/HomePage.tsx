@@ -49,6 +49,13 @@ const HomePage = ({ setSearchedBoulders }: HomePageProps) => {
             onClick={handleAreaSubmit}
           />
         </span>
+        <span className="homepage__input-element--button">
+          <Button
+            label="Climbed Boulders"
+            color="green"
+            linkTo="/userPage"
+          />
+        </span>
       </div>
     </div>
   );

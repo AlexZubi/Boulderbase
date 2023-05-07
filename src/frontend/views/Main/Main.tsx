@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import HomePage from "../HomePage/HomePage";
 import ResultPage from "../ResultPage/ResultPage";
-import UserPage from "../UserPage/UserPage";
 import { Boulder } from "../../../models/common";
 import { retrieveUserBoulders } from "../../helper/requests";
 
@@ -37,6 +36,16 @@ const Main = () => {
                 setFetchedBoulders={setFetchedBoulders}
               />
             )}
+          />
+          <Route
+                path="/userPage"
+                exact
+                render={() => (
+                  <ResultPage
+                    searchedBoulders={fetchedBoulders}
+                    setFetchedBoulders={setFetchedBoulders}
+                  />
+                )}
           />
         </Switch>
       </div>

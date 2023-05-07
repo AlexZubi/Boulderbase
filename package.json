@@ -19,7 +19,6 @@
     "body-parser": "^1.19.0",
     "cheerio": "^1.0.0-rc.10",
     "cors": "^2.8.5",
-    "curl": "^0.1.4",
     "env-cmd": "^10.1.0",
     "express": "^4.17.1",
     "lodash": "^4.17.21",
@@ -55,7 +54,6 @@
     "prettier": "^2.4.1",
     "react-router-dom": "^5.2.1",
     "react-table": "^7.0.4",
-    "request": "^2.88.2",
     "ts-node": "^10.2.0",
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.3.5"
